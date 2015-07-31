@@ -8,12 +8,10 @@ namespace XLabs.Forms.Controls
 {
     using System;
     using System.Collections.Generic;
-
+    using System.Diagnostics;
     using UIKit;
-
     using Xamarin.Forms;
     using Xamarin.Forms.Platform.iOS;
-
     using XLabs.Forms.Behaviors;
 
     /// <summary>
@@ -61,10 +59,16 @@ namespace XLabs.Forms.Controls
             // Longpress
             this._recognizers.Add(new UILongPressGestureRecognizer((x) =>
                 {
+                    if (x.State == UIGestureRecognizerState.Began)
+                    {
+                        var viewpoint = x.LocationInView(this);
+                        this.Element.ProcessGesture(new GestureResult { GestureType = GestureType.LongTouch, Direction = Directionality.None, Origin = viewpoint.ToPoint() });
+                    }
+
                     if (x.State == UIGestureRecognizerState.Ended)
                     {
                         var viewpoint = x.LocationInView(this);
-                        this.Element.ProcessGesture(new GestureResult { GestureType = GestureType.DoubleTap, Direction = Directionality.None, Origin = viewpoint.ToPoint() });                        
+                        this.Element.ProcessGesture(new GestureResult { GestureType = GestureType.LongPress, Direction = Directionality.None, Origin = viewpoint.ToPoint() });
                     }
                 }));
             // Swipe

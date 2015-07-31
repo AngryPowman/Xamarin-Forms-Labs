@@ -318,9 +318,13 @@ namespace XLabs.Forms.Controls
 		/// </summary>
 		DoubleTap,
 		/// <summary>
-		/// LongPress
+        /// LongTouch (@AngryPowman : Will process this event when finger touch on point without release)
 		/// </summary>
-		LongPress,
+		LongTouch,
+        /// <summary>
+        /// LongPress
+        /// </summary>
+        LongPress,
 		/// <summary>
 		/// Swipe, Swipe is combined with Directionality to support:
 		/// SwipeLeft
