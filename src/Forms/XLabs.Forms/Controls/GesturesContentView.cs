@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Xamarin.Forms;
 using XLabs.Forms.Behaviors;
@@ -126,7 +127,8 @@ namespace XLabs.Forms.Controls
 			//Check the view stack first
 			if (ExcludeChildren && gesture.ViewStack != null && gesture.ViewStack.Count != 0 && _viewInterests.All(x => x.View != gesture.ViewStack[0])) return false;//The innermost (source) is not an actual interested view
 			var interestedview = InterestedView(gesture.Origin);
-			if (interestedview == null) return false;
+
+            if (interestedview == null) return false;
 			gesture.StartView = interestedview.View;
 
 			//Check for perfect matches first
@@ -158,6 +160,7 @@ namespace XLabs.Forms.Controls
 
 			//Is there one or more interest int this gesture?
 			if (!interest.Any()) return false;
+
 			var final = interest.First();
 			//Finish setting up our gestureresult
 			gesture.Origin=new Point(Math.Max(gesture.Origin.X-interestedview.View.X,0),Math.Max(gesture.Origin.Y-interestedview.View.Y,0));

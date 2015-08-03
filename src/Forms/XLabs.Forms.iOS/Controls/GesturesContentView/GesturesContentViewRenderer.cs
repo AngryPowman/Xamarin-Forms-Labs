@@ -57,18 +57,29 @@ namespace XLabs.Forms.Controls
                     }
                 }) { NumberOfTapsRequired = 2 });
             // Longpress
+            CoreGraphics.CGPoint longPressGestureViewPoint = CoreGraphics.CGPoint.Empty;
             this._recognizers.Add(new UILongPressGestureRecognizer((x) =>
                 {
                     if (x.State == UIGestureRecognizerState.Began)
                     {
-                        var viewpoint = x.LocationInView(this);
-                        this.Element.ProcessGesture(new GestureResult { GestureType = GestureType.LongTouch, Direction = Directionality.None, Origin = viewpoint.ToPoint() });
+                        longPressGestureViewPoint = x.LocationInView(this);
+                        this.Element.ProcessGesture(
+                            new GestureResult { 
+                                GestureType = GestureType.LongTouch, 
+                                Direction = Directionality.None, 
+                                Origin = longPressGestureViewPoint.ToPoint() 
+                            });
                     }
 
-                    if (x.State == UIGestureRecognizerState.Ended)
+                    if (x.State == UIGestureRecognizerState.Ended
+                        && longPressGestureViewPoint != CoreGraphics.CGPoint.Empty)
                     {
-                        var viewpoint = x.LocationInView(this);
-                        this.Element.ProcessGesture(new GestureResult { GestureType = GestureType.LongPress, Direction = Directionality.None, Origin = viewpoint.ToPoint() });
+                        bool result = this.Element.ProcessGesture(
+                            new GestureResult { 
+                                GestureType = GestureType.LongPress, 
+                                Direction = Directionality.None, 
+                                Origin = longPressGestureViewPoint.ToPoint() 
+                            });
                     }
                 }));
             // Swipe
