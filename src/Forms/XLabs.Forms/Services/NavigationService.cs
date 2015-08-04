@@ -3,8 +3,8 @@
 // Author           : Shawn Anderson
 // Created          : 12-29-2014
 //
-// Last Modified By : Shawn Anderson
-// Last Modified On : 12-29-2014
+// Last Modified By : AngryPowman
+// Last Modified On : 08-04-2015
 // ***********************************************************************
 // <copyright file="NavigationService.cs" company="">
 //     Copyright (c) 2014 . All rights reserved.
@@ -18,10 +18,10 @@ using XLabs.Forms.Mvvm;
 
 namespace XLabs.Forms.Services
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Reflection;
-    using XLabs.Platform.Services;
+	using System;
+	using System.Collections.Generic;
+	using System.Reflection;
+	using XLabs.Platform.Services;
 
 	/// <summary>
 	/// Class NavigationService.
@@ -73,9 +73,9 @@ namespace XLabs.Forms.Services
 		/// </summary>
 		/// <param name="pageKey">The page key.</param>
 		/// <param name="animated">if set to <c>true</c> [animated].</param>
-        /// <param name="args">The arguments.</param>
+		/// <param name="args">The arguments.</param>
 		/// <exception cref="System.ArgumentException">That pagekey is not registered;pageKey</exception>
-        public void NavigateTo(string pageKey, bool animated = true, params object[] args)
+		public void NavigateTo(string pageKey, bool animated = true, params object[] args)
 		{
 			if (!this._pageLookup.ContainsKey(pageKey))
 			{
@@ -92,8 +92,8 @@ namespace XLabs.Forms.Services
 		/// </summary>
 		/// <param name="pageType">Type of the page.</param>
 		/// <param name="animated">if set to <c>true</c> [animated].</param>
-        /// <param name="args">The arguments.</param>
-        /// <exception cref="System.ArgumentException">Argument must be derived from type Xamarin.Forms.Page;pageType</exception>
+		/// <param name="args">The arguments.</param>
+		/// <exception cref="System.ArgumentException">Argument must be derived from type Xamarin.Forms.Page;pageType</exception>
 		public void NavigateTo(Type pageType, bool animated = true, params object[] args)
 		{
 			if (_navigation == null)
@@ -127,11 +127,11 @@ namespace XLabs.Forms.Services
 		/// </summary>
 		/// <typeparam name="T"></typeparam>
 		/// <param name="animated">if set to <c>true</c> [animated].</param>
-        /// <param name="args">The arguments.</param>
+		/// <param name="args">The arguments.</param>
 		/// <exception cref="System.ArgumentException">Page Type must be based on Xamarin.Forms.Page</exception>
-        public void NavigateTo<T>(bool animated = true, params object[] args) where T : class
+		public void NavigateTo<T>(bool animated = true, params object[] args) where T : class
 		{
-            NavigateTo(typeof(T), animated, args);
+			NavigateTo(typeof(T), animated, args);
 		}
 
 		/// <summary>

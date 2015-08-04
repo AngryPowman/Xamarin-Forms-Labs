@@ -82,7 +82,7 @@ namespace XLabs.Forms.Mvvm
 		/// </summary>
 		/// <param name="viewModelType">Type of the view model.</param>
 		/// <param name="initialiser">The initialiser.</param>
-        /// <param name="args">The arguments.</param>
+		/// <param name="args">The arguments.</param>
 		/// <returns>System.Object.</returns>
 		/// <exception cref="System.InvalidOperationException">Unknown View for ViewModel</exception>
 		public static object CreatePage(Type viewModelType, Action<object, object> initialiser = null, params object[] args)
@@ -149,10 +149,10 @@ namespace XLabs.Forms.Mvvm
 		/// <typeparam name="TViewModel">The type of the view model.</typeparam>
 		/// <typeparam name="TPage">The type of the t page.</typeparam>
 		/// <param name="initialiser">The create action.</param>
-        /// <param name="args">The arguments.</param>
+		/// <param name="args">The arguments.</param>
 		/// <returns>Page for the ViewModel.</returns>
 		/// <exception cref="System.InvalidOperationException">Unknown View for ViewModel.</exception>
-        public static object CreatePage<TViewModel, TPage>(Action<TViewModel, TPage> initialiser = null, params object[] args)
+		public static object CreatePage<TViewModel, TPage>(Action<TViewModel, TPage> initialiser = null, params object[] args)
 			where TViewModel : class, IViewModel
 		{
 			Action<object, object> i = (o1, o2) =>
