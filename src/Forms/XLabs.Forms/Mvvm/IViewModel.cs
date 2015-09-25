@@ -2,6 +2,9 @@
 
 namespace XLabs.Forms.Mvvm
 {
+	/// <summary>
+	/// Interface IViewModel
+	/// </summary>
 	public interface IViewModel
 	{
 		/// <summary>

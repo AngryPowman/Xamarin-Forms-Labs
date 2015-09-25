@@ -17,12 +17,26 @@ using System.Reflection;
 
 namespace ServiceStack.Text.Controller
 {
+	/// <summary>
+	/// Class CommandProcessor.
+	/// </summary>
 	public class CommandProcessor 
 	{
+		/// <summary>
+		/// Gets or sets the controllers.
+		/// </summary>
+		/// <value>The controllers.</value>
 		private object[] Controllers { get; set; }
 
+		/// <summary>
+		/// The context map
+		/// </summary>
 		private readonly Dictionary<string, object> contextMap;
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="CommandProcessor"/> class.
+		/// </summary>
+		/// <param name="controllers">The controllers.</param>
 		public CommandProcessor(object[] controllers)
 		{
 			this.Controllers = controllers;
@@ -34,6 +48,15 @@ namespace ServiceStack.Text.Controller
             }
         }
 
+		/// <summary>
+		/// Invokes the specified command URI.
+		/// </summary>
+		/// <param name="commandUri">The command URI.</param>
+		/// <exception cref="System.Exception">
+		/// UnknownContext:  + controllerName
+		/// or
+		/// InvalidCommand
+		/// </exception>
 		public void Invoke(string commandUri)
 		{
 			var actionParts = commandUri.Split(new[] { "://" }, StringSplitOptions.None);
@@ -67,6 +90,12 @@ namespace ServiceStack.Text.Controller
 			}
 		}
 
+		/// <summary>
+		/// Converts the values to types.
+		/// </summary>
+		/// <param name="values">The values.</param>
+		/// <param name="types">The types.</param>
+		/// <returns>System.Object[].</returns>
 		private static object[] ConvertValuesToTypes(IList<string> values, IList<Type> types)
 		{
 			var convertedValues = new object[types.Count];

@@ -107,7 +107,13 @@ namespace XLabs.Serialization
             return (this as IStreamSerializer).DeserializeFromString<T>(data);
         }
 
-        public object Deserialize(string data, Type type)
+		/// <summary>
+		/// Deserializes string into an object.
+		/// </summary>
+		/// <param name="data">Serialized object.</param>
+		/// <param name="type">Type of object to deserialize.</param>
+		/// <returns>Object of type T.</returns>
+		public object Deserialize(string data, Type type)
         {
             return (this as IStreamSerializer).DeserializeFromString(data, type);
         }

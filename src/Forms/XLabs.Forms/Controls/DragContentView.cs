@@ -2,7 +2,10 @@
 
 namespace XLabs.Forms.Controls
 {
-    public class DragContentView : ContentView
+	/// <summary>
+	/// Class DragContentView.
+	/// </summary>
+	public class DragContentView : ContentView
     {
     }
 }

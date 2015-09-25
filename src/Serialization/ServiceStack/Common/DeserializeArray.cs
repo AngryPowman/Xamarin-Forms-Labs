@@ -18,15 +18,33 @@ using System.Threading;
 
 namespace ServiceStack.Text.Common
 {
-    internal static class DeserializeArrayWithElements<TSerializer>
+	/// <summary>
+	/// Class DeserializeArrayWithElements.
+	/// </summary>
+	/// <typeparam name="TSerializer">The type of the t serializer.</typeparam>
+	internal static class DeserializeArrayWithElements<TSerializer>
         where TSerializer : ITypeSerializer
     {
-        private static Dictionary<Type, ParseArrayOfElementsDelegate> ParseDelegateCache
+		/// <summary>
+		/// The parse delegate cache
+		/// </summary>
+		private static Dictionary<Type, ParseArrayOfElementsDelegate> ParseDelegateCache
             = new Dictionary<Type, ParseArrayOfElementsDelegate>();
 
-        private delegate object ParseArrayOfElementsDelegate(string value, ParseStringDelegate parseFn);
+		/// <summary>
+		/// Delegate ParseArrayOfElementsDelegate
+		/// </summary>
+		/// <param name="value">The value.</param>
+		/// <param name="parseFn">The parse function.</param>
+		/// <returns>System.Object.</returns>
+		private delegate object ParseArrayOfElementsDelegate(string value, ParseStringDelegate parseFn);
 
-        public static Func<string, ParseStringDelegate, object> GetParseFn(Type type)
+		/// <summary>
+		/// Gets the parse function.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns>Func&lt;System.String, ParseStringDelegate, System.Object&gt;.</returns>
+		public static Func<string, ParseStringDelegate, object> GetParseFn(Type type)
         {
             ParseArrayOfElementsDelegate parseFn;
             if (ParseDelegateCache.TryGetValue(type, out parseFn)) return parseFn.Invoke;
@@ -54,12 +72,26 @@ namespace ServiceStack.Text.Common
         }
     }
 
-    internal static class DeserializeArrayWithElements<T, TSerializer>
+	/// <summary>
+	/// Class DeserializeArrayWithElements.
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	/// <typeparam name="TSerializer">The type of the t serializer.</typeparam>
+	internal static class DeserializeArrayWithElements<T, TSerializer>
         where TSerializer : ITypeSerializer
     {
-        private static readonly ITypeSerializer Serializer = JsWriter.GetTypeSerializer<TSerializer>();
+		/// <summary>
+		/// The serializer
+		/// </summary>
+		private static readonly ITypeSerializer Serializer = JsWriter.GetTypeSerializer<TSerializer>();
 
-        public static T[] ParseGenericArray(string value, ParseStringDelegate elementParseFn)
+		/// <summary>
+		/// Parses the generic array.
+		/// </summary>
+		/// <param name="value">The value.</param>
+		/// <param name="elementParseFn">The element parse function.</param>
+		/// <returns>T[].</returns>
+		public static T[] ParseGenericArray(string value, ParseStringDelegate elementParseFn)
         {
             if ((value = DeserializeListWithElements<TSerializer>.StripList(value)) == null) return null;
             if (value == string.Empty) return new T[0];
@@ -106,12 +138,24 @@ namespace ServiceStack.Text.Common
         }
     }
 
-    internal static class DeserializeArray<TSerializer>
+	/// <summary>
+	/// Class DeserializeArray.
+	/// </summary>
+	/// <typeparam name="TSerializer">The type of the t serializer.</typeparam>
+	internal static class DeserializeArray<TSerializer>
         where TSerializer : ITypeSerializer
     {
-        private static Dictionary<Type, ParseStringDelegate> ParseDelegateCache = new Dictionary<Type, ParseStringDelegate>();
+		/// <summary>
+		/// The parse delegate cache
+		/// </summary>
+		private static Dictionary<Type, ParseStringDelegate> ParseDelegateCache = new Dictionary<Type, ParseStringDelegate>();
 
-        public static ParseStringDelegate GetParseFn(Type type)
+		/// <summary>
+		/// Gets the parse function.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns>ParseStringDelegate.</returns>
+		public static ParseStringDelegate GetParseFn(Type type)
         {
             ParseStringDelegate parseFn;
             if (ParseDelegateCache.TryGetValue(type, out parseFn)) return parseFn;
@@ -137,24 +181,47 @@ namespace ServiceStack.Text.Common
         }
     }
 
-    internal static class DeserializeArray<T, TSerializer>
+	/// <summary>
+	/// Class DeserializeArray.
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	/// <typeparam name="TSerializer">The type of the t serializer.</typeparam>
+	internal static class DeserializeArray<T, TSerializer>
         where TSerializer : ITypeSerializer
     {
-        private static readonly ITypeSerializer Serializer = JsWriter.GetTypeSerializer<TSerializer>();
+		/// <summary>
+		/// The serializer
+		/// </summary>
+		private static readonly ITypeSerializer Serializer = JsWriter.GetTypeSerializer<TSerializer>();
 
-        private static readonly ParseStringDelegate CacheFn;
+		/// <summary>
+		/// The cache function
+		/// </summary>
+		private static readonly ParseStringDelegate CacheFn;
 
-        static DeserializeArray()
+		/// <summary>
+		/// Initializes static members of the <see cref="DeserializeArray{T, TSerializer}"/> class.
+		/// </summary>
+		static DeserializeArray()
         {
             CacheFn = GetParseFn();
         }
 
-        public static ParseStringDelegate Parse
+		/// <summary>
+		/// Gets the parse.
+		/// </summary>
+		/// <value>The parse.</value>
+		public static ParseStringDelegate Parse
         {
             get { return CacheFn; }
         }
 
-        public static ParseStringDelegate GetParseFn()
+		/// <summary>
+		/// Gets the parse function.
+		/// </summary>
+		/// <returns>ParseStringDelegate.</returns>
+		/// <exception cref="System.ArgumentException"></exception>
+		public static ParseStringDelegate GetParseFn()
         {
             var type = typeof(T);
             if (!type.IsArray)
@@ -175,7 +242,12 @@ namespace ServiceStack.Text.Common
             return null;
         }
 
-        public static string[] ParseStringArray(string value)
+		/// <summary>
+		/// Parses the string array.
+		/// </summary>
+		/// <param name="value">The value.</param>
+		/// <returns>System.String[].</returns>
+		public static string[] ParseStringArray(string value)
         {
             if ((value = DeserializeListWithElements<TSerializer>.StripList(value)) == null) return null;
             return value == string.Empty
@@ -183,7 +255,12 @@ namespace ServiceStack.Text.Common
                     : DeserializeListWithElements<TSerializer>.ParseStringList(value).ToArray();
         }
 
-        public static byte[] ParseByteArray(string value)
+		/// <summary>
+		/// Parses the byte array.
+		/// </summary>
+		/// <param name="value">The value.</param>
+		/// <returns>System.Byte[].</returns>
+		public static byte[] ParseByteArray(string value)
         {
             if ((value = DeserializeListWithElements<TSerializer>.StripList(value)) == null) return null;
             if ((value = Serializer.UnescapeSafeString(value)) == null) return null;

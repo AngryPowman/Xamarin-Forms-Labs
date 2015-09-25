@@ -211,16 +211,18 @@ namespace XLabs.Forms.Controls
             targetButton.ImageEdgeInsets = imageInsets;
         }
 
-        /// <summary>
-        /// Loads an image from a bundle given the supplied image name, resizes it to the
-        /// height and width request and sets it into a <see cref="UIButton"/>.
-        /// </summary>
-        /// <param name="source">The <see cref="ImageSource"/> to load the image from.</param>
-        /// <param name="widthRequest">The requested image width.</param>
-        /// <param name="heightRequest">The requested image height.</param>
-        /// <param name="targetButton">A <see cref="UIButton"/> to set the image into.</param>
-        /// <returns>A <see cref="Task"/> for the awaited operation.</returns>
-        private async static Task SetImageAsync(ImageSource source, int widthRequest, int heightRequest, UIButton targetButton, UIControlState state = UIControlState.Normal, UIColor tintColor = null)
+		/// <summary>
+		/// Loads an image from a bundle given the supplied image name, resizes it to the
+		/// height and width request and sets it into a <see cref="UIButton" />.
+		/// </summary>
+		/// <param name="source">The <see cref="ImageSource" /> to load the image from.</param>
+		/// <param name="widthRequest">The requested image width.</param>
+		/// <param name="heightRequest">The requested image height.</param>
+		/// <param name="targetButton">A <see cref="UIButton" /> to set the image into.</param>
+		/// <param name="state">The state.</param>
+		/// <param name="tintColor">Color of the tint.</param>
+		/// <returns>A <see cref="Task" /> for the awaited operation.</returns>
+		private async static Task SetImageAsync(ImageSource source, int widthRequest, int heightRequest, UIButton targetButton, UIControlState state = UIControlState.Normal, UIColor tintColor = null)
         {
             var handler = GetHandler(source);
             using (UIImage image = await handler.LoadImageAsync(source))
@@ -241,7 +243,10 @@ namespace XLabs.Forms.Controls
             }
         }
 
-        public override void LayoutSubviews()
+		/// <summary>
+		/// Layouts the subviews.
+		/// </summary>
+		public override void LayoutSubviews()
         {
             base.LayoutSubviews();
             if (ImageButton.Orientation == ImageOrientation.ImageToRight)

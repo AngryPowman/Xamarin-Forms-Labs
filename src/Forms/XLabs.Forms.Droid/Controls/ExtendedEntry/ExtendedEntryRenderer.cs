@@ -5,27 +5,24 @@ using XLabs.Forms.Controls;
 namespace XLabs.Forms.Controls
 {
     using System;
-
+    using System.ComponentModel;
+    using Android.Graphics;
+    using Android.Text;
+    using Android.Text.Method;
+    using Android.Util;
     using Android.Views;
-
+    using Extensions;
     using Xamarin.Forms;
     using Xamarin.Forms.Platform.Android;
-
-    using Extensions;
-    using Android.Text;
+    using Color = Xamarin.Forms.Color;
 
     /// <summary>
     /// Class ExtendedEntryRenderer.
     /// </summary>
     public class ExtendedEntryRenderer : EntryRenderer
     {
-        /// <summary>
-        /// The mi n_ distance
-        /// </summary>
         private const int MinDistance = 10;
-        /// <summary>
-        /// The _down x
-        /// </summary>
+
         private float downX, downY, upX, upY;
 
         /// <summary>
@@ -37,6 +34,12 @@ namespace XLabs.Forms.Controls
             base.OnElementChanged(e);
 
             var view = (ExtendedEntry)Element;
+            
+            if (Control != null && e.NewElement != null && e.NewElement.IsPassword)
+            {
+                Control.SetTypeface(Typeface.Default, TypefaceStyle.Normal);
+                Control.TransformationMethod = new PasswordTransformationMethod();
+            }
 
             SetFont(view);
             SetTextAlignment(view);
@@ -97,7 +100,7 @@ namespace XLabs.Forms.Controls
                         }
                         else 
                         {
-                            Android.Util.Log.Info("ExtendedEntry", "Horizontal Swipe was only " + Math.Abs(deltaX) + " long, need at least " + MinDistance);
+                            Log.Info("ExtendedEntry", "Horizontal Swipe was only " + Math.Abs(deltaX) + " long, need at least " + MinDistance);
                             return; // We don't consume the event
                         }
                     }
@@ -124,7 +127,7 @@ namespace XLabs.Forms.Controls
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="System.ComponentModel.PropertyChangedEventArgs"/> instance containing the event data.</param>
-        protected override void OnElementPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             var view = (ExtendedEntry)Element;
 
@@ -136,19 +139,21 @@ namespace XLabs.Forms.Controls
             {
                 SetTextAlignment(view);
             }
-            //else if (e.PropertyName == ExtendedEntry.HasBorderProperty.PropertyName)
-            //    SetBorder(view);
+            else if (e.PropertyName == ExtendedEntry.HasBorderProperty.PropertyName)
+            {
+                //return;   
+            }
             else if (e.PropertyName == ExtendedEntry.PlaceholderTextColorProperty.PropertyName)
             {
                 SetPlaceholderTextColor(view);
             }
-            else if (e.PropertyName == VisualElement.BackgroundColorProperty.PropertyName)
-            {
-                this.Control.SetBackgroundColor(view.BackgroundColor.ToAndroid());
-            }
             else
             {
                 base.OnElementPropertyChanged(sender, e);
+                if (e.PropertyName == VisualElement.BackgroundColorProperty.PropertyName)
+                {
+                    this.Control.SetBackgroundColor(view.BackgroundColor.ToAndroid());
+                }
             }
         }
 

@@ -30,7 +30,11 @@ namespace XLabs.Serialization.JsonNET
         {
         }
 
-        public JsonSerializer(JsonSerializerSettings settings)
+		/// <summary>
+		/// Initializes a new instance of the <see cref="JsonSerializer"/> class.
+		/// </summary>
+		/// <param name="settings">The settings.</param>
+		public JsonSerializer(JsonSerializerSettings settings)
         {
             this.Settings = settings;
         }
@@ -53,7 +57,11 @@ namespace XLabs.Serialization.JsonNET
                 };
         }
 
-        public JsonSerializerSettings Settings
+		/// <summary>
+		/// Gets or sets the settings.
+		/// </summary>
+		/// <value>The settings.</value>
+		public JsonSerializerSettings Settings
         {
             get;
             set;
@@ -100,7 +108,13 @@ namespace XLabs.Serialization.JsonNET
             return JsonConvert.DeserializeObject<T>(data, this.Settings);
         }
 
-        public override object Deserialize(string data, Type type)
+		/// <summary>
+		/// Deserializes the specified data.
+		/// </summary>
+		/// <param name="data">The data.</param>
+		/// <param name="type">The type.</param>
+		/// <returns>System.Object.</returns>
+		public override object Deserialize(string data, Type type)
         {
             return JsonConvert.DeserializeObject(data, type, this.Settings);
         }

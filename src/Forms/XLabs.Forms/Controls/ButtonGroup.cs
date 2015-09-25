@@ -16,13 +16,15 @@ namespace XLabs.Forms.Controls
 		/// The view background color property
 		/// </summary>
 		public static readonly BindableProperty ViewBackgroundColorProperty = BindableProperty.Create("ViewBackgroundColor", typeof(Color), typeof(ButtonGroup), Color.Default);
-		/// <summary>
-		/// The background color property
-		/// </summary>
+#pragma warning disable CS0108 // Member hides inherited member; missing new keyword
+							  /// <summary>
+							  /// The background color property
+							  /// </summary>
 		public static readonly BindableProperty BackgroundColorProperty = BindableProperty.Create("BackgroundColor", typeof(Color), typeof(ButtonGroup), Color.Default);
-		/// <summary>
-		/// The selected background color property
-		/// </summary>
+#pragma warning restore CS0108 // Member hides inherited member; missing new keyword
+							  /// <summary>
+							  /// The selected background color property
+							  /// </summary>
 		public static readonly BindableProperty SelectedBackgroundColorProperty = BindableProperty.Create("SelectedBackgroundColor", typeof(Color), typeof(ButtonGroup), Color.Default);
 		/// <summary>
 		/// The text color property
@@ -142,12 +144,14 @@ namespace XLabs.Forms.Controls
 			}
 		}
 
+#pragma warning disable CS0108 // Member hides inherited member; missing new keyword
 		/// <summary>
 		/// Gets or sets the color which will fill the background of a VisualElement. This is a bindable property.
 		/// </summary>
 		/// <value>The color that is used to fill the background of a VisualElement. The default is <see cref="P:Xamarin.Forms.Color.Default" />.</value>
 		/// <remarks>To be added.</remarks>
 		public Color BackgroundColor
+#pragma warning restore CS0108 // Member hides inherited member; missing new keyword
 		{
 			get { return (Color)GetValue(BackgroundColorProperty); }
 			set

@@ -3,7 +3,6 @@ namespace XLabs.Forms.Controls
     using System.ComponentModel;
     using CoreGraphics;
 
-    using CoreGraphics;
     using Foundation;
     using UIKit;
 

@@ -8,7 +8,10 @@ namespace XLabs.Forms.Pages
 {
     using Xamarin.Forms.Platform.WinPhone;
 
-    public class ExtendedMasterDetailRenderer : MasterDetailRenderer
+	/// <summary>
+	/// Class ExtendedMasterDetailRenderer.
+	/// </summary>
+	public class ExtendedMasterDetailRenderer : MasterDetailRenderer
     {
     }
 }

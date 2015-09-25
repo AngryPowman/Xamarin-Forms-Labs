@@ -131,7 +131,7 @@ namespace XLabs.Forms.Controls
         /// <param name="rect">The rect.</param>
         public override void Draw(CGRect rect)
         {
-            UIImage img = null;
+          //UIImage img = null;
             var color = _mv.StyleDescriptor.InactiveDateForegroundColor;
             BackgroundColor = _mv.StyleDescriptor.InactiveDateBackgroundColor;
             var backgroundStyle = CalendarView.BackgroundStyle.Fill;

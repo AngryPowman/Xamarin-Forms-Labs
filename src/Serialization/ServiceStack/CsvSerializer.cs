@@ -1,3 +1,9 @@
+// ***********************************************************************
+// <copyright file="CsvSerializer.cs" company="XLabs">
+//     Copyright © ServiceStack 2013 & XLabs
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
 using System;
 using System.Linq;
 using System.Collections.Generic;
@@ -12,13 +18,27 @@ using ServiceStack.Text.Reflection;
 
 namespace ServiceStack.Text
 {
-    public class CsvSerializer
+	/// <summary>
+	/// Class CsvSerializer.
+	/// </summary>
+	public class CsvSerializer
     {
-        private static readonly UTF8Encoding UTF8EncodingWithoutBom = new UTF8Encoding(false);
+		/// <summary>
+		/// The ut f8 encoding without bom
+		/// </summary>
+		private static readonly UTF8Encoding UTF8EncodingWithoutBom = new UTF8Encoding(false);
 
-        private static Dictionary<Type, WriteObjectDelegate> WriteFnCache = new Dictionary<Type, WriteObjectDelegate>();
+		/// <summary>
+		/// The write function cache
+		/// </summary>
+		private static Dictionary<Type, WriteObjectDelegate> WriteFnCache = new Dictionary<Type, WriteObjectDelegate>();
 
-        internal static WriteObjectDelegate GetWriteFn(Type type)
+		/// <summary>
+		/// Gets the write function.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns>WriteObjectDelegate.</returns>
+		internal static WriteObjectDelegate GetWriteFn(Type type)
         {
             try
             {
@@ -51,7 +71,13 @@ namespace ServiceStack.Text
             }
         }
 
-        public static string SerializeToCsv<T>(IEnumerable<T> records)
+		/// <summary>
+		/// Serializes to CSV.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="records">The records.</param>
+		/// <returns>System.String.</returns>
+		public static string SerializeToCsv<T>(IEnumerable<T> records)
         {
             var sb = new StringBuilder();
             using (var writer = new StringWriter(sb, CultureInfo.InvariantCulture))
@@ -61,7 +87,13 @@ namespace ServiceStack.Text
             }
         }
 
-        public static string SerializeToString<T>(T value)
+		/// <summary>
+		/// Serializes to string.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="value">The value.</param>
+		/// <returns>System.String.</returns>
+		public static string SerializeToString<T>(T value)
         {
             if (value == null) return null;
             if (typeof(T) == typeof(string)) return value as string;
@@ -74,7 +106,13 @@ namespace ServiceStack.Text
             return sb.ToString();
         }
 
-        public static void SerializeToWriter<T>(T value, TextWriter writer)
+		/// <summary>
+		/// Serializes to writer.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="value">The value.</param>
+		/// <param name="writer">The writer.</param>
+		public static void SerializeToWriter<T>(T value, TextWriter writer)
         {
             if (value == null) return;
             if (typeof(T) == typeof(string))
@@ -85,7 +123,13 @@ namespace ServiceStack.Text
             CsvSerializer<T>.WriteObject(writer, value);
         }
 
-        public static void SerializeToStream<T>(T value, Stream stream)
+		/// <summary>
+		/// Serializes to stream.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="value">The value.</param>
+		/// <param name="stream">The stream.</param>
+		public static void SerializeToStream<T>(T value, Stream stream)
         {
             if (value == null) return;
             var writer = new StreamWriter(stream, UTF8EncodingWithoutBom);
@@ -93,7 +137,12 @@ namespace ServiceStack.Text
             writer.Flush();
         }
 
-        public static void SerializeToStream(object obj, Stream stream)
+		/// <summary>
+		/// Serializes to stream.
+		/// </summary>
+		/// <param name="obj">The object.</param>
+		/// <param name="stream">The stream.</param>
+		public static void SerializeToStream(object obj, Stream stream)
         {
             if (obj == null) return;
             var writer = new StreamWriter(stream, UTF8EncodingWithoutBom);
@@ -102,17 +151,36 @@ namespace ServiceStack.Text
             writer.Flush();
         }
 
-        public static T DeserializeFromStream<T>(Stream stream)
+		/// <summary>
+		/// Deserializes from stream.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="stream">The stream.</param>
+		/// <returns>T.</returns>
+		/// <exception cref="System.NotImplementedException"></exception>
+		public static T DeserializeFromStream<T>(Stream stream)
         {
             throw new NotImplementedException();
         }
 
-        public static object DeserializeFromStream(Type type, Stream stream)
+		/// <summary>
+		/// Deserializes from stream.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <param name="stream">The stream.</param>
+		/// <returns>System.Object.</returns>
+		/// <exception cref="System.NotImplementedException"></exception>
+		public static object DeserializeFromStream(Type type, Stream stream)
         {
             throw new NotImplementedException();
         }
 
-        public static void WriteLateBoundObject(TextWriter writer, object value)
+		/// <summary>
+		/// Writes the late bound object.
+		/// </summary>
+		/// <param name="writer">The writer.</param>
+		/// <param name="value">The value.</param>
+		public static void WriteLateBoundObject(TextWriter writer, object value)
         {
             if (value == null) return;
             var writeFn = GetWriteFn(value.GetType());
@@ -120,21 +188,45 @@ namespace ServiceStack.Text
         }
     }
 
-    internal static class CsvSerializer<T>
+	/// <summary>
+	/// Class CsvSerializer.
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	internal static class CsvSerializer<T>
     {
-        private static readonly WriteObjectDelegate CacheFn;
+		/// <summary>
+		/// The cache function
+		/// </summary>
+		private static readonly WriteObjectDelegate CacheFn;
 
-        public static WriteObjectDelegate WriteFn()
+		/// <summary>
+		/// Writes the function.
+		/// </summary>
+		/// <returns>WriteObjectDelegate.</returns>
+		public static WriteObjectDelegate WriteFn()
         {
             return CacheFn;
         }
 
-        private const string IgnoreResponseStatus = "ResponseStatus";
+		/// <summary>
+		/// The ignore response status
+		/// </summary>
+		private const string IgnoreResponseStatus = "ResponseStatus";
 
-        private static Func<object, object> valueGetter = null;
-        private static WriteObjectDelegate writeElementFn = null;
+		/// <summary>
+		/// The value getter
+		/// </summary>
+		private static Func<object, object> valueGetter = null;
+		/// <summary>
+		/// The write element function
+		/// </summary>
+		private static WriteObjectDelegate writeElementFn = null;
 
-        private static WriteObjectDelegate GetWriteFn()
+		/// <summary>
+		/// Gets the write function.
+		/// </summary>
+		/// <returns>WriteObjectDelegate.</returns>
+		private static WriteObjectDelegate GetWriteFn()
         {
             PropertyInfo firstCandidate = null;
             Type bestCandidateEnumerableType = null;
@@ -208,17 +300,33 @@ namespace ServiceStack.Text
             return WriteNonEnumerableType;
         }
 
-        private static WriteObjectDelegate CreateWriteFn(Type elementType)
+		/// <summary>
+		/// Creates the write function.
+		/// </summary>
+		/// <param name="elementType">Type of the element.</param>
+		/// <returns>WriteObjectDelegate.</returns>
+		private static WriteObjectDelegate CreateWriteFn(Type elementType)
         {
             return CreateCsvWriterFn(elementType, "WriteObject");
         }
 
-        private static WriteObjectDelegate CreateWriteRowFn(Type elementType)
+		/// <summary>
+		/// Creates the write row function.
+		/// </summary>
+		/// <param name="elementType">Type of the element.</param>
+		/// <returns>WriteObjectDelegate.</returns>
+		private static WriteObjectDelegate CreateWriteRowFn(Type elementType)
         {
             return CreateCsvWriterFn(elementType, "WriteObjectRow");
         }
 
-        private static WriteObjectDelegate CreateCsvWriterFn(Type elementType, string methodName)
+		/// <summary>
+		/// Creates the CSV writer function.
+		/// </summary>
+		/// <param name="elementType">Type of the element.</param>
+		/// <param name="methodName">Name of the method.</param>
+		/// <returns>WriteObjectDelegate.</returns>
+		private static WriteObjectDelegate CreateCsvWriterFn(Type elementType, string methodName)
         {
             var genericType = typeof(CsvWriter<>).MakeGenericType(elementType);
             var mi = genericType.GetPublicStaticMethod(methodName);
@@ -226,17 +334,32 @@ namespace ServiceStack.Text
             return writeFn;
         }
 
-        public static void WriteEnumerableType(TextWriter writer, object obj)
+		/// <summary>
+		/// Writes the type of the enumerable.
+		/// </summary>
+		/// <param name="writer">The writer.</param>
+		/// <param name="obj">The object.</param>
+		public static void WriteEnumerableType(TextWriter writer, object obj)
         {
             writeElementFn(writer, obj);
         }
 
-        public static void WriteSelf(TextWriter writer, object obj)
+		/// <summary>
+		/// Writes the self.
+		/// </summary>
+		/// <param name="writer">The writer.</param>
+		/// <param name="obj">The object.</param>
+		public static void WriteSelf(TextWriter writer, object obj)
         {
             CsvWriter<T>.WriteRow(writer, (T)obj);
         }
 
-        public static void WriteEnumerableProperty(TextWriter writer, object obj)
+		/// <summary>
+		/// Writes the enumerable property.
+		/// </summary>
+		/// <param name="writer">The writer.</param>
+		/// <param name="obj">The object.</param>
+		public static void WriteEnumerableProperty(TextWriter writer, object obj)
         {
             if (obj == null) return; //AOT
 
@@ -244,13 +367,21 @@ namespace ServiceStack.Text
             writeElementFn(writer, enumerableProperty);
         }
 
-        public static void WriteNonEnumerableType(TextWriter writer, object obj)
+		/// <summary>
+		/// Writes the type of the non enumerable.
+		/// </summary>
+		/// <param name="writer">The writer.</param>
+		/// <param name="obj">The object.</param>
+		public static void WriteNonEnumerableType(TextWriter writer, object obj)
         {
             var nonEnumerableType = valueGetter(obj);
             writeElementFn(writer, nonEnumerableType);
         }
 
-        static CsvSerializer()
+		/// <summary>
+		/// Initializes static members of the <see cref="CsvSerializer{T}"/> class.
+		/// </summary>
+		static CsvSerializer()
         {
             if (typeof(T) == typeof(object))
             {
@@ -262,7 +393,12 @@ namespace ServiceStack.Text
             }
         }
 
-        public static void WriteObject(TextWriter writer, object value)
+		/// <summary>
+		/// Writes the object.
+		/// </summary>
+		/// <param name="writer">The writer.</param>
+		/// <param name="value">The value.</param>
+		public static void WriteObject(TextWriter writer, object value)
         {
             CacheFn(writer, value);
         }

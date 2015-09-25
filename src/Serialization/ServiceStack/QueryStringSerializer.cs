@@ -24,12 +24,26 @@ using ServiceStack.Text.Jsv;
 
 namespace ServiceStack.Text
 {
+	/// <summary>
+	/// Class QueryStringSerializer.
+	/// </summary>
 	public static class QueryStringSerializer
 	{
+		/// <summary>
+		/// The instance
+		/// </summary>
 		internal static readonly JsWriter<JsvTypeSerializer> Instance = new JsWriter<JsvTypeSerializer>();
 
+		/// <summary>
+		/// The write function cache
+		/// </summary>
 		private static Dictionary<Type, WriteObjectDelegate> WriteFnCache = new Dictionary<Type, WriteObjectDelegate>();
 
+		/// <summary>
+		/// Gets the write function.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns>WriteObjectDelegate.</returns>
 		internal static WriteObjectDelegate GetWriteFn(Type type)
 		{
 			try
@@ -56,12 +70,17 @@ namespace ServiceStack.Text
                 
                 return writeFn;
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
 				throw;
 			}
 		}
 
+		/// <summary>
+		/// Writes the late bound object.
+		/// </summary>
+		/// <param name="writer">The writer.</param>
+		/// <param name="value">The value.</param>
 		public static void WriteLateBoundObject(TextWriter writer, object value)
 		{
 			if (value == null) return;
@@ -69,11 +88,22 @@ namespace ServiceStack.Text
 			writeFn(writer, value);
 		}
 
+		/// <summary>
+		/// Gets the value type to string method.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns>WriteObjectDelegate.</returns>
 		internal static WriteObjectDelegate GetValueTypeToStringMethod(Type type)
 		{
 			return Instance.GetValueTypeToStringMethod(type);
 		}
 
+		/// <summary>
+		/// Serializes to string.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="value">The value.</param>
+		/// <returns>System.String.</returns>
 		public static string SerializeToString<T>(T value)
 		{
 			var sb = new StringBuilder();
@@ -91,13 +121,23 @@ namespace ServiceStack.Text
 	/// <typeparam name="T"></typeparam>
 	public static class QueryStringWriter<T>
 	{
+		/// <summary>
+		/// The cache function
+		/// </summary>
 		private static readonly WriteObjectDelegate CacheFn;
 
-	    public static WriteObjectDelegate WriteFn()
+		/// <summary>
+		/// Writes the function.
+		/// </summary>
+		/// <returns>WriteObjectDelegate.</returns>
+		public static WriteObjectDelegate WriteFn()
 		{
 			return CacheFn;
 		}
 
+		/// <summary>
+		/// Initializes static members of the <see cref="QueryStringWriter{T}"/> class.
+		/// </summary>
 		static QueryStringWriter()
 		{
 			if (typeof(T) == typeof(object))
@@ -129,14 +169,27 @@ namespace ServiceStack.Text
 			}
 		}
 
+		/// <summary>
+		/// Writes the object.
+		/// </summary>
+		/// <param name="writer">The writer.</param>
+		/// <param name="value">The value.</param>
 		public static void WriteObject(TextWriter writer, object value)
 		{
 			if (writer == null) return;
 			CacheFn(writer, value);
 		}
 
-        private static readonly ITypeSerializer Serializer = JsvTypeSerializer.Instance;        
-        public static void WriteIDictionary(TextWriter writer, object oMap)
+		/// <summary>
+		/// The serializer
+		/// </summary>
+		private static readonly ITypeSerializer Serializer = JsvTypeSerializer.Instance;
+		/// <summary>
+		/// Writes the i dictionary.
+		/// </summary>
+		/// <param name="writer">The writer.</param>
+		/// <param name="oMap">The o map.</param>
+		public static void WriteIDictionary(TextWriter writer, object oMap)
         {
             WriteObjectDelegate writeKeyFn = null;
             WriteObjectDelegate writeValueFn = null;

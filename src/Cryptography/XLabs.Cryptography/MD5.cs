@@ -1,4 +1,17 @@
-﻿/****************************************************************************
+﻿// ***********************************************************************
+// Assembly         : XLabs.Cryptography
+// Author           : rmarinho
+// Created          : 09-08-2015
+//
+// Last Modified By : rmarinho
+// Last Modified On : 09-08-2015
+// ***********************************************************************
+// <copyright file="MD5.cs" company="XLabs Team">
+//     Copyright ©  2014
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
+/****************************************************************************
 	 Copyright 2002-2005 GL Conseil/Flow Group SAS.  All rights reserved.
 
 	Permission is granted to anyone to use this software for any purpose on
@@ -48,11 +61,17 @@ namespace XLabs.Cryptography
     using System.IO;
     using System.Text;
 
-    /// <summary>
+	/// <summary>
 	/// Summary description for MD5.
 	/// </summary>
 	public class MD5 : IDisposable
 	{
+		/// <summary>
+		/// Creates the specified hash name.
+		/// </summary>
+		/// <param name="hashName">Name of the hash.</param>
+		/// <returns>MD5.</returns>
+		/// <exception cref="System.NotSupportedException"></exception>
 		static public MD5 Create(string hashName)
 		{
 			if (hashName == "MD5")
@@ -61,6 +80,11 @@ namespace XLabs.Cryptography
 				throw new NotSupportedException();
 		}
 
+		/// <summary>
+		/// Gets the MD5 string.
+		/// </summary>
+		/// <param name="source">The source.</param>
+		/// <returns>System.String.</returns>
 		static public string GetMd5String(String source)
 		{
 			var md = Create();
@@ -71,6 +95,10 @@ namespace XLabs.Cryptography
 			return sb.ToString();
 		}
 
+		/// <summary>
+		/// Creates this instance.
+		/// </summary>
+		/// <returns>MD5.</returns>
 		static public MD5 Create()
 		{
 			return new MD5();
@@ -78,22 +106,73 @@ namespace XLabs.Cryptography
 
 		#region base implementation of the MD5
 		#region constants
+		/// <summary>
+		/// The S11
+		/// </summary>
 		private const byte S11 = 7;
+		/// <summary>
+		/// The S12
+		/// </summary>
 		private const byte S12 = 12;
+		/// <summary>
+		/// The S13
+		/// </summary>
 		private const byte S13 = 17;
+		/// <summary>
+		/// The S14
+		/// </summary>
 		private const byte S14 = 22;
+		/// <summary>
+		/// The S21
+		/// </summary>
 		private const byte S21 = 5;
+		/// <summary>
+		/// The S22
+		/// </summary>
 		private const byte S22 = 9;
+		/// <summary>
+		/// The S23
+		/// </summary>
 		private const byte S23 = 14;
+		/// <summary>
+		/// The S24
+		/// </summary>
 		private const byte S24 = 20;
+		/// <summary>
+		/// The S31
+		/// </summary>
 		private const byte S31 = 4;
+		/// <summary>
+		/// The S32
+		/// </summary>
 		private const byte S32 = 11;
+		/// <summary>
+		/// The S33
+		/// </summary>
 		private const byte S33 = 16;
+		/// <summary>
+		/// The S34
+		/// </summary>
 		private const byte S34 = 23;
+		/// <summary>
+		/// The S41
+		/// </summary>
 		private const byte S41 = 6;
+		/// <summary>
+		/// The S42
+		/// </summary>
 		private const byte S42 = 10;
+		/// <summary>
+		/// The S43
+		/// </summary>
 		private const byte S43 = 15;
+		/// <summary>
+		/// The S44
+		/// </summary>
 		private const byte S44 = 21;
+		/// <summary>
+		/// The padding
+		/// </summary>
 		static private readonly byte[] Padding = {
 			0x80, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 			0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -102,18 +181,46 @@ namespace XLabs.Cryptography
 		#endregion
 
 		#region F, G, H and I are basic MD5 functions.
+		/// <summary>
+		/// fs the specified x.
+		/// </summary>
+		/// <param name="x">The x.</param>
+		/// <param name="y">The y.</param>
+		/// <param name="z">The z.</param>
+		/// <returns>System.UInt32.</returns>
 		static private uint F(uint x, uint y, uint z)
 		{
 			return (((x) & (y)) | ((~x) & (z)));
 		}
+		/// <summary>
+		/// gs the specified x.
+		/// </summary>
+		/// <param name="x">The x.</param>
+		/// <param name="y">The y.</param>
+		/// <param name="z">The z.</param>
+		/// <returns>System.UInt32.</returns>
 		static private uint G(uint x, uint y, uint z)
 		{
 			return (((x) & (z)) | ((y) & (~z)));
 		}
+		/// <summary>
+		/// hes the specified x.
+		/// </summary>
+		/// <param name="x">The x.</param>
+		/// <param name="y">The y.</param>
+		/// <param name="z">The z.</param>
+		/// <returns>System.UInt32.</returns>
 		static private uint H(uint x, uint y, uint z)
 		{
 			return ((x) ^ (y) ^ (z));
 		}
+		/// <summary>
+		/// is the specified x.
+		/// </summary>
+		/// <param name="x">The x.</param>
+		/// <param name="y">The y.</param>
+		/// <param name="z">The z.</param>
+		/// <returns>System.UInt32.</returns>
 		static private uint I(uint x, uint y, uint z)
 		{
 			return ((y) ^ ((x) | (~z)));
@@ -124,9 +231,9 @@ namespace XLabs.Cryptography
 		/// <summary>
 		/// rotates x left n bits.
 		/// </summary>
-		/// <param name="x"></param>
-		/// <param name="n"></param>
-		/// <returns></returns>
+		/// <param name="x">The x.</param>
+		/// <param name="n">The n.</param>
+		/// <returns>System.UInt32.</returns>
 		static private uint ROTATE_LEFT(uint x, byte n)
 		{
 			return (((x) << (n)) | ((x) >> (32 - (n))));
@@ -134,7 +241,17 @@ namespace XLabs.Cryptography
 		#endregion
 
 		#region FF, GG, HH, and II transformations
-		/// FF, GG, HH, and II transformations 
+		/// <summary>
+		/// Ffs the specified a.
+		/// </summary>
+		/// <param name="a">a.</param>
+		/// <param name="b">The b.</param>
+		/// <param name="c">The c.</param>
+		/// <param name="d">The d.</param>
+		/// <param name="x">The x.</param>
+		/// <param name="s">The s.</param>
+		/// <param name="ac">The ac.</param>
+		/// FF, GG, HH, and II transformations
 		/// for rounds 1, 2, 3, and 4.
 		/// Rotation is separate from addition to prevent recomputation.
 		static private void FF(ref uint a, uint b, uint c, uint d, uint x, byte s, uint ac)
@@ -143,18 +260,48 @@ namespace XLabs.Cryptography
 			(a) = ROTATE_LEFT((a), (s));
 			(a) += (b);
 		}
+		/// <summary>
+		/// Ggs the specified a.
+		/// </summary>
+		/// <param name="a">a.</param>
+		/// <param name="b">The b.</param>
+		/// <param name="c">The c.</param>
+		/// <param name="d">The d.</param>
+		/// <param name="x">The x.</param>
+		/// <param name="s">The s.</param>
+		/// <param name="ac">The ac.</param>
 		static private void GG(ref uint a, uint b, uint c, uint d, uint x, byte s, uint ac)
 		{
 			(a) += G((b), (c), (d)) + (x) + (uint)(ac);
 			(a) = ROTATE_LEFT((a), (s));
 			(a) += (b);
 		}
+		/// <summary>
+		/// Hhes the specified a.
+		/// </summary>
+		/// <param name="a">a.</param>
+		/// <param name="b">The b.</param>
+		/// <param name="c">The c.</param>
+		/// <param name="d">The d.</param>
+		/// <param name="x">The x.</param>
+		/// <param name="s">The s.</param>
+		/// <param name="ac">The ac.</param>
 		static private void HH(ref uint a, uint b, uint c, uint d, uint x, byte s, uint ac)
 		{
 			(a) += H((b), (c), (d)) + (x) + (uint)(ac);
 			(a) = ROTATE_LEFT((a), (s));
 			(a) += (b);
 		}
+		/// <summary>
+		/// Iis the specified a.
+		/// </summary>
+		/// <param name="a">a.</param>
+		/// <param name="b">The b.</param>
+		/// <param name="c">The c.</param>
+		/// <param name="d">The d.</param>
+		/// <param name="x">The x.</param>
+		/// <param name="s">The s.</param>
+		/// <param name="ac">The ac.</param>
 		static private void II(ref uint a, uint b, uint c, uint d, uint x, byte s, uint ac)
 		{
 			(a) += I((b), (c), (d)) + (x) + (uint)(ac);
@@ -180,6 +327,9 @@ namespace XLabs.Cryptography
 		readonly byte[] buffer = new byte[64];
 		#endregion
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="MD5"/> class.
+		/// </summary>
 		internal MD5()
 		{
 			Initialize();
@@ -188,9 +338,7 @@ namespace XLabs.Cryptography
 		/// <summary>
 		/// MD5 initialization. Begins an MD5 operation, writing a new context.
 		/// </summary>
-		/// <remarks>
-		/// The RFC named it "MD5Init"
-		/// </remarks>
+		/// <remarks>The RFC named it "MD5Init"</remarks>
 		public virtual void Initialize()
 		{
 			this.count[0] = this.count[1] = 0;
@@ -207,9 +355,9 @@ namespace XLabs.Cryptography
 		/// operation, processing another message block, and updating the
 		/// context.
 		/// </summary>
-		/// <param name="input"></param>
-		/// <param name="offset"></param>
-		/// <param name="count"></param>
+		/// <param name="input">The input.</param>
+		/// <param name="offset">The offset.</param>
+		/// <param name="count">The count.</param>
 		/// <remarks>The RFC Named it MD5Update</remarks>
 		protected virtual void HashCore(byte[] input, int offset, int count)
 		{
@@ -287,8 +435,8 @@ namespace XLabs.Cryptography
 		/// <summary>
 		/// MD5 basic transformation. Transforms state based on 64 bytes block.
 		/// </summary>
-		/// <param name="block"></param>
-		/// <param name="offset"></param>
+		/// <param name="block">The block.</param>
+		/// <param name="offset">The offset.</param>
 		private void Transform(byte[] block, int offset)
 		{
 			uint a = this.state[0], b = this.state[1], c = this.state[2], d = this.state[3];
@@ -379,13 +527,13 @@ namespace XLabs.Cryptography
 
 		/// <summary>
 		/// Encodes input (uint) into output (byte). Assumes len is
-		///  multiple of 4.
+		/// multiple of 4.
 		/// </summary>
-		/// <param name="output"></param>
-		/// <param name="outputOffset"></param>
-		/// <param name="input"></param>
-		/// <param name="inputOffset"></param>
-		/// <param name="count"></param>
+		/// <param name="output">The output.</param>
+		/// <param name="outputOffset">The output offset.</param>
+		/// <param name="input">The input.</param>
+		/// <param name="inputOffset">The input offset.</param>
+		/// <param name="count">The count.</param>
 		private static void Encode(byte[] output, int outputOffset, uint[] input, int inputOffset, int count)
 		{
 			int i, j;
@@ -403,11 +551,11 @@ namespace XLabs.Cryptography
 		/// Decodes input (byte) into output (uint). Assumes len is
 		/// a multiple of 4.
 		/// </summary>
-		/// <param name="output"></param>
-		/// <param name="outputOffset"></param>
-		/// <param name="input"></param>
-		/// <param name="inputOffset"></param>
-		/// <param name="count"></param>
+		/// <param name="output">The output.</param>
+		/// <param name="outputOffset">The output offset.</param>
+		/// <param name="input">The input.</param>
+		/// <param name="inputOffset">The input offset.</param>
+		/// <param name="count">The count.</param>
 		static private void Decode(uint[] output, int outputOffset, byte[] input, int inputOffset, int count)
 		{
 			int i, j;
@@ -419,8 +567,18 @@ namespace XLabs.Cryptography
 
 		#region expose the same interface as the regular MD5 object
 
+		/// <summary>
+		/// The hash value
+		/// </summary>
 		protected byte[] HashValue;
+		/// <summary>
+		/// The state
+		/// </summary>
 		protected int State;
+		/// <summary>
+		/// Gets a value indicating whether this instance can reuse transform.
+		/// </summary>
+		/// <value><c>true</c> if this instance can reuse transform; otherwise, <c>false</c>.</value>
 		public virtual bool CanReuseTransform
 		{
 			get
@@ -429,6 +587,10 @@ namespace XLabs.Cryptography
 			}
 		}
 
+		/// <summary>
+		/// Gets a value indicating whether this instance can transform multiple blocks.
+		/// </summary>
+		/// <value><c>true</c> if this instance can transform multiple blocks; otherwise, <c>false</c>.</value>
 		public virtual bool CanTransformMultipleBlocks
 		{
 			get
@@ -436,6 +598,11 @@ namespace XLabs.Cryptography
 				return true;
 			}
 		}
+		/// <summary>
+		/// Gets the hash.
+		/// </summary>
+		/// <value>The hash.</value>
+		/// <exception cref="System.InvalidOperationException"></exception>
 		public virtual byte[] Hash
 		{
 			get
@@ -445,6 +612,10 @@ namespace XLabs.Cryptography
 				return (byte[])this.HashValue.Clone();
 			}
 		}
+		/// <summary>
+		/// Gets the size of the hash.
+		/// </summary>
+		/// <value>The size of the hash.</value>
 		public virtual int HashSize
 		{
 			get
@@ -452,8 +623,15 @@ namespace XLabs.Cryptography
 				return this.HashSizeValue;
 			}
 		}
+		/// <summary>
+		/// The hash size value
+		/// </summary>
 		protected int HashSizeValue = 128;
 
+		/// <summary>
+		/// Gets the size of the input block.
+		/// </summary>
+		/// <value>The size of the input block.</value>
 		public virtual int InputBlockSize
 		{
 			get
@@ -461,6 +639,10 @@ namespace XLabs.Cryptography
 				return 1;
 			}
 		}
+		/// <summary>
+		/// Gets the size of the output block.
+		/// </summary>
+		/// <value>The size of the output block.</value>
 		public virtual int OutputBlockSize
 		{
 			get
@@ -469,15 +651,30 @@ namespace XLabs.Cryptography
 			}
 		}
 
+		/// <summary>
+		/// Clears this instance.
+		/// </summary>
 		public void Clear()
 		{
 			Dispose(true);
 		}
 
+		/// <summary>
+		/// Computes the hash.
+		/// </summary>
+		/// <param name="buffer">The buffer.</param>
+		/// <returns>System.Byte[].</returns>
 		public byte[] ComputeHash(byte[] buffer)
 		{
 			return ComputeHash(buffer, 0, buffer.Length);
 		}
+		/// <summary>
+		/// Computes the hash.
+		/// </summary>
+		/// <param name="buffer">The buffer.</param>
+		/// <param name="offset">The offset.</param>
+		/// <param name="count">The count.</param>
+		/// <returns>System.Byte[].</returns>
 		public byte[] ComputeHash(byte[] buffer, int offset, int count)
 		{
 			Initialize();
@@ -486,6 +683,11 @@ namespace XLabs.Cryptography
 			return (byte[])this.HashValue.Clone();
 		}
 
+		/// <summary>
+		/// Computes the hash.
+		/// </summary>
+		/// <param name="inputStream">The input stream.</param>
+		/// <returns>System.Byte[].</returns>
 		public byte[] ComputeHash(Stream inputStream)
 		{
 			Initialize();
@@ -499,6 +701,22 @@ namespace XLabs.Cryptography
 			return (byte[])this.HashValue.Clone();
 		}
 
+		/// <summary>
+		/// Transforms the block.
+		/// </summary>
+		/// <param name="inputBuffer">The input buffer.</param>
+		/// <param name="inputOffset">The input offset.</param>
+		/// <param name="inputCount">The input count.</param>
+		/// <param name="outputBuffer">The output buffer.</param>
+		/// <param name="outputOffset">The output offset.</param>
+		/// <returns>System.Int32.</returns>
+		/// <exception cref="System.ArgumentNullException">inputBuffer</exception>
+		/// <exception cref="System.ArgumentOutOfRangeException">
+		/// inputOffset
+		/// or
+		/// inputOffset
+		/// </exception>
+		/// <exception cref="System.ArgumentException">inputCount</exception>
 		public int TransformBlock(
 			byte[] inputBuffer,
 			int inputOffset,
@@ -536,6 +754,20 @@ namespace XLabs.Cryptography
 			}
 			return inputCount;
 		}
+		/// <summary>
+		/// Transforms the final block.
+		/// </summary>
+		/// <param name="inputBuffer">The input buffer.</param>
+		/// <param name="inputOffset">The input offset.</param>
+		/// <param name="inputCount">The input count.</param>
+		/// <returns>System.Byte[].</returns>
+		/// <exception cref="System.ArgumentNullException">inputBuffer</exception>
+		/// <exception cref="System.ArgumentOutOfRangeException">
+		/// inputOffset
+		/// or
+		/// inputOffset
+		/// </exception>
+		/// <exception cref="System.ArgumentException">inputCount</exception>
 		public byte[] TransformFinalBlock(
 			byte[] inputBuffer,
 			int inputOffset,
@@ -571,11 +803,18 @@ namespace XLabs.Cryptography
 		}
 		#endregion
 
+		/// <summary>
+		/// Releases unmanaged and - optionally - managed resources.
+		/// </summary>
+		/// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
 		protected virtual void Dispose(bool disposing)
 		{
 			if (!disposing)
 				Initialize();
 		}
+		/// <summary>
+		/// Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+		/// </summary>
 		public void Dispose()
 		{
 			Dispose(true);

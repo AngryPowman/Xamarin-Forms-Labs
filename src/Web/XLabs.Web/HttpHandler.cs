@@ -1,3 +1,9 @@
+// ***********************************************************************
+// <copyright file="HttpHandler.cs" company="">
+//     Copyright (c) . All rights reserved.
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,13 +14,28 @@ using System.Threading.Tasks;
 
 namespace XLabs.Web
 {
-    public class HttpHandler : HttpClientHandler
+	/// <summary>
+	/// Class HttpHandler.
+	/// </summary>
+	public class HttpHandler : HttpClientHandler
     {
-        private const string CookieHeader = "Set-Cookie";
+		/// <summary>
+		/// The cookie header
+		/// </summary>
+		private const string CookieHeader = "Set-Cookie";
 
-        public EventHandler<EventArgs<Cookie>> CookieReceived;
+		/// <summary>
+		/// The cookie received
+		/// </summary>
+		public EventHandler<EventArgs<Cookie>> CookieReceived;
 
-        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, System.Threading.CancellationToken cancellationToken)
+		/// <summary>
+		/// send as an asynchronous operation.
+		/// </summary>
+		/// <param name="request">The request.</param>
+		/// <param name="cancellationToken">The cancellation token.</param>
+		/// <returns>Task&lt;HttpResponseMessage&gt;.</returns>
+		protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, System.Threading.CancellationToken cancellationToken)
         {
             var response = await base.SendAsync(request, cancellationToken);
 

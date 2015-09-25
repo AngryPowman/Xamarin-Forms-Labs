@@ -9,7 +9,6 @@
 //
 // Licensed under the same terms of ServiceStack: new BSD license.
 //
-
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -21,15 +20,34 @@ using ServiceStack.Text.Json;
 
 namespace ServiceStack.Text.Common
 {
-    internal static class DeserializeDictionary<TSerializer>
+	/// <summary>
+	/// Class DeserializeDictionary.
+	/// </summary>
+	/// <typeparam name="TSerializer">The type of the t serializer.</typeparam>
+	internal static class DeserializeDictionary<TSerializer>
         where TSerializer : ITypeSerializer
     {
-        private static readonly ITypeSerializer Serializer = JsWriter.GetTypeSerializer<TSerializer>();
+		/// <summary>
+		/// The serializer
+		/// </summary>
+		private static readonly ITypeSerializer Serializer = JsWriter.GetTypeSerializer<TSerializer>();
 
-        const int KeyIndex = 0;
-        const int ValueIndex = 1;
+		/// <summary>
+		/// The key index
+		/// </summary>
+		const int KeyIndex = 0;
+		/// <summary>
+		/// The value index
+		/// </summary>
+		const int ValueIndex = 1;
 
-        public static ParseStringDelegate GetParseMethod(Type type)
+		/// <summary>
+		/// Gets the parse method.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns>ParseStringDelegate.</returns>
+		/// <exception cref="System.ArgumentException"></exception>
+		public static ParseStringDelegate GetParseMethod(Type type)
         {
             var mapInterface = type.GetTypeWithGenericInterfaceOf(typeof(IDictionary<,>));
             if (mapInterface == null)
@@ -70,7 +88,12 @@ namespace ServiceStack.Text.Common
             return value => ParseDictionaryType(value, createMapType, dictionaryArgs, keyTypeParseMethod, valueTypeParseMethod);
         }
 
-        public static JsonObject ParseJsonObject(string value)
+		/// <summary>
+		/// Parses the json object.
+		/// </summary>
+		/// <param name="value">The value.</param>
+		/// <returns>JsonObject.</returns>
+		public static JsonObject ParseJsonObject(string value)
         {
             var index = VerifyAndGetStartIndex(value, typeof(JsonObject));
 
@@ -98,7 +121,12 @@ namespace ServiceStack.Text.Common
         }
 
 #if !SILVERLIGHT
-        public static Hashtable ParseHashtable(string value)
+		/// <summary>
+		/// Parses the hashtable.
+		/// </summary>
+		/// <param name="value">The value.</param>
+		/// <returns>Hashtable.</returns>
+		public static Hashtable ParseHashtable(string value)
         {
             var index = VerifyAndGetStartIndex(value, typeof(Hashtable));
 
@@ -126,7 +154,12 @@ namespace ServiceStack.Text.Common
         }
 #endif
 
-        public static Dictionary<string, string> ParseStringDictionary(string value)
+		/// <summary>
+		/// Parses the string dictionary.
+		/// </summary>
+		/// <param name="value">The value.</param>
+		/// <returns>Dictionary&lt;System.String, System.String&gt;.</returns>
+		public static Dictionary<string, string> ParseStringDictionary(string value)
         {
             var index = VerifyAndGetStartIndex(value, typeof(Dictionary<string, string>));
 
@@ -153,7 +186,17 @@ namespace ServiceStack.Text.Common
             return result;
         }
 
-        public static IDictionary<TKey, TValue> ParseDictionary<TKey, TValue>(
+		/// <summary>
+		/// Parses the dictionary.
+		/// </summary>
+		/// <typeparam name="TKey">The type of the t key.</typeparam>
+		/// <typeparam name="TValue">The type of the t value.</typeparam>
+		/// <param name="value">The value.</param>
+		/// <param name="createMapType">Type of the create map.</param>
+		/// <param name="parseKeyFn">The parse key function.</param>
+		/// <param name="parseValueFn">The parse value function.</param>
+		/// <returns>IDictionary&lt;TKey, TValue&gt;.</returns>
+		public static IDictionary<TKey, TValue> ParseDictionary<TKey, TValue>(
             string value, Type createMapType,
             ParseStringDelegate parseKeyFn, ParseStringDelegate parseValueFn)
         {
@@ -224,7 +267,13 @@ namespace ServiceStack.Text.Common
             return to;
         }
 
-        private static int VerifyAndGetStartIndex(string value, Type createMapType)
+		/// <summary>
+		/// Verifies the start index of the and get.
+		/// </summary>
+		/// <param name="value">The value.</param>
+		/// <param name="createMapType">Type of the create map.</param>
+		/// <returns>System.Int32.</returns>
+		private static int VerifyAndGetStartIndex(string value, Type createMapType)
         {
             var index = 0;
             if (!Serializer.EatMapStartChar(value, ref index))
@@ -236,13 +285,33 @@ namespace ServiceStack.Text.Common
             return index;
         }
 
-        private static Dictionary<string, ParseDictionaryDelegate> ParseDelegateCache
+		/// <summary>
+		/// The parse delegate cache
+		/// </summary>
+		private static Dictionary<string, ParseDictionaryDelegate> ParseDelegateCache
             = new Dictionary<string, ParseDictionaryDelegate>();
 
-        private delegate object ParseDictionaryDelegate(string value, Type createMapType,
+		/// <summary>
+		/// Delegate ParseDictionaryDelegate
+		/// </summary>
+		/// <param name="value">The value.</param>
+		/// <param name="createMapType">Type of the create map.</param>
+		/// <param name="keyParseFn">The key parse function.</param>
+		/// <param name="valueParseFn">The value parse function.</param>
+		/// <returns>System.Object.</returns>
+		private delegate object ParseDictionaryDelegate(string value, Type createMapType,
             ParseStringDelegate keyParseFn, ParseStringDelegate valueParseFn);
 
-        public static object ParseDictionaryType(string value, Type createMapType, Type[] argTypes,
+		/// <summary>
+		/// Parses the type of the dictionary.
+		/// </summary>
+		/// <param name="value">The value.</param>
+		/// <param name="createMapType">Type of the create map.</param>
+		/// <param name="argTypes">The argument types.</param>
+		/// <param name="keyParseFn">The key parse function.</param>
+		/// <param name="valueParseFn">The value parse function.</param>
+		/// <returns>System.Object.</returns>
+		public static object ParseDictionaryType(string value, Type createMapType, Type[] argTypes,
             ParseStringDelegate keyParseFn, ParseStringDelegate valueParseFn)
         {
 
@@ -268,7 +337,12 @@ namespace ServiceStack.Text.Common
             return parseDelegate(value, createMapType, keyParseFn, valueParseFn);
         }
 
-        private static string GetTypesKey(params Type[] types)
+		/// <summary>
+		/// Gets the types key.
+		/// </summary>
+		/// <param name="types">The types.</param>
+		/// <returns>System.String.</returns>
+		private static string GetTypesKey(params Type[] types)
         {
             var sb = new StringBuilder(256);
             foreach (var type in types)

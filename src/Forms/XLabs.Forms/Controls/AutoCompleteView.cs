@@ -757,11 +757,14 @@ namespace XLabs.Forms.Controls
         private void OnSelectedItemChanged(object selectedItem)
         {
             SelectedItem = selectedItem;
-            SelectedCommand.Execute(selectedItem);
 
-            if (SelectedItemChanged != null)
+			if(SelectedCommand != null)
+            	SelectedCommand.Execute(selectedItem);
+
+			var handler = SelectedItemChanged;
+			if (handler != null)
             {
-                SelectedItemChanged(this, new SelectedItemChangedEventArgs(selectedItem));
+				handler(this, new SelectedItemChangedEventArgs(selectedItem));
             }
         }
 
@@ -771,9 +774,10 @@ namespace XLabs.Forms.Controls
         /// <param name="e">The <see cref="TextChangedEventArgs"/> instance containing the event data.</param>
         private void OnTextChanged(TextChangedEventArgs e)
         {
-            if (TextChanged != null)
+			var handler = TextChanged;
+			if (handler != null)
             {
-                TextChanged(this, e);
+				handler(this, e);
             }
         }
 

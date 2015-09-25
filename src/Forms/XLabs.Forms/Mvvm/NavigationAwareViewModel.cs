@@ -2,7 +2,10 @@
 
 namespace XLabs.Forms.Mvvm
 {
-    public class NavigationAwareViewModel : ViewModel, INavigationAware
+	/// <summary>
+	/// Class NavigationAwareViewModel.
+	/// </summary>
+	public class NavigationAwareViewModel : ViewModel, INavigationAware
     {
         /// <summary>
         /// Called when being navigated to.

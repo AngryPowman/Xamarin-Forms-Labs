@@ -23,12 +23,33 @@ namespace XLabs.Forms.Charting.Controls
 		#endregion
 
 		#region BindableProperties
+		/// <summary>
+		/// The data source property
+		/// </summary>
 		public static readonly BindableProperty DataSourceProperty = BindableProperty.Create("DataSource", typeof(IEnumerable<IEnumerable<object>>), typeof(Chart), default(IEnumerable<IEnumerable<object>>), BindingMode.OneWay, null, null, null, null);
+		/// <summary>
+		/// The color property
+		/// </summary>
 		public static readonly BindableProperty ColorProperty = BindableProperty.Create("Color", typeof(Color), typeof(Chart), Color.White, BindingMode.OneWay, null, null, null, null);
+		/// <summary>
+		/// The series property
+		/// </summary>
 		public static readonly BindableProperty SeriesProperty = BindableProperty.Create("Series", typeof(SeriesCollection), typeof(Chart), default(SeriesCollection), BindingMode.OneWay, null, null, null, null);
+		/// <summary>
+		/// The spacing property
+		/// </summary>
 		public static readonly BindableProperty SpacingProperty = BindableProperty.Create("Spacing", typeof(double), typeof(Chart), 5.0, BindingMode.OneWay, null, null, null, null);
+		/// <summary>
+		/// The grid property
+		/// </summary>
 		public static readonly BindableProperty GridProperty = BindableProperty.Create("Grid", typeof(bool), typeof(Chart), true, BindingMode.OneWay, null, null, null, null);
+		/// <summary>
+		/// The x path property
+		/// </summary>
 		public static readonly BindableProperty XPathProperty = BindableProperty.Create("XPath", typeof(string), typeof(Chart), null, BindingMode.OneWay, null, null, null, null);
+		/// <summary>
+		/// The y path property
+		/// </summary>
 		public static readonly BindableProperty YPathProperty = BindableProperty.Create("YPath", typeof(string), typeof(Chart), null, BindingMode.OneWay, null, null, null, null);
 		#endregion
 
@@ -142,6 +163,9 @@ namespace XLabs.Forms.Charting.Controls
 		}
 		#endregion
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="Chart"/> class.
+		/// </summary>
 		public Chart()
 		{
 			Series = new SeriesCollection();
@@ -397,6 +421,7 @@ namespace XLabs.Forms.Charting.Controls
 		/// Draw a pie chart.
 		/// </summary>
 		/// <param name="points">Specified points in the series.</param>
+		/// <param name="pieNo">The pie no.</param>
 		private void DrawPieChart(DataPointCollection points, int pieNo)
 		{
 			double sizeOfCircle = ((WidthRequest > HeightRequest) ? HeightRequest / 2 : WidthRequest / 2);

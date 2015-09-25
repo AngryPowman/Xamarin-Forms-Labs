@@ -7,6 +7,9 @@ namespace XLabs.Forms.Controls
 {
 	using Xamarin.Forms.Platform.WinPhone;
 
+	/// <summary>
+	/// Class ExtendedTextCellRenderer.
+	/// </summary>
 	public class ExtendedTextCellRenderer : TextCellRenderer
 	{
 		// TODO: Complete Cell customizations

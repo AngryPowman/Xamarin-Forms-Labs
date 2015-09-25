@@ -153,8 +153,14 @@ namespace XLabs.Forms.Pages
 		}
 	}
 
+	/// <summary>
+	/// Class ExtendedPhoneMasterDetailPageRenderer.
+	/// </summary>
 	public class ExtendedPhoneMasterDetailPageRenderer : PhoneMasterDetailRenderer
 	{
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ExtendedPhoneMasterDetailPageRenderer"/> class.
+		/// </summary>
 		public ExtendedPhoneMasterDetailPageRenderer()
 		{
 		}

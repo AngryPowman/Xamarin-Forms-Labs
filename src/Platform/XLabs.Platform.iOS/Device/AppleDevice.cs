@@ -293,22 +293,38 @@ namespace XLabs.Platform.Device
             }
         }
 
-        public string LanguageCode
+		/// <summary>
+		/// Gets the language code.
+		/// </summary>
+		/// <value>The language code.</value>
+		public string LanguageCode
         {
             get { return NSLocale.PreferredLanguages[0]; }
         }
 
-        public double TimeZoneOffset
+		/// <summary>
+		/// Gets the time zone offset.
+		/// </summary>
+		/// <value>The time zone offset.</value>
+		public double TimeZoneOffset
         {
             get { return NSTimeZone.LocalTimeZone.GetSecondsFromGMT / 3600.0; }
         }
 
-        public string TimeZone
+		/// <summary>
+		/// Gets the time zone.
+		/// </summary>
+		/// <value>The time zone.</value>
+		public string TimeZone
         {
             get { return NSTimeZone.LocalTimeZone.Name; }
         }
 
-        public Orientation Orientation
+		/// <summary>
+		/// Gets the orientation.
+		/// </summary>
+		/// <value>The orientation.</value>
+		public Orientation Orientation
         {
             get
             {

@@ -2,6 +2,9 @@
 
 namespace XLabs.Forms.Controls
 {
+	/// <summary>
+	/// Class ExtendedDatePicker.
+	/// </summary>
 	public class ExtendedDatePicker : DatePicker
 	{
 		/// <summary>

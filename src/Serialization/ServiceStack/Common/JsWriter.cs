@@ -1,3 +1,14 @@
+//
+// https://github.com/ServiceStack/ServiceStack.Text
+// ServiceStack.Text: .NET C# POCO JSON, JSV and CSV Text Serializers.
+//
+// Authors:
+//   Demis Bellot (demis.bellot@gmail.com)
+//
+// Copyright 2012 ServiceStack Ltd.
+//
+// Licensed under the same terms of ServiceStack: new BSD license.
+//
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -10,35 +21,101 @@ using ServiceStack.Text.Jsv;
 
 namespace ServiceStack.Text.Common
 {
-    public static class JsWriter
+	/// <summary>
+	/// Class JsWriter.
+	/// </summary>
+	public static class JsWriter
     {
-        public const string TypeAttr = "__type";
+		/// <summary>
+		/// The type attribute
+		/// </summary>
+		public const string TypeAttr = "__type";
 
-        public const char MapStartChar = '{';
-        public const char MapKeySeperator = ':';
-        public const char ItemSeperator = ',';
-        public const char MapEndChar = '}';
-        public const string MapNullValue = "\"\"";
-        public const string EmptyMap = "{}";
+		/// <summary>
+		/// The map start character
+		/// </summary>
+		public const char MapStartChar = '{';
+		/// <summary>
+		/// The map key seperator
+		/// </summary>
+		public const char MapKeySeperator = ':';
+		/// <summary>
+		/// The item seperator
+		/// </summary>
+		public const char ItemSeperator = ',';
+		/// <summary>
+		/// The map end character
+		/// </summary>
+		public const char MapEndChar = '}';
+		/// <summary>
+		/// The map null value
+		/// </summary>
+		public const string MapNullValue = "\"\"";
+		/// <summary>
+		/// The empty map
+		/// </summary>
+		public const string EmptyMap = "{}";
 
-        public const char ListStartChar = '[';
-        public const char ListEndChar = ']';
-        public const char ReturnChar = '\r';
-        public const char LineFeedChar = '\n';
+		/// <summary>
+		/// The list start character
+		/// </summary>
+		public const char ListStartChar = '[';
+		/// <summary>
+		/// The list end character
+		/// </summary>
+		public const char ListEndChar = ']';
+		/// <summary>
+		/// The return character
+		/// </summary>
+		public const char ReturnChar = '\r';
+		/// <summary>
+		/// The line feed character
+		/// </summary>
+		public const char LineFeedChar = '\n';
 
-        public const char QuoteChar = '"';
-        public const string QuoteString = "\"";
-        public const string EscapedQuoteString = "\\\"";
-        public const string ItemSeperatorString = ",";
-        public const string MapKeySeperatorString = ":";
+		/// <summary>
+		/// The quote character
+		/// </summary>
+		public const char QuoteChar = '"';
+		/// <summary>
+		/// The quote string
+		/// </summary>
+		public const string QuoteString = "\"";
+		/// <summary>
+		/// The escaped quote string
+		/// </summary>
+		public const string EscapedQuoteString = "\\\"";
+		/// <summary>
+		/// The item seperator string
+		/// </summary>
+		public const string ItemSeperatorString = ",";
+		/// <summary>
+		/// The map key seperator string
+		/// </summary>
+		public const string MapKeySeperatorString = ":";
 
-        public static readonly char[] CsvChars = new[] { ItemSeperator, QuoteChar };
-        public static readonly char[] EscapeChars = new[] { QuoteChar, MapKeySeperator, ItemSeperator, MapStartChar, MapEndChar, ListStartChar, ListEndChar, ReturnChar, LineFeedChar };
+		/// <summary>
+		/// The CSV chars
+		/// </summary>
+		public static readonly char[] CsvChars = new[] { ItemSeperator, QuoteChar };
+		/// <summary>
+		/// The escape chars
+		/// </summary>
+		public static readonly char[] EscapeChars = new[] { QuoteChar, MapKeySeperator, ItemSeperator, MapStartChar, MapEndChar, ListStartChar, ListEndChar, ReturnChar, LineFeedChar };
 
-        private const int LengthFromLargestChar = '}' + 1;
-        private static readonly bool[] EscapeCharFlags = new bool[LengthFromLargestChar];
+		/// <summary>
+		/// The length from largest character
+		/// </summary>
+		private const int LengthFromLargestChar = '}' + 1;
+		/// <summary>
+		/// The escape character flags
+		/// </summary>
+		private static readonly bool[] EscapeCharFlags = new bool[LengthFromLargestChar];
 
-        static JsWriter()
+		/// <summary>
+		/// Initializes static members of the <see cref="JsWriter"/> class.
+		/// </summary>
+		static JsWriter()
         {
             foreach (var escapeChar in EscapeChars)
             {
@@ -47,7 +124,11 @@ namespace ServiceStack.Text.Common
             var loadConfig = JsConfig.EmitCamelCaseNames; //force load
         }
 
-        public static void WriteDynamic(Action callback)
+		/// <summary>
+		/// Writes the dynamic.
+		/// </summary>
+		/// <param name="callback">The callback.</param>
+		public static void WriteDynamic(Action callback)
         {
             JsState.IsWritingDynamic = true;
             try
@@ -60,12 +141,12 @@ namespace ServiceStack.Text.Common
             }
         }
 
-        /// <summary>
-        /// micro optimizations: using flags instead of value.IndexOfAny(EscapeChars)
-        /// </summary>
-        /// <param name="value"></param>
-        /// <returns></returns>
-        public static bool HasAnyEscapeChars(string value)
+		/// <summary>
+		/// micro optimizations: using flags instead of value.IndexOfAny(EscapeChars)
+		/// </summary>
+		/// <param name="value">The value.</param>
+		/// <returns><c>true</c> if [has any escape chars] [the specified value]; otherwise, <c>false</c>.</returns>
+		public static bool HasAnyEscapeChars(string value)
         {
             var len = value.Length;
             for (var i = 0; i < len; i++)
@@ -77,7 +158,12 @@ namespace ServiceStack.Text.Common
             return false;
         }
 
-        internal static void WriteItemSeperatorIfRanOnce(TextWriter writer, ref bool ranOnce)
+		/// <summary>
+		/// Writes the item seperator if ran once.
+		/// </summary>
+		/// <param name="writer">The writer.</param>
+		/// <param name="ranOnce">if set to <c>true</c> [ran once].</param>
+		internal static void WriteItemSeperatorIfRanOnce(TextWriter writer, ref bool ranOnce)
         {
             if (ranOnce)
                 writer.Write(ItemSeperator);
@@ -85,7 +171,12 @@ namespace ServiceStack.Text.Common
                 ranOnce = true;
         }
 
-        internal static bool ShouldUseDefaultToStringMethod(Type type)
+		/// <summary>
+		/// Shoulds the use default to string method.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
+		internal static bool ShouldUseDefaultToStringMethod(Type type)
         {
             return type == typeof(byte) || type == typeof(byte?)
                 || type == typeof(short) || type == typeof(short?)
@@ -102,7 +193,13 @@ namespace ServiceStack.Text.Common
                 || type == typeof(decimal) || type == typeof(decimal?);
         }
 
-        internal static ITypeSerializer GetTypeSerializer<TSerializer>()
+		/// <summary>
+		/// Gets the type serializer.
+		/// </summary>
+		/// <typeparam name="TSerializer">The type of the t serializer.</typeparam>
+		/// <returns>ITypeSerializer.</returns>
+		/// <exception cref="System.NotSupportedException"></exception>
+		internal static ITypeSerializer GetTypeSerializer<TSerializer>()
         {
             if (typeof(TSerializer) == typeof(JsvTypeSerializer))
                 return JsvTypeSerializer.Instance;
@@ -167,7 +264,12 @@ namespace ServiceStack.Text.Common
         }
 #endif
 
-        public static void WriteEnumFlags(TextWriter writer, object enumFlagValue)
+		/// <summary>
+		/// Writes the enum flags.
+		/// </summary>
+		/// <param name="writer">The writer.</param>
+		/// <param name="enumFlagValue">The enum flag value.</param>
+		public static void WriteEnumFlags(TextWriter writer, object enumFlagValue)
         {
             if (enumFlagValue == null) return;
 #if NETFX_CORE
@@ -237,12 +339,22 @@ namespace ServiceStack.Text.Common
         }
     }
 
-    internal class JsWriter<TSerializer>
+	/// <summary>
+	/// Class JsWriter.
+	/// </summary>
+	/// <typeparam name="TSerializer">The type of the t serializer.</typeparam>
+	internal class JsWriter<TSerializer>
         where TSerializer : ITypeSerializer
     {
-        private static readonly ITypeSerializer Serializer = JsWriter.GetTypeSerializer<TSerializer>();
+		/// <summary>
+		/// The serializer
+		/// </summary>
+		private static readonly ITypeSerializer Serializer = JsWriter.GetTypeSerializer<TSerializer>();
 
-        public JsWriter()
+		/// <summary>
+		/// Initializes a new instance of the <see cref="JsWriter{TSerializer}"/> class.
+		/// </summary>
+		public JsWriter()
         {
             this.SpecialTypes = new Dictionary<Type, WriteObjectDelegate>
         	{
@@ -255,7 +367,12 @@ namespace ServiceStack.Text.Common
         	};
         }
 
-        public WriteObjectDelegate GetValueTypeToStringMethod(Type type)
+		/// <summary>
+		/// Gets the value type to string method.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns>WriteObjectDelegate.</returns>
+		public WriteObjectDelegate GetValueTypeToStringMethod(Type type)
         {
             if (type == typeof(char) || type == typeof(char?))
                 return Serializer.WriteChar;
@@ -329,7 +446,12 @@ namespace ServiceStack.Text.Common
             return Serializer.WriteObjectString;
         }
 
-        internal WriteObjectDelegate GetWriteFn<T>()
+		/// <summary>
+		/// Gets the write function.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <returns>WriteObjectDelegate.</returns>
+		internal WriteObjectDelegate GetWriteFn<T>()
         {
             if (typeof(T) == typeof(string))
             {
@@ -350,7 +472,12 @@ namespace ServiceStack.Text.Common
             return GetCoreWriteFn<T>();
         }
 
-        private WriteObjectDelegate GetCoreWriteFn<T>()
+		/// <summary>
+		/// Gets the core write function.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <returns>WriteObjectDelegate.</returns>
+		private WriteObjectDelegate GetCoreWriteFn<T>()
         {
             if ((typeof(T).IsValueType() && !JsConfig.TreatAsRefType(typeof(T))) || JsConfig<T>.HasSerializeFn)
             {
@@ -439,9 +566,17 @@ namespace ServiceStack.Text.Common
             return Serializer.WriteBuiltIn;
         }
 
-        public Dictionary<Type, WriteObjectDelegate> SpecialTypes;
+		/// <summary>
+		/// The special types
+		/// </summary>
+		public Dictionary<Type, WriteObjectDelegate> SpecialTypes;
 
-        public WriteObjectDelegate GetSpecialWriteFn(Type type)
+		/// <summary>
+		/// Gets the special write function.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns>WriteObjectDelegate.</returns>
+		public WriteObjectDelegate GetSpecialWriteFn(Type type)
         {
             WriteObjectDelegate writeFn = null;
             if (SpecialTypes.TryGetValue(type, out writeFn))
@@ -456,7 +591,12 @@ namespace ServiceStack.Text.Common
             return null;
         }
 
-        public void WriteType(TextWriter writer, object value)
+		/// <summary>
+		/// Writes the type.
+		/// </summary>
+		/// <param name="writer">The writer.</param>
+		/// <param name="value">The value.</param>
+		public void WriteType(TextWriter writer, object value)
         {
             Serializer.WriteRawString(writer, JsConfig.TypeWriter((Type)value));
         }

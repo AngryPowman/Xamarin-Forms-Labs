@@ -70,6 +70,9 @@ namespace XLabs.Forms.Controls
 		}
 	}
 
+	/// <summary>
+	/// Class CameraPreview.
+	/// </summary>
 	public class CameraPreview : ViewGroup, ISurfaceHolderCallback
 	{
 		const string TAG = "Preview";
@@ -80,6 +83,10 @@ namespace XLabs.Forms.Controls
 		IList<Camera.Size> _mSupportedPreviewSizes;
 		Camera _camera;
 
+		/// <summary>
+		/// Gets or sets the preview camera.
+		/// </summary>
+		/// <value>The preview camera.</value>
 		public Camera PreviewCamera
 		{
 			get { return _camera; }
@@ -94,6 +101,10 @@ namespace XLabs.Forms.Controls
 			}
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="CameraPreview"/> class.
+		/// </summary>
+		/// <param name="context">The context.</param>
 		public CameraPreview(Context context)
 			: base(context)
 		{
@@ -106,6 +117,10 @@ namespace XLabs.Forms.Controls
 			_mHolder.AddCallback(this);
 		}
 
+		/// <summary>
+		/// Switches the camera.
+		/// </summary>
+		/// <param name="camera">The camera.</param>
 		public void SwitchCamera(Camera camera)
 		{
 			if (PreviewCamera != null)
@@ -132,6 +147,11 @@ namespace XLabs.Forms.Controls
 			camera.SetParameters(parameters);
 		}
 
+		/// <summary>
+		/// Called when [measure].
+		/// </summary>
+		/// <param name="widthMeasureSpec">The width measure spec.</param>
+		/// <param name="heightMeasureSpec">The height measure spec.</param>
 		protected override void OnMeasure(int widthMeasureSpec, int heightMeasureSpec)
 		{
 			// We purposely disregard child measurements because act as a
@@ -147,6 +167,14 @@ namespace XLabs.Forms.Controls
 			}
 		}
 
+		/// <summary>
+		/// Called when [layout].
+		/// </summary>
+		/// <param name="changed">if set to <c>true</c> [changed].</param>
+		/// <param name="l">The l.</param>
+		/// <param name="t">The t.</param>
+		/// <param name="r">The r.</param>
+		/// <param name="b">The b.</param>
 		protected override void OnLayout(bool changed, int l, int t, int r, int b)
 		{
 			if (changed && ChildCount > 0)
@@ -180,6 +208,10 @@ namespace XLabs.Forms.Controls
 			}
 		}
 
+		/// <summary>
+		/// Surfaces the created.
+		/// </summary>
+		/// <param name="holder">The holder.</param>
 		public void SurfaceCreated(ISurfaceHolder holder)
 		{
 			// The Surface has been created, acquire the camera and tell it where
@@ -197,6 +229,10 @@ namespace XLabs.Forms.Controls
 			}
 		}
 
+		/// <summary>
+		/// Surfaces the destroyed.
+		/// </summary>
+		/// <param name="holder">The holder.</param>
 		public void SurfaceDestroyed(ISurfaceHolder holder)
 		{
 			// Surface will be destroyed when we return, so stop the preview.
@@ -206,6 +242,13 @@ namespace XLabs.Forms.Controls
 			}
 		}
 
+		/// <summary>
+		/// Gets the size of the optimal preview.
+		/// </summary>
+		/// <param name="sizes">The sizes.</param>
+		/// <param name="w">The w.</param>
+		/// <param name="h">The h.</param>
+		/// <returns>Camera.Size.</returns>
 		private Camera.Size GetOptimalPreviewSize(IList<Camera.Size> sizes, int w, int h)
 		{
 			const double AspectTolerance = 0.1;
@@ -251,6 +294,13 @@ namespace XLabs.Forms.Controls
 			return optimalSize;
 		}
 
+		/// <summary>
+		/// Surfaces the changed.
+		/// </summary>
+		/// <param name="holder">The holder.</param>
+		/// <param name="format">The format.</param>
+		/// <param name="w">The w.</param>
+		/// <param name="h">The h.</param>
 		public void SurfaceChanged(ISurfaceHolder holder, Android.Graphics.Format format, int w, int h)
 		{
 			// Now that the size is known, set up the camera parameters and begin

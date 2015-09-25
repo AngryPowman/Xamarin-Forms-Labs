@@ -1,5 +1,7 @@
-Xamarin Forms Labs
+**Xamarin Forms Labs** [![Build status](https://ci.appveyor.com/api/projects/status/33q2u1d3dpn3abgn?svg=true)](https://ci.appveyor.com/project/xlabs/xamarin-forms-labs)
 =====================
+
+[![Build status](https://ci.appveyor.com/api/projects/status/33q2u1d3dpn3abgn?svg=true)](https://ci.appveyor.com/project/xlabs/xamarin-forms-labs)
 
 **XLabs** is a open source project that aims to provide a powerful and cross platform set of services and controls tailored to work with Xamarin and [Xamarin Forms](http://xamarin.com/forms).
 
@@ -23,6 +25,7 @@ The v.2.0 is the stable branch.
  - [ExtendedTextCell (beta)](https://github.com/XLabs/Xamarin-Forms-Labs/wiki/ExtendedTextCell)
  - [ExtendedViewCell (beta)](https://github.com/XLabs/Xamarin-Forms-Labs/wiki/ExtendedViewCell)
  - [HybridWebView (beta)](https://github.com/XLabs/Xamarin-Forms-Labs/wiki/HybridWebView)
+ - GradientContentView (iOS/Android beta)
  - [GridView (IOS beta)](https://github.com/XLabs/Xamarin-Forms-Labs/wiki/GridView)
  - [ImageButton (beta)](https://github.com/XLabs/Xamarin-Forms-Labs/wiki/ImageButton)
  - RadioButton (beta)
@@ -74,7 +77,7 @@ We are working in a great [wiki][1] on how to use the controls and services.
 
 https://github.com/XLabs/Xamarin-Forms-Labs/wiki
 
-
+[Good forum post helping you setup and use XLabs](http://forums.xamarin.com/discussion/35991/how-to-install-setup-and-use-xlabs#latest)
 
 Using the MVVM Helpers
 -----------

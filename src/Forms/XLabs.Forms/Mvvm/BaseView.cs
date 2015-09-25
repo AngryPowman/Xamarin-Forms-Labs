@@ -39,6 +39,9 @@ namespace XLabs.Forms.Mvvm
 		}
 	}
 
+	/// <summary>
+	/// Class BaseView.
+	/// </summary>
 	public class BaseView : ContentPage
 	{
 		/// <summary>

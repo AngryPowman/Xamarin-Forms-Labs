@@ -155,14 +155,15 @@ namespace XLabs.Forms.Controls
             return returnValue;
         }
 
-        /// <summary>
-        ///     Returns a <see cref="Xamarin.Forms.Image" /> from the <see cref="ImageSource" /> provided.
-        /// </summary>
-        /// <param name="source">The <see cref="ImageSource" /> to load the image from.</param>
-        /// <param name="height">The height for the image (divides by 2 for the Windows Phone platform).</param>
-        /// <param name="width">The width for the image (divides by 2 for the Windows Phone platform).</param>
-        /// <returns>A properly sized image.</returns>
-        private static async Task<Image> GetImageAsync(ImageSource source, int height, int width, Image currentImage)
+		/// <summary>
+		/// Returns a <see cref="Xamarin.Forms.Image" /> from the <see cref="ImageSource" /> provided.
+		/// </summary>
+		/// <param name="source">The <see cref="ImageSource" /> to load the image from.</param>
+		/// <param name="height">The height for the image (divides by 2 for the Windows Phone platform).</param>
+		/// <param name="width">The width for the image (divides by 2 for the Windows Phone platform).</param>
+		/// <param name="currentImage">The current image.</param>
+		/// <returns>A properly sized image.</returns>
+		private static async Task<Image> GetImageAsync(ImageSource source, int height, int width, Image currentImage)
         {
             var image = currentImage ?? new Image();
             var handler = GetHandler(source);

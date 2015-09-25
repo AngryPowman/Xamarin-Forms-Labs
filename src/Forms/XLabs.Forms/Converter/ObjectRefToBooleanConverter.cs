@@ -12,13 +12,13 @@ namespace XLabs.Forms.Converter
 	public class ObjectRefToBooleanConverter : IValueConverter
 	{
 		/// <summary>
-		/// Converts an objectreferene to a boolean/>.
+		/// Converts an objectreferene to a boolean/&gt;.
 		/// </summary>
 		/// <param name="value">An objectreference</param>
 		/// <param name="targetType">boolean</param>
 		/// <param name="parameter">not used</param>
 		/// <param name="culture">not used</param>
-		/// <returns>True if the <see cref="value"/> is not null, false otherwise</returns>
+		/// <returns>True if the <see cref="System.Object" /> is not null, false otherwise</returns>
 		/// Element created at 05/11/2014,9:09 AM by Charles
 		/// <remarks>To be added.</remarks>
 		public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

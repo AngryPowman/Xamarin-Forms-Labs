@@ -35,23 +35,51 @@ namespace ServiceStack.Text
 {
 	using System.Xml.Serialization;
 
+	/// <summary>
+	/// Class StringExtensions.
+	/// </summary>
 	public static class StringExtensions
 	{
+		/// <summary>
+		/// To the specified value.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="value">The value.</param>
+		/// <returns>T.</returns>
 		public static T To<T>(this string value)
 		{
 			return TypeSerializer.DeserializeFromString<T>(value);
 		}
 
+		/// <summary>
+		/// To the specified default value.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="value">The value.</param>
+		/// <param name="defaultValue">The default value.</param>
+		/// <returns>T.</returns>
 		public static T To<T>(this string value, T defaultValue)
 		{
 			return String.IsNullOrEmpty(value) ? defaultValue : TypeSerializer.DeserializeFromString<T>(value);
 		}
 
+		/// <summary>
+		/// To the or default value.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="value">The value.</param>
+		/// <returns>T.</returns>
 		public static T ToOrDefaultValue<T>(this string value)
 		{
 			return String.IsNullOrEmpty(value) ? default(T) : TypeSerializer.DeserializeFromString<T>(value);
 		}
 
+		/// <summary>
+		/// To the specified type.
+		/// </summary>
+		/// <param name="value">The value.</param>
+		/// <param name="type">The type.</param>
+		/// <returns>System.Object.</returns>
 		public static object To(this string value, Type type)
 		{
 			return TypeSerializer.DeserializeFromString(value, type);
@@ -64,7 +92,7 @@ namespace ServiceStack.Text
 		/// <param name="source">The source.</param>
 		/// <param name="from">From.</param>
 		/// <param name="to">To.</param>
-		/// <returns></returns>
+		/// <returns>System.String.</returns>
 		public static string BaseConvert(this string source, int from, int to)
 		{
 			const string chars = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
@@ -107,11 +135,21 @@ namespace ServiceStack.Text
 			return result;
 		}
 
+		/// <summary>
+		/// Encodes the XML.
+		/// </summary>
+		/// <param name="value">The value.</param>
+		/// <returns>System.String.</returns>
 		public static string EncodeXml(this string value)
 		{
 			return value.Replace("<", "&lt;").Replace(">", "&gt;").Replace("&", "&amp;");
 		}
 
+		/// <summary>
+		/// Encodes the json.
+		/// </summary>
+		/// <param name="value">The value.</param>
+		/// <returns>System.String.</returns>
 		public static string EncodeJson(this string value)
 		{
 			return String.Concat
@@ -121,6 +159,11 @@ namespace ServiceStack.Text
 			);
 		}
 
+		/// <summary>
+		/// Encodes the JSV.
+		/// </summary>
+		/// <param name="value">The value.</param>
+		/// <returns>System.String.</returns>
 		public static string EncodeJsv(this string value)
 		{
 			if (JsState.QueryStringMode)
@@ -137,6 +180,11 @@ namespace ServiceStack.Text
 					);
 		}
 
+		/// <summary>
+		/// Decodes the JSV.
+		/// </summary>
+		/// <param name="value">The value.</param>
+		/// <returns>System.String.</returns>
 		public static string DecodeJsv(this string value)
 		{
 			const int startingQuotePos = 1;
@@ -147,6 +195,11 @@ namespace ServiceStack.Text
 						.Replace(TypeSerializer.DoubleQuoteString, JsWriter.QuoteString);
 		}
 
+		/// <summary>
+		/// URLs the encode.
+		/// </summary>
+		/// <param name="text">The text.</param>
+		/// <returns>System.String.</returns>
 		public static string UrlEncode(this string text)
 		{
 			if (String.IsNullOrEmpty(text)) return text;
@@ -174,6 +227,11 @@ namespace ServiceStack.Text
 			return sb.ToString();
 		}
 
+		/// <summary>
+		/// URLs the decode.
+		/// </summary>
+		/// <param name="text">The text.</param>
+		/// <returns>System.String.</returns>
 		public static string UrlDecode(this string text)
 		{
 			if (String.IsNullOrEmpty(text)) return null;
@@ -208,6 +266,12 @@ namespace ServiceStack.Text
 		}
 
 #if !XBOX
+		/// <summary>
+		/// Hexadecimals the escape.
+		/// </summary>
+		/// <param name="text">The text.</param>
+		/// <param name="anyCharOf">Any character of.</param>
+		/// <returns>System.String.</returns>
 		public static string HexEscape(this string text, params char[] anyCharOf)
 		{
 			if (String.IsNullOrEmpty(text)) return text;
@@ -234,6 +298,12 @@ namespace ServiceStack.Text
 			return sb.ToString();
 		}
 #endif
+		/// <summary>
+		/// Hexadecimals the unescape.
+		/// </summary>
+		/// <param name="text">The text.</param>
+		/// <param name="anyCharOf">Any character of.</param>
+		/// <returns>System.String.</returns>
 		public static string HexUnescape(this string text, params char[] anyCharOf)
 		{
 			if (String.IsNullOrEmpty(text)) return null;
@@ -260,6 +330,12 @@ namespace ServiceStack.Text
 			return sb.ToString();
 		}
 
+		/// <summary>
+		/// URLs the format.
+		/// </summary>
+		/// <param name="url">The URL.</param>
+		/// <param name="urlComponents">The URL components.</param>
+		/// <returns>System.String.</returns>
 		public static string UrlFormat(this string url, params string[] urlComponents)
 		{
 			var encodedUrlComponents = new string[urlComponents.Length];
@@ -272,6 +348,11 @@ namespace ServiceStack.Text
 			return String.Format(url, encodedUrlComponents);
 		}
 
+		/// <summary>
+		/// To the rot13.
+		/// </summary>
+		/// <param name="value">The value.</param>
+		/// <returns>System.String.</returns>
 		public static string ToRot13(this string value)
 		{
 			var array = value.ToCharArray();
@@ -290,6 +371,12 @@ namespace ServiceStack.Text
 			return new string(array);
 		}
 
+		/// <summary>
+		/// Withes the trailing slash.
+		/// </summary>
+		/// <param name="path">The path.</param>
+		/// <returns>System.String.</returns>
+		/// <exception cref="System.ArgumentNullException">path</exception>
 		public static string WithTrailingSlash(this string path)
 		{
 			if (String.IsNullOrEmpty(path))
@@ -302,11 +389,23 @@ namespace ServiceStack.Text
 			return path;
 		}
 
+		/// <summary>
+		/// Appends the path.
+		/// </summary>
+		/// <param name="uri">The URI.</param>
+		/// <param name="uriComponents">The URI components.</param>
+		/// <returns>System.String.</returns>
 		public static string AppendPath(this string uri, params string[] uriComponents)
 		{
 			return AppendUrlPaths(uri, uriComponents);
 		}
 
+		/// <summary>
+		/// Appends the URL paths.
+		/// </summary>
+		/// <param name="uri">The URI.</param>
+		/// <param name="uriComponents">The URI components.</param>
+		/// <returns>System.String.</returns>
 		public static string AppendUrlPaths(this string uri, params string[] uriComponents)
 		{
 			var sb = new StringBuilder(uri.WithTrailingSlash());
@@ -319,6 +418,12 @@ namespace ServiceStack.Text
 			return sb.ToString();
 		}
 
+		/// <summary>
+		/// Appends the URL paths raw.
+		/// </summary>
+		/// <param name="uri">The URI.</param>
+		/// <param name="uriComponents">The URI components.</param>
+		/// <returns>System.String.</returns>
 		public static string AppendUrlPathsRaw(this string uri, params string[] uriComponents)
 		{
 			var sb = new StringBuilder(uri.WithTrailingSlash());
@@ -332,38 +437,73 @@ namespace ServiceStack.Text
 		}
 
 #if !SILVERLIGHT
+		/// <summary>
+		/// Froms the ASCII bytes.
+		/// </summary>
+		/// <param name="bytes">The bytes.</param>
+		/// <returns>System.String.</returns>
 		public static string FromAsciiBytes(this byte[] bytes)
 		{
 			return bytes == null ? null
 				: Encoding.ASCII.GetString(bytes, 0, bytes.Length);
 		}
 
+		/// <summary>
+		/// To the ASCII bytes.
+		/// </summary>
+		/// <param name="value">The value.</param>
+		/// <returns>System.Byte[].</returns>
 		public static byte[] ToAsciiBytes(this string value)
 		{
 			return Encoding.ASCII.GetBytes(value);
 		}
 #endif
+		/// <summary>
+		/// Froms the UTF8 bytes.
+		/// </summary>
+		/// <param name="bytes">The bytes.</param>
+		/// <returns>System.String.</returns>
 		public static string FromUtf8Bytes(this byte[] bytes)
 		{
 			return bytes == null ? null
 				: Encoding.UTF8.GetString(bytes, 0, bytes.Length);
 		}
 
+		/// <summary>
+		/// To the UTF8 bytes.
+		/// </summary>
+		/// <param name="value">The value.</param>
+		/// <returns>System.Byte[].</returns>
 		public static byte[] ToUtf8Bytes(this string value)
 		{
 			return Encoding.UTF8.GetBytes(value);
 		}
 
+		/// <summary>
+		/// To the UTF8 bytes.
+		/// </summary>
+		/// <param name="intVal">The int value.</param>
+		/// <returns>System.Byte[].</returns>
 		public static byte[] ToUtf8Bytes(this int intVal)
 		{
 			return FastToUtf8Bytes(intVal.ToString());
 		}
 
+		/// <summary>
+		/// To the UTF8 bytes.
+		/// </summary>
+		/// <param name="longVal">The long value.</param>
+		/// <returns>System.Byte[].</returns>
 		public static byte[] ToUtf8Bytes(this long longVal)
 		{
 			return FastToUtf8Bytes(longVal.ToString());
 		}
 
+		/// <summary>
+		/// To the UTF8 bytes.
+		/// </summary>
+		/// <param name="doubleVal">The double value.</param>
+		/// <returns>System.Byte[].</returns>
 		public static byte[] ToUtf8Bytes(this double doubleVal)
 		{
 			var doubleStr = doubleVal.ToString(CultureInfo.InvariantCulture.NumberFormat);
@@ -375,10 +515,10 @@ namespace ServiceStack.Text
 		}
 
 		/// <summary>
-		/// Skip the encoding process for 'safe strings' 
+		/// Skip the encoding process for 'safe strings'
 		/// </summary>
-		/// <param name="strVal"></param>
-		/// <returns></returns>
+		/// <param name="strVal">The string value.</param>
+		/// <returns>System.Byte[].</returns>
 		private static byte[] FastToUtf8Bytes(string strVal)
 		{
 			var bytes = new byte[strVal.Length];
@@ -388,6 +528,12 @@ namespace ServiceStack.Text
 			return bytes;
 		}
 
+		/// <summary>
+		/// Splits the on first.
+		/// </summary>
+		/// <param name="strVal">The string value.</param>
+		/// <param name="needle">The needle.</param>
+		/// <returns>System.String[].</returns>
 		public static string[] SplitOnFirst(this string strVal, char needle)
 		{
 			if (strVal == null) return new string[0];
@@ -397,6 +543,12 @@ namespace ServiceStack.Text
 				: new[] { strVal.Substring(0, pos), strVal.Substring(pos + 1) };
 		}
 
+		/// <summary>
+		/// Splits the on first.
+		/// </summary>
+		/// <param name="strVal">The string value.</param>
+		/// <param name="needle">The needle.</param>
+		/// <returns>System.String[].</returns>
 		public static string[] SplitOnFirst(this string strVal, string needle)
 		{
 			if (strVal == null) return new string[0];
@@ -406,6 +558,12 @@ namespace ServiceStack.Text
 				: new[] { strVal.Substring(0, pos), strVal.Substring(pos + 1) };
 		}
 
+		/// <summary>
+		/// Splits the on last.
+		/// </summary>
+		/// <param name="strVal">The string value.</param>
+		/// <param name="needle">The needle.</param>
+		/// <returns>System.String[].</returns>
 		public static string[] SplitOnLast(this string strVal, char needle)
 		{
 			if (strVal == null) return new string[0];
@@ -415,6 +573,12 @@ namespace ServiceStack.Text
 				: new[] { strVal.Substring(0, pos), strVal.Substring(pos + 1) };
 		}
 
+		/// <summary>
+		/// Splits the on last.
+		/// </summary>
+		/// <param name="strVal">The string value.</param>
+		/// <param name="needle">The needle.</param>
+		/// <returns>System.String[].</returns>
 		public static string[] SplitOnLast(this string strVal, string needle)
 		{
 			if (strVal == null) return new string[0];
@@ -424,6 +588,11 @@ namespace ServiceStack.Text
 				: new[] { strVal.Substring(0, pos), strVal.Substring(pos + 1) };
 		}
 
+		/// <summary>
+		/// Withouts the extension.
+		/// </summary>
+		/// <param name="filePath">The file path.</param>
+		/// <returns>System.String.</returns>
 		public static string WithoutExtension(this string filePath)
 		{
 			if (String.IsNullOrEmpty(filePath)) return null;
@@ -439,11 +608,25 @@ namespace ServiceStack.Text
 		private static readonly char DirSep = '\\';//Path.DirectorySeparatorChar;
 		private static readonly char AltDirSep = '/';//Path.DirectorySeparatorChar == '/' ? '\\' : '/';
 #else
+		/// <summary>
+		/// The dir sep
+		/// </summary>
 		private static readonly char DirSep = Path.DirectorySeparatorChar;
+		/// <summary>
+		/// The alt dir sep
+		/// </summary>
 		private static readonly char AltDirSep = Path.DirectorySeparatorChar == '/' ? '\\' : '/';
 #endif
+		/// <summary>
+		/// The dir seps
+		/// </summary>
 		static readonly char[] DirSeps = new[] { '\\', '/' };
 
+		/// <summary>
+		/// Parents the directory.
+		/// </summary>
+		/// <param name="filePath">The file path.</param>
+		/// <returns>System.String.</returns>
 		public static string ParentDirectory(this string filePath)
 		{
 			if (String.IsNullOrEmpty(filePath)) return null;
@@ -455,37 +638,79 @@ namespace ServiceStack.Text
 			return dirSep == 0 ? null : filePath.TrimEnd(dirSep).SplitOnLast(dirSep)[0];
 		}
 
+		/// <summary>
+		/// To the JSV.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="obj">The object.</param>
+		/// <returns>System.String.</returns>
 		public static string ToJsv<T>(this T obj)
 		{
 			return TypeSerializer.SerializeToString(obj);
 		}
 
+		/// <summary>
+		/// Froms the JSV.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="jsv">The JSV.</param>
+		/// <returns>T.</returns>
 		public static T FromJsv<T>(this string jsv)
 		{
 			return TypeSerializer.DeserializeFromString<T>(jsv);
 		}
 
+		/// <summary>
+		/// To the json.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="obj">The object.</param>
+		/// <returns>System.String.</returns>
 		public static string ToJson<T>(this T obj) {
 			return JsConfig.PreferInterfaces
 				? JsonSerializer.SerializeToString(obj, AssemblyUtils.MainInterface<T>())
 				: JsonSerializer.SerializeToString(obj);
 		}
 
+		/// <summary>
+		/// Froms the json.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="json">The json.</param>
+		/// <returns>T.</returns>
 		public static T FromJson<T>(this string json)
 		{
 			return JsonSerializer.DeserializeFromString<T>(json);
 		}
 
+		/// <summary>
+		/// Formats the with.
+		/// </summary>
+		/// <param name="text">The text.</param>
+		/// <param name="args">The arguments.</param>
+		/// <returns>System.String.</returns>
 		public static string FormatWith(this string text, params object[] args)
 		{
 			return String.Format(text, args);
 		}
 
+		/// <summary>
+		/// FMTs the specified arguments.
+		/// </summary>
+		/// <param name="text">The text.</param>
+		/// <param name="args">The arguments.</param>
+		/// <returns>System.String.</returns>
 		public static string Fmt(this string text, params object[] args)
 		{
 			return String.Format(text, args);
 		}
 
+		/// <summary>
+		/// Startses the with ignore case.
+		/// </summary>
+		/// <param name="text">The text.</param>
+		/// <param name="startsWith">The starts with.</param>
+		/// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
 		public static bool StartsWithIgnoreCase(this string text, string startsWith)
 		{
 #if NETFX_CORE
@@ -497,6 +722,12 @@ namespace ServiceStack.Text
 #endif
 		}
 
+		/// <summary>
+		/// Endses the with ignore case.
+		/// </summary>
+		/// <param name="text">The text.</param>
+		/// <param name="endsWith">The ends with.</param>
+		/// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
 		public static bool EndsWithIgnoreCase(this string text, string endsWith)
 		{
 #if NETFX_CORE
@@ -508,6 +739,11 @@ namespace ServiceStack.Text
 #endif
 		}
 
+		/// <summary>
+		/// Reads all text.
+		/// </summary>
+		/// <param name="filePath">The file path.</param>
+		/// <returns>System.String.</returns>
 		public static string ReadAllText(this string filePath)
 		{
 #if XBOX && !SILVERLIGHT
@@ -541,11 +777,24 @@ namespace ServiceStack.Text
 		}
 
 
+		/// <summary>
+		/// Indexes the of any.
+		/// </summary>
+		/// <param name="text">The text.</param>
+		/// <param name="needles">The needles.</param>
+		/// <returns>System.Int32.</returns>
 		public static int IndexOfAny(this string text, params string[] needles)
 		{
 			return IndexOfAny(text, 0, needles);
 		}
 
+		/// <summary>
+		/// Indexes the of any.
+		/// </summary>
+		/// <param name="text">The text.</param>
+		/// <param name="startIndex">The start index.</param>
+		/// <param name="needles">The needles.</param>
+		/// <returns>System.Int32.</returns>
 		public static int IndexOfAny(this string text, int startIndex, params string[] needles)
 		{
 			if (text == null) return -1;
@@ -559,11 +808,31 @@ namespace ServiceStack.Text
 			return firstPos;
 		}
 
+		/// <summary>
+		/// Extracts the contents.
+		/// </summary>
+		/// <param name="fromText">From text.</param>
+		/// <param name="startAfter">The start after.</param>
+		/// <param name="endAt">The end at.</param>
+		/// <returns>System.String.</returns>
 		public static string ExtractContents(this string fromText, string startAfter, string endAt)
 		{
 			return ExtractContents(fromText, startAfter, startAfter, endAt);
 		}
 
+		/// <summary>
+		/// Extracts the contents.
+		/// </summary>
+		/// <param name="fromText">From text.</param>
+		/// <param name="uniqueMarker">The unique marker.</param>
+		/// <param name="startAfter">The start after.</param>
+		/// <param name="endAt">The end at.</param>
+		/// <returns>System.String.</returns>
+		/// <exception cref="System.ArgumentNullException">uniqueMarker
+		/// or
+		/// startAfter
+		/// or
+		/// endAt</exception>
 		public static string ExtractContents(this string fromText, string uniqueMarker, string startAfter, string endAt)
 		{
 			if (String.IsNullOrEmpty(uniqueMarker))
@@ -591,8 +860,16 @@ namespace ServiceStack.Text
 #if XBOX && !SILVERLIGHT
 		static readonly Regex StripHtmlRegEx = new Regex(@"<(.|\n)*?>", RegexOptions.Compiled);
 #else
+		/// <summary>
+		/// The strip HTML reg ex
+		/// </summary>
 		static readonly Regex StripHtmlRegEx = new Regex(@"<(.|\n)*?>");
 #endif
+		/// <summary>
+		/// Strips the HTML.
+		/// </summary>
+		/// <param name="html">The HTML.</param>
+		/// <returns>System.String.</returns>
 		public static string StripHtml(this string html)
 		{
 			return String.IsNullOrEmpty(html) ? null : StripHtmlRegEx.Replace(html, "");
@@ -602,9 +879,20 @@ namespace ServiceStack.Text
 		static readonly Regex StripBracketsRegEx = new Regex(@"\[(.|\n)*?\]", RegexOptions.Compiled);
 		static readonly Regex StripBracesRegEx = new Regex(@"\((.|\n)*?\)", RegexOptions.Compiled);
 #else
+		/// <summary>
+		/// The strip brackets reg ex
+		/// </summary>
 		static readonly Regex StripBracketsRegEx = new Regex(@"\[(.|\n)*?\]");
+		/// <summary>
+		/// The strip braces reg ex
+		/// </summary>
 		static readonly Regex StripBracesRegEx = new Regex(@"\((.|\n)*?\)");
 #endif
+		/// <summary>
+		/// Strips the markdown markup.
+		/// </summary>
+		/// <param name="markdown">The markdown.</param>
+		/// <returns>System.String.</returns>
 		public static string StripMarkdownMarkup(this string markdown)
 		{
 			if (String.IsNullOrEmpty(markdown)) return null;
@@ -620,7 +908,15 @@ namespace ServiceStack.Text
 			return markdown;
 		}
 
+		/// <summary>
+		/// The lower case offset
+		/// </summary>
 		private const int LowerCaseOffset = 'a' - 'A';
+		/// <summary>
+		/// To the camel case.
+		/// </summary>
+		/// <param name="value">The value.</param>
+		/// <returns>System.String.</returns>
 		public static string ToCamelCase(this string value)
 		{
 			if (String.IsNullOrEmpty(value)) return value;
@@ -646,7 +942,15 @@ namespace ServiceStack.Text
 			return new string(newValue);
 		}
 
+		/// <summary>
+		/// The text information
+		/// </summary>
 		private static readonly TextInfo TextInfo = CultureInfo.InvariantCulture.TextInfo;
+		/// <summary>
+		/// To the title case.
+		/// </summary>
+		/// <param name="value">The value.</param>
+		/// <returns>System.String.</returns>
 		public static string ToTitleCase(this string value)
 		{
 #if SILVERLIGHT || __MonoCS__
@@ -668,6 +972,11 @@ namespace ServiceStack.Text
 #endif
 		}
 
+		/// <summary>
+		/// To the lowercase underscore.
+		/// </summary>
+		/// <param name="value">The value.</param>
+		/// <returns>System.String.</returns>
 		public static string ToLowercaseUnderscore(this string value)
 		{
 			if (String.IsNullOrEmpty(value)) return value;
@@ -689,6 +998,12 @@ namespace ServiceStack.Text
 			return sb.ToString();
 		}
 
+		/// <summary>
+		/// Safes the substring.
+		/// </summary>
+		/// <param name="value">The value.</param>
+		/// <param name="length">The length.</param>
+		/// <returns>System.String.</returns>
 		public static string SafeSubstring(this string value, int length)
 		{
 			return String.IsNullOrEmpty(value)
@@ -696,6 +1011,13 @@ namespace ServiceStack.Text
 				: value.Substring(Math.Min(length, value.Length));
 		}
 
+		/// <summary>
+		/// Safes the substring.
+		/// </summary>
+		/// <param name="value">The value.</param>
+		/// <param name="startIndex">The start index.</param>
+		/// <param name="length">The length.</param>
+		/// <returns>System.String.</returns>
 		public static string SafeSubstring(this string value, int startIndex, int length)
 		{
 			if (String.IsNullOrEmpty(value)) return String.Empty;
@@ -705,6 +1027,12 @@ namespace ServiceStack.Text
 			return value.Length > startIndex ? value.Substring(startIndex) : String.Empty;
 		}
 
+		/// <summary>
+		/// Determines whether [is anonymous type] [the specified type].
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns><c>true</c> if [is anonymous type] [the specified type]; otherwise, <c>false</c>.</returns>
+		/// <exception cref="System.ArgumentNullException">type</exception>
 		public static bool IsAnonymousType(this Type type)
 		{
 			if (type == null)
@@ -721,12 +1049,24 @@ namespace ServiceStack.Text
 				&& (type.Attributes & TypeAttributes.NotPublic) == TypeAttributes.NotPublic;
 #endif
 		}
-		
+
+		/// <summary>
+		/// Compares the ignore case.
+		/// </summary>
+		/// <param name="strA">The string a.</param>
+		/// <param name="strB">The string b.</param>
+		/// <returns>System.Int32.</returns>
 		public static int CompareIgnoreCase(this string strA, string strB)
 		{
 			return String.Compare(strA, strB, InvariantComparisonIgnoreCase());
 		}
 
+		/// <summary>
+		/// Endses the with invariant.
+		/// </summary>
+		/// <param name="str">The string.</param>
+		/// <param name="endsWith">The ends with.</param>
+		/// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
 		public static bool EndsWithInvariant(this string str, string endsWith)
 		{
 			return str.EndsWith(endsWith, InvariantComparison());
@@ -751,19 +1091,38 @@ namespace ServiceStack.Text
 			return StringComparer.CurrentCultureIgnoreCase;
 		}
 #else
+		/// <summary>
+		/// The dir separator character
+		/// </summary>
 		public static char DirSeparatorChar = Path.DirectorySeparatorChar;
+		/// <summary>
+		/// Invariants the comparison.
+		/// </summary>
+		/// <returns>StringComparison.</returns>
 		public static StringComparison InvariantComparison()
 		{
 			return StringComparison.InvariantCulture;
 		}
+		/// <summary>
+		/// Invariants the comparison ignore case.
+		/// </summary>
+		/// <returns>StringComparison.</returns>
 		public static StringComparison InvariantComparisonIgnoreCase()
 		{
 			return StringComparison.InvariantCultureIgnoreCase;
 		}
+		/// <summary>
+		/// Invariants the comparer.
+		/// </summary>
+		/// <returns>StringComparer.</returns>
 		public static StringComparer InvariantComparer()
 		{
 			return StringComparer.InvariantCulture;
 		}
+		/// <summary>
+		/// Invariants the comparer ignore case.
+		/// </summary>
+		/// <returns>StringComparer.</returns>
 		public static StringComparer InvariantComparerIgnoreCase()
 		{
 			return StringComparer.InvariantCultureIgnoreCase;

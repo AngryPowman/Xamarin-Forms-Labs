@@ -6,22 +6,29 @@
           x:Class="XLabs.Sample.Pages.Mvvm.CanvasWebHybrid"
           Title="CanvasJS hybrid view">
   <toolkit:BaseView.Content>
-    <StackLayout x:Name="Container">
-      <StackLayout.Padding>
+    <RelativeLayout x:Name="Container">
+      <RelativeLayout.Padding>
         <OnPlatform x:TypeArguments="Thickness"
             iOS="0, 20, 0, 0"
             Android="10, 0, 0, 0"
-            WinPhone="0, 0, 0, 0" />
-      </StackLayout.Padding>
+            WinPhone="0, 20, 0, 0" />
+      </RelativeLayout.Padding>
       <Label Text="{Binding Title}" />
-      <ListView x:Name="NativeList" ItemsSource="{Binding DataPoints}" WidthRequest="200" HeightRequest="200">
+      <ListView 
+        x:Name="NativeList" 
+        ItemsSource="{Binding DataPoints}"
+        RelativeLayout.XConstraint= "{ConstraintExpression Type=Constant, Constant=0}" 
+        RelativeLayout.YConstraint= "{ConstraintExpression Type=Constant, Constant=20}" 
+        RelativeLayout.WidthConstraint= "{ConstraintExpression Type=RelativeToParent, Property=Width,Factor=1}" 
+        RelativeLayout.HeightConstraint= "{ConstraintExpression Type=RelativeToParent, Property=Height,Factor=.4}" 
+        >
         <ListView.ItemTemplate>
           <DataTemplate>
             <ViewCell>
               <ViewCell.View>
-                <StackLayout HeightRequest="120">
+                <StackLayout>
                   <Label Text="{Binding Label}" />
-                  <Slider Value="{Binding Y, Mode=TwoWay}" />
+                  <Slider Value="{Binding Y, Mode=TwoWay}"  />
                   <!--							<Slider Maximum="{Binding Max}"></Slider>-->
                 </StackLayout>
               </ViewCell.View>
@@ -30,8 +37,15 @@
           </DataTemplate>
         </ListView.ItemTemplate>
       </ListView>
-      <controls:HybridWebView x:Name="hybridWebView" WidthRequest="200" HeightRequest="300" />
-    </StackLayout>
+      <controls:HybridWebView 
+        x:Name="hybridWebView" 
+        BackgroundColor="White"
+        RelativeLayout.XConstraint= "{ConstraintExpression Type=Constant, Constant=0}" 
+        RelativeLayout.YConstraint= "{ConstraintExpression Type=RelativeToParent, Property=Height, Factor=.5}" 
+        RelativeLayout.WidthConstraint= "{ConstraintExpression Type=RelativeToParent, Property=Width,Factor=1}" 
+        RelativeLayout.HeightConstraint= "{ConstraintExpression Type=RelativeToParent, Property=Height,Factor=.5}" 
+    />
+    </RelativeLayout>
   </toolkit:BaseView.Content>
 </toolkit:BaseView>
 

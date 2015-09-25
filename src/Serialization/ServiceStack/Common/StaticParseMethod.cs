@@ -17,11 +17,25 @@ using ServiceStack.Text.Jsv;
 
 namespace ServiceStack.Text.Common
 {
-    internal delegate object ParseDelegate(string value);
+	/// <summary>
+	/// Delegate ParseDelegate
+	/// </summary>
+	/// <param name="value">The value.</param>
+	/// <returns>System.Object.</returns>
+	internal delegate object ParseDelegate(string value);
 
-    internal static class ParseMethodUtilities
+	/// <summary>
+	/// Class ParseMethodUtilities.
+	/// </summary>
+	internal static class ParseMethodUtilities
     {
-        public static ParseStringDelegate GetParseFn<T>(string parseMethod)
+		/// <summary>
+		/// Gets the parse function.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="parseMethod">The parse method.</param>
+		/// <returns>ParseStringDelegate.</returns>
+		public static ParseStringDelegate GetParseFn<T>(string parseMethod)
         {
             // Get the static Parse(string) method on the type supplied
             var parseMethodInfo = typeof(T).GetPublicStaticMethod(parseMethod, new[] { typeof(string) });
@@ -54,39 +68,74 @@ namespace ServiceStack.Text.Common
         }
     }
 
-    public static class StaticParseMethod<T>
+	/// <summary>
+	/// Class StaticParseMethod.
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	public static class StaticParseMethod<T>
     {
-        const string ParseMethod = "Parse";
+		/// <summary>
+		/// The parse method
+		/// </summary>
+		const string ParseMethod = "Parse";
 
-        private static readonly ParseStringDelegate CacheFn;
+		/// <summary>
+		/// The cache function
+		/// </summary>
+		private static readonly ParseStringDelegate CacheFn;
 
-        public static ParseStringDelegate Parse
+		/// <summary>
+		/// Gets the parse.
+		/// </summary>
+		/// <value>The parse.</value>
+		public static ParseStringDelegate Parse
         {
             get { return CacheFn; }
         }
 
-        static StaticParseMethod()
+		/// <summary>
+		/// Initializes static members of the <see cref="StaticParseMethod{T}"/> class.
+		/// </summary>
+		static StaticParseMethod()
         {
             CacheFn = ParseMethodUtilities.GetParseFn<T>(ParseMethod);
         }
 
     }
 
-    internal static class StaticParseRefTypeMethod<TSerializer, T>
+	/// <summary>
+	/// Class StaticParseRefTypeMethod.
+	/// </summary>
+	/// <typeparam name="TSerializer">The type of the t serializer.</typeparam>
+	/// <typeparam name="T"></typeparam>
+	internal static class StaticParseRefTypeMethod<TSerializer, T>
         where TSerializer : ITypeSerializer
     {
-        static readonly string ParseMethod = typeof(TSerializer) == typeof(JsvTypeSerializer)
+		/// <summary>
+		/// The parse method
+		/// </summary>
+		static readonly string ParseMethod = typeof(TSerializer) == typeof(JsvTypeSerializer)
             ? "ParseJsv"
             : "ParseJson";
 
-        private static readonly ParseStringDelegate CacheFn;
+		/// <summary>
+		/// The cache function
+		/// </summary>
+		private static readonly ParseStringDelegate CacheFn;
 
-        public static ParseStringDelegate Parse
+		/// <summary>
+		/// Gets the parse.
+		/// </summary>
+		/// <value>The parse.</value>
+		public static ParseStringDelegate Parse
         {
             get { return CacheFn; }
         }
 
-        static StaticParseRefTypeMethod()
+		/// <summary>
+		/// Initializes static members of the <see cref="StaticParseRefTypeMethod{TSerializer, T}"/> class.
+		/// </summary>
+		static StaticParseRefTypeMethod()
         {
             CacheFn = ParseMethodUtilities.GetParseFn<T>(ParseMethod);
         }

@@ -7,7 +7,9 @@ namespace XLabs.Forms.Controls
 {
     using System;
     using System.Diagnostics;
+    using System.IO;
     using Foundation;
+    using Platform.Services.IO;
     using UIKit;
     using WebKit;
     using Xamarin.Forms;
@@ -20,7 +22,6 @@ namespace XLabs.Forms.Controls
     {
         private UISwipeGestureRecognizer leftSwipeGestureRecognizer;
         private UISwipeGestureRecognizer rightSwipeGestureRecognizer;
-
         private WKUserContentController userController;
 
         /// <summary>
@@ -65,10 +66,11 @@ namespace XLabs.Forms.Controls
 
         #endregion
 
-        /* 
-         * This is a hack to because the base wasn't working 
-         * when within a stacklayout
-         */
+        /// <summary>
+        /// Layouts the subviews.
+        /// This is a hack to because the base wasn't working 
+        /// when within a stacklayout
+        /// </summary>
         public override void LayoutSubviews()
         {
             base.LayoutSubviews();
@@ -95,7 +97,7 @@ namespace XLabs.Forms.Controls
         {
             base.OnElementChanged(e);
 
-            if (Control == null)
+            if (Control == null && e.NewElement != null)
             {
                 this.userController = new WKUserContentController();
                 var config = new WKWebViewConfiguration()
@@ -151,9 +153,7 @@ namespace XLabs.Forms.Controls
         {
             InvokeOnMainThread(() => Control.EvaluateJavaScript(new NSString(script), (r, e) =>
             {
-                if (e != null)
-                    //System.Diagnostics.Debug.WriteLine(r);
-                    Debug.WriteLine(e);
+                if (e != null) Debug.WriteLine(e);
             }));
         }
 
@@ -165,19 +165,40 @@ namespace XLabs.Forms.Controls
             }
         }
 
-        partial void LoadFromContent(object sender, string contentFullName)
+        partial void LoadFromContent(object sender, HybridWebView.LoadContentEventArgs contentArgs)
         {
-            Element.Uri = new Uri(NSBundle.MainBundle.BundlePath + "/" + contentFullName);
+            var baseUri = contentArgs.BaseUri ?? GetTempDirectory();
+            Element.Uri = new Uri(baseUri + "/" + contentArgs.Content);
+            //Element.Uri = new Uri(NSBundle.MainBundle.BundlePath + "/" + contentFullName);
+            //Control.LoadHtmlString(new NSString(contentFullName), new NSUrl(NSBundle.MainBundle.BundlePath, true));
         }
 
-        partial void LoadContent(object sender, string contentFullName)
+        partial void LoadContent(object sender, HybridWebView.LoadContentEventArgs contentArgs)
         {
-            Control.LoadHtmlString(new NSString(contentFullName), new NSUrl(NSBundle.MainBundle.BundlePath, true));
+            var baseUri = contentArgs.BaseUri ?? GetTempDirectory();
+            Control.LoadHtmlString(new NSString(contentArgs.Content), new NSUrl(baseUri, true));
         }
 
         partial void LoadFromString(string html)
         {
-            this.LoadContent(null, html);
+            this.LoadContent(null, new HybridWebView.LoadContentEventArgs(html, null));
+        }
+
+        /// <summary>
+        /// Copies bundle directory to temp directory.
+        /// </summary>
+        /// <param name="path">Directory to copy.</param>
+        public static void CopyBundleDirectory(string path)
+        {
+            var source = Path.Combine(NSBundle.MainBundle.BundlePath, path);
+            var dest = Path.Combine(GetTempDirectory(), path);
+
+            FileManager.CopyDirectory(new DirectoryInfo(source), new DirectoryInfo(dest));
+        }
+
+        private static string GetTempDirectory()
+        {
+            return Environment.GetFolderPath(Environment.SpecialFolder.Personal).Replace("Documents", "tmp");
         }
     }
 }

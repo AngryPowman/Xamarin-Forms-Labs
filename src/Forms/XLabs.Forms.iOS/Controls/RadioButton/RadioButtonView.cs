@@ -4,34 +4,55 @@ using UIKit;
 
 namespace XLabs.Forms.Controls
 {
-    [Register("RadioButtonView")]
+	/// <summary>
+	/// Class RadioButtonView.
+	/// </summary>
+	[Register("RadioButtonView")]
     public class RadioButtonView : UIButton
     {
-        public RadioButtonView()
+		/// <summary>
+		/// Initializes a new instance of the <see cref="RadioButtonView"/> class.
+		/// </summary>
+		public RadioButtonView()
         {
             Initialize();
         }
 
-        public RadioButtonView(CGRect bounds)
+		/// <summary>
+		/// Initializes a new instance of the <see cref="RadioButtonView"/> class.
+		/// </summary>
+		/// <param name="bounds">The bounds.</param>
+		public RadioButtonView(CGRect bounds)
             : base(bounds)
         {
             Initialize();
         }
 
-        
-        public bool Checked
+
+		/// <summary>
+		/// Gets or sets a value indicating whether this <see cref="RadioButtonView"/> is checked.
+		/// </summary>
+		/// <value><c>true</c> if checked; otherwise, <c>false</c>.</value>
+		public bool Checked
         {
             set { this.Selected = value; }
             get { return this.Selected; }
         }
 
-        public string Text
+		/// <summary>
+		/// Sets the text.
+		/// </summary>
+		/// <value>The text.</value>
+		public string Text
         {
             set { this.SetTitle(value, UIControlState.Normal); }
             
         }
 
-        void Initialize()
+		/// <summary>
+		/// Initializes this instance.
+		/// </summary>
+		void Initialize()
         {
             this.AdjustEdgeInsets();
             this.ApplyStyle();
@@ -39,7 +60,10 @@ namespace XLabs.Forms.Controls
             this.TouchUpInside += (sender, args) => this.Selected = !this.Selected;
         }
 
-        void AdjustEdgeInsets()
+		/// <summary>
+		/// Adjusts the edge insets.
+		/// </summary>
+		void AdjustEdgeInsets()
         {
             const float inset = 8f;
 
@@ -48,7 +72,10 @@ namespace XLabs.Forms.Controls
             this.TitleEdgeInsets = new UIEdgeInsets(0f, inset * 2, 0f, 0f);
         }
 
-        void ApplyStyle()
+		/// <summary>
+		/// Applies the style.
+		/// </summary>
+		void ApplyStyle()
         {
             this.SetImage(UIImage.FromBundle("Images/RadioButton/checked.png"), UIControlState.Selected);
             this.SetImage(UIImage.FromBundle("Images/RadioButton/unchecked.png"), UIControlState.Normal);

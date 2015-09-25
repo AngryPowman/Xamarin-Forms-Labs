@@ -15,11 +15,21 @@ using System.Reflection;
 #if !XBOX
 using System.Linq.Expressions;
 #endif
+
 namespace ServiceStack.Text.Reflection
 {
-    public static class StaticAccessors
+	/// <summary>
+	/// Class StaticAccessors.
+	/// </summary>
+	public static class StaticAccessors
     {
-        public static Func<object, object> GetValueGetter(this PropertyInfo propertyInfo, Type type)
+		/// <summary>
+		/// Gets the value getter.
+		/// </summary>
+		/// <param name="propertyInfo">The property information.</param>
+		/// <param name="type">The type.</param>
+		/// <returns>Func&lt;System.Object, System.Object&gt;.</returns>
+		public static Func<object, object> GetValueGetter(this PropertyInfo propertyInfo, Type type)
         {
 #if NETFX_CORE
 			var getMethodInfo = propertyInfo.GetMethod;
@@ -39,7 +49,13 @@ namespace ServiceStack.Text.Reflection
 #endif
         }
 
-        public static Func<T, object> GetValueGetter<T>(this PropertyInfo propertyInfo)
+		/// <summary>
+		/// Gets the value getter.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="propertyInfo">The property information.</param>
+		/// <returns>Func&lt;T, System.Object&gt;.</returns>
+		public static Func<T, object> GetValueGetter<T>(this PropertyInfo propertyInfo)
         {
 #if NETFX_CORE
 			var getMethodInfo = propertyInfo.GetMethod;
@@ -57,7 +73,13 @@ namespace ServiceStack.Text.Reflection
 #endif
         }
 
-        public static Func<T, object> GetValueGetter<T>(this FieldInfo fieldInfo)
+		/// <summary>
+		/// Gets the value getter.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="fieldInfo">The field information.</param>
+		/// <returns>Func&lt;T, System.Object&gt;.</returns>
+		public static Func<T, object> GetValueGetter<T>(this FieldInfo fieldInfo)
         {
 #if (SILVERLIGHT && !WINDOWS_PHONE) || MONOTOUCH || XBOX
             return x => fieldInfo.GetValue(x);
@@ -70,7 +92,14 @@ namespace ServiceStack.Text.Reflection
         }
 
 #if !XBOX
-        public static Action<T, object> GetValueSetter<T>(this PropertyInfo propertyInfo)
+		/// <summary>
+		/// Gets the value setter.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="propertyInfo">The property information.</param>
+		/// <returns>Action&lt;T, System.Object&gt;.</returns>
+		/// <exception cref="System.ArgumentException"></exception>
+		public static Action<T, object> GetValueSetter<T>(this PropertyInfo propertyInfo)
         {
             if (typeof(T) != propertyInfo.DeclaringType)
             {

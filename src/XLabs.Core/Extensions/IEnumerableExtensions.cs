@@ -5,6 +5,9 @@
     using System.Collections.ObjectModel;
     using System.Linq;
 
+    /// <summary>
+    /// Class IEnumerableExtensions.
+    /// </summary>
     public static class IEnumerableExtensions
     {
         /// <summary>
@@ -18,6 +21,13 @@
             return new ReadOnlyCollection<T>((enumerable as IList<T>) ?? enumerable.ToList());
         }
 
+        /// <summary>
+        /// Fors the each.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="enumerable">The enumerable.</param>
+        /// <param name="action">The action.</param>
+        /// <returns>IEnumerable&lt;T&gt;.</returns>
         public static IEnumerable<T> ForEach<T>(this IEnumerable<T> enumerable, Action<T> action)
         {
             foreach (var item in enumerable)

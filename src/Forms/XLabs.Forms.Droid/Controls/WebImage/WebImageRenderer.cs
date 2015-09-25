@@ -43,7 +43,7 @@ namespace XLabs.Forms.Controls
 			var networkStatus = Reachability.InternetConnectionStatus();
 			var isReachable = networkStatus != NetworkStatus.NotReachable;
 
-			if (isReachable)
+			if (isReachable && !string.IsNullOrEmpty(WebImage.ImageUrl))
 			{
 				image = GetImageFromWeb(WebImage.ImageUrl);
 			}

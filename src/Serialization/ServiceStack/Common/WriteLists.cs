@@ -266,7 +266,7 @@ namespace ServiceStack.Text.Common
                 }
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 throw;
             }

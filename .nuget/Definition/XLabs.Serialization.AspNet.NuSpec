@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package>
+  <metadata>
+    <id>XLabs.Serialization.AspNet</id>
+    <title>XLabs - Serialization - ASP.NET wrapper</title>
+    <tags>Xamarin XLabs Serialization ASP.NET</tags>
+    <version>2.0.5603</version>
+    <authors>XLabs Team</authors>
+    <licenseUrl>https://github.com/XForms/Xamarin-Forms-Labs/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/XForms/Xamarin-Forms-Labs</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/XLabs/Xamarin-Forms-Labs/master/Design/Icons/nuget/icon_nuget.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>
+      XLabs is a open source project that aims to provide a powerfull and cross platform set of controls tailored to work with Xamarin Forms.
+
+      This package contains a wrapper allowing you to use any XLabs serializer in ASP.NET project.
+    </description>
+    <summary>
+      XLabs is a open source project that aims to provide a powerfull and cross platform set of controls tailored to work with Xamarin.
+    </summary>
+    <releaseNotes>
+
+    </releaseNotes>
+    <language>en-US</language>
+    <dependencies>
+      <dependency id="XLabs.Serialization" version="2.0.5603" />
+    </dependencies>
+  </metadata>
+  <files>	
+    <file src="..\..\build\**\XLabs.Serialization.AspNet.dll*" target="lib\net45" />
+    <file src="..\..\build\**\XLabs.Serialization.AspNet.dll.mdb*" target="lib\net45" />
+    <file src="..\..\build\**\XLabs.Serialization.AspNet.pdb*" target="lib\net45" />
+    <file src="..\..\build\**\XLabs.Serialization.AspNet.xml*" target="lib\net45" />
+    <!-- Source Files for Symbol Server -->
+    <file src="..\..\src\Serialization\XLabs.Serialization.AspNet\**\*.cs" target="src" />
+  </files>
+</package>

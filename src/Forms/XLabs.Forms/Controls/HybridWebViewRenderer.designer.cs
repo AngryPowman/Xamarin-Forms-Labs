@@ -29,6 +29,11 @@ namespace XLabs.Forms.Controls
         //private static readonly Regex Expression = new Regex(Format);
         private static readonly Regex FuncExpression = new Regex(FuncFormat);
 
+        /// <summary>
+        /// Handles the <see cref="E:ElementPropertyChanged" /> event.
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="System.ComponentModel.PropertyChangedEventArgs"/> instance containing the event data.</param>
         protected override void OnElementPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             // Xamarin will changed the renderer attached to a view so it is possible that
@@ -136,9 +141,9 @@ namespace XLabs.Forms.Controls
 
         partial void Load(Uri uri);
 
-        partial void LoadFromContent(object sender, string contentFullName);
+        partial void LoadFromContent(object sender, HybridWebView.LoadContentEventArgs contentArgs);
 
-        partial void LoadContent(object sender, string contentFullName);
+        partial void LoadContent(object sender, HybridWebView.LoadContentEventArgs contentArgs);
 
         partial void LoadFromString(string html);
 

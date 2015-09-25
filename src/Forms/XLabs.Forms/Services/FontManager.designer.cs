@@ -7,11 +7,20 @@ using Xamarin.Forms;
 
 namespace XLabs.Forms.Services
 {
-    public partial class FontManager
+	/// <summary>
+	/// Class FontManager.
+	/// </summary>
+	public partial class FontManager
     {
         private const short InitialSize = 24;
 
-        public Font FindClosest(string name, double desiredHeight)
+		/// <summary>
+		/// Finds the closest.
+		/// </summary>
+		/// <param name="name">The name.</param>
+		/// <param name="desiredHeight">Height of the desired.</param>
+		/// <returns>Font.</returns>
+		public Font FindClosest(string name, double desiredHeight)
         {
             var height = this.GetHeight(Font.OfSize(name, InitialSize));
 

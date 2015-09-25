@@ -22,8 +22,17 @@ namespace XLabs.Forms.Extensions
 		/// <param name="typeface">Typeface.</param>
 		void StoreTypeface(string key, Typeface typeface);
 
+		/// <summary>
+		/// Removes the typeface.
+		/// </summary>
+		/// <param name="key">The key.</param>
 		void RemoveTypeface(string key);
 
+		/// <summary>
+		/// Retrieves the typeface.
+		/// </summary>
+		/// <param name="key">The key.</param>
+		/// <returns>Typeface.</returns>
 		Typeface RetrieveTypeface(string key);
 	}
 
@@ -155,6 +164,7 @@ namespace XLabs.Forms.Extensions
 					#if DEBUG
 					Console.WriteLine("Found in assets and cached.");
 					#endif
+#pragma warning disable CS0168 // Variable is declared but never used
 				} catch(Exception ex)
 				{
 					#if DEBUG
@@ -164,10 +174,13 @@ namespace XLabs.Forms.Extensions
 					try
 					{
 						typeface = Typeface.CreateFromFile("fonts/" + filename);
-						#if DEBUG
+
+
+#if DEBUG
 						Console.WriteLine("Found in file and cached.");
-						#endif
+#endif
 					} catch(Exception ex1)
+#pragma warning restore CS0168 // Variable is declared but never used
 					{
 						#if DEBUG
 						Console.WriteLine("not found by file. Exception: {0}", ex1);

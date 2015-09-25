@@ -18,8 +18,16 @@ using ServiceStack.Text.Common;
 
 namespace ServiceStack.Text
 {
+	/// <summary>
+	/// Class JsvFormatter.
+	/// </summary>
 	public static class JsvFormatter
 	{
+		/// <summary>
+		/// Formats the specified serialized text.
+		/// </summary>
+		/// <param name="serializedText">The serialized text.</param>
+		/// <returns>System.String.</returns>
 		public static string Format(string serializedText)
 		{
 			if (string.IsNullOrEmpty(serializedText)) return null;
@@ -82,6 +90,11 @@ namespace ServiceStack.Text
 			return sb.ToString();
 		}
 
+		/// <summary>
+		/// Appends the tab line.
+		/// </summary>
+		/// <param name="sb">The sb.</param>
+		/// <param name="tabCount">The tab count.</param>
 		private static void AppendTabLine(StringBuilder sb, int tabCount)
 		{
 			sb.AppendLine();

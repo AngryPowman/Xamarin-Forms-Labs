@@ -16,9 +16,17 @@ namespace XLabs.Platform
     using System.Threading.Tasks;
     using Android.Graphics;
 
-    public static class ViewExtensions
+	/// <summary>
+	/// Class ViewExtensions.
+	/// </summary>
+	public static class ViewExtensions
     {
-        public static Android.Graphics.Bitmap ToBitmap(this Android.Views.View view)
+		/// <summary>
+		/// To the bitmap.
+		/// </summary>
+		/// <param name="view">The view.</param>
+		/// <returns>Android.Graphics.Bitmap.</returns>
+		public static Android.Graphics.Bitmap ToBitmap(this Android.Views.View view)
         {
             var bitmap = Bitmap.CreateBitmap(view.Width, view.Height, Bitmap.Config.Argb8888);
             using (var c = new Canvas(bitmap))
@@ -29,12 +37,24 @@ namespace XLabs.Platform
             return bitmap;
         }
 
-        public static async Task StreamToPng(this Android.Views.View view, Stream stream)
+		/// <summary>
+		/// Streams to PNG.
+		/// </summary>
+		/// <param name="view">The view.</param>
+		/// <param name="stream">The stream.</param>
+		/// <returns>Task.</returns>
+		public static async Task StreamToPng(this Android.Views.View view, Stream stream)
         {
             await view.ToBitmap().CompressAsync(Bitmap.CompressFormat.Png, 100, stream);
         }
 
-        public static bool IsHit(this Android.Views.View view, PointF point)
+		/// <summary>
+		/// Determines whether the specified point is hit.
+		/// </summary>
+		/// <param name="view">The view.</param>
+		/// <param name="point">The point.</param>
+		/// <returns><c>true</c> if the specified point is hit; otherwise, <c>false</c>.</returns>
+		public static bool IsHit(this Android.Views.View view, PointF point)
         {
             var r = new Rect();
             view.GetHitRect(r);

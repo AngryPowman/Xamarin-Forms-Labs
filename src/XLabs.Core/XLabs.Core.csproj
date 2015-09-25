@@ -60,7 +60,9 @@
     <Compile Include="Helpers\BigEndianReader.cs" />
     <Compile Include="Helpers\EventArgs{T}.cs" />
     <Compile Include="Helpers\EventExtensions.cs" />
+    <Compile Include="Helpers\GroupedListSource.cs" />
     <Compile Include="Helpers\Icons.cs" />
+    <Compile Include="Helpers\ListGroup.cs" />
     <Compile Include="Helpers\TaskUtils.cs" />
     <Compile Include="Helpers\Vector3.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

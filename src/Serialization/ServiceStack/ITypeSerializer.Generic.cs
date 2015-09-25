@@ -15,6 +15,10 @@ using System.IO;
 
 namespace ServiceStack.Text
 {
+	/// <summary>
+	/// Interface ITypeSerializer
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
 	public interface ITypeSerializer<T>
 	{
 		/// <summary>

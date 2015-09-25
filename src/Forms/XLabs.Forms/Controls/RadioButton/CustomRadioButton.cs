@@ -3,9 +3,15 @@ using Xamarin.Forms;
 
 namespace XLabs.Forms.Controls
 {
-    public class CustomRadioButton : View
+	/// <summary>
+	/// Class CustomRadioButton.
+	/// </summary>
+	public class CustomRadioButton : View
     {
-        public static readonly BindableProperty CheckedProperty =
+		/// <summary>
+		/// The checked property
+		/// </summary>
+		public static readonly BindableProperty CheckedProperty =
             BindableProperty.Create<CustomRadioButton, bool>(
                 p => p.Checked, false);
 
@@ -63,14 +69,22 @@ namespace XLabs.Forms.Controls
             }
         }
 
-        public string Text
+		/// <summary>
+		/// Gets or sets the text.
+		/// </summary>
+		/// <value>The text.</value>
+		public string Text
         {
             get { return this.GetValue<string>(TextProperty); }
 
             set { SetValue(TextProperty, value); }
         }
 
-        public Color TextColor
+		/// <summary>
+		/// Gets or sets the color of the text.
+		/// </summary>
+		/// <value>The color of the text.</value>
+		public Color TextColor
         {
             get { return this.GetValue<Color>(TextColorProperty); }
 
@@ -109,6 +123,12 @@ namespace XLabs.Forms.Controls
             }
         }
 
-        public int Id { get; set; }
-    }
+#pragma warning disable CS0108 // Member hides inherited member; missing new keyword
+		/// <summary>
+		/// Gets or sets the identifier.
+		/// </summary>
+		/// <value>The identifier.</value>
+		public int Id { get; set; }
+#pragma warning restore CS0108 // Member hides inherited member; missing new keyword
+	}
 }

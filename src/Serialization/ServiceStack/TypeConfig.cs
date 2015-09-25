@@ -1,17 +1,42 @@
+// ***********************************************************************
+// <copyright file="TypeConfig.cs" company="XLabs">
+//     Copyright © ServiceStack 2013 & XLabs
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
 using System;
 using System.Linq;
 using System.Reflection;
 
 namespace ServiceStack.Text
 {
-    internal class TypeConfig
+	/// <summary>
+	/// Class TypeConfig.
+	/// </summary>
+	internal class TypeConfig
     {
-        internal readonly Type Type;
-        internal bool EnableAnonymousFieldSetterses;
-        internal PropertyInfo[] Properties;
-        internal FieldInfo[] Fields;
+		/// <summary>
+		/// The type
+		/// </summary>
+		internal readonly Type Type;
+		/// <summary>
+		/// The enable anonymous field setterses
+		/// </summary>
+		internal bool EnableAnonymousFieldSetterses;
+		/// <summary>
+		/// The properties
+		/// </summary>
+		internal PropertyInfo[] Properties;
+		/// <summary>
+		/// The fields
+		/// </summary>
+		internal FieldInfo[] Fields;
 
-        internal TypeConfig(Type type)
+		/// <summary>
+		/// Initializes a new instance of the <see cref="TypeConfig"/> class.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		internal TypeConfig(Type type)
         {
             Type = type;
             EnableAnonymousFieldSetterses = false;
@@ -20,29 +45,51 @@ namespace ServiceStack.Text
         }
     }
 
-    public static class TypeConfig<T>
+	/// <summary>
+	/// Class TypeConfig.
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	public static class TypeConfig<T>
     {
-        private static readonly TypeConfig config;
+		/// <summary>
+		/// The configuration
+		/// </summary>
+		private static readonly TypeConfig config;
 
-        public static PropertyInfo[] Properties
+		/// <summary>
+		/// Gets or sets the properties.
+		/// </summary>
+		/// <value>The properties.</value>
+		public static PropertyInfo[] Properties
         {
             get { return config.Properties; }
             set { config.Properties = value; }
         }
 
-        public static FieldInfo[] Fields
+		/// <summary>
+		/// Gets or sets the fields.
+		/// </summary>
+		/// <value>The fields.</value>
+		public static FieldInfo[] Fields
         {
             get { return config.Fields; }
             set { config.Fields = value; }
         }
 
-        public static bool EnableAnonymousFieldSetters
+		/// <summary>
+		/// Gets or sets a value indicating whether [enable anonymous field setters].
+		/// </summary>
+		/// <value><c>true</c> if [enable anonymous field setters]; otherwise, <c>false</c>.</value>
+		public static bool EnableAnonymousFieldSetters
         {
             get { return config.EnableAnonymousFieldSetterses; }
             set { config.EnableAnonymousFieldSetterses = value; }
         }
 
-        static TypeConfig()
+		/// <summary>
+		/// Initializes static members of the <see cref="TypeConfig{T}"/> class.
+		/// </summary>
+		static TypeConfig()
         {
             config = new TypeConfig(typeof(T));
             
@@ -56,7 +103,11 @@ namespace ServiceStack.Text
             Fields = config.Type.GetSerializableFields().ToArray();
         }
 
-        internal static TypeConfig GetState()
+		/// <summary>
+		/// Gets the state.
+		/// </summary>
+		/// <returns>TypeConfig.</returns>
+		internal static TypeConfig GetState()
         {
             return config;
         }

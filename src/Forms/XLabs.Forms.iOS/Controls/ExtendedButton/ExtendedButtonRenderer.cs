@@ -9,9 +9,16 @@ namespace XLabs.Forms.Controls
     using System.ComponentModel;
     using Extensions;
 
-    public class ExtendedButtonRenderer : ButtonRenderer
+	/// <summary>
+	/// Class ExtendedButtonRenderer.
+	/// </summary>
+	public class ExtendedButtonRenderer : ButtonRenderer
     {
-        protected override void OnElementChanged(ElementChangedEventArgs<Button> e)
+		/// <summary>
+		/// Called when [element changed].
+		/// </summary>
+		/// <param name="e">The e.</param>
+		protected override void OnElementChanged(ElementChangedEventArgs<Button> e)
         {
             base.OnElementChanged(e);
 
@@ -26,7 +33,12 @@ namespace XLabs.Forms.Controls
             this.Control.HorizontalAlignment = this.Element.HorizontalContentAlignment.ToContentHorizontalAlignment();
         }
 
-        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+		/// <summary>
+		/// Handles the <see cref="E:ElementPropertyChanged" /> event.
+		/// </summary>
+		/// <param name="sender">The sender.</param>
+		/// <param name="e">The <see cref="PropertyChangedEventArgs"/> instance containing the event data.</param>
+		protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             switch (e.PropertyName)
             {
@@ -42,7 +54,11 @@ namespace XLabs.Forms.Controls
             }
         }
 
-        public new ExtendedButton Element
+		/// <summary>
+		/// Gets the element.
+		/// </summary>
+		/// <value>The element.</value>
+		public new ExtendedButton Element
         {
             get
             {

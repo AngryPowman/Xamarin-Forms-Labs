@@ -43,6 +43,11 @@
         /// <value>The ydpi.</value>
         public double Ydpi { get { return Info.RawDpiY; }}
 
+        public double Scale
+        {
+            get { return Info.RawPixelsPerViewPixel; }
+        }
+
         /// <summary>
         /// Convert width in inches to runtime pixels
         /// </summary>

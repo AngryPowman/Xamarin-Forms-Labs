@@ -64,7 +64,7 @@ namespace ServiceStack.Text.Jsv
 
                 return writeFn;
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
 				throw;
 			}

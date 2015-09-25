@@ -1,5 +1,4 @@
 ﻿using Xamarin.Forms;
-
 using XLabs.Forms.Controls;
 
 [assembly: ExportRenderer (typeof(GridView), typeof(GridViewRenderer))]
@@ -30,7 +29,7 @@ namespace XLabs.Forms.Controls
 		/// </summary>
 		private readonly Android.Content.Res.Orientation _orientation = Android.Content.Res.Orientation.Undefined;
 		/// <summary>
-		/// Initializes a new instance of the <see cref="GridViewRenderer"/> class.
+		/// Initializes a new instance of the <see cref="GridViewRenderer" /> class.
 		/// </summary>
 		public GridViewRenderer ()
 		{
@@ -106,7 +105,7 @@ namespace XLabs.Forms.Controls
 		/// Handles the ItemClick event of the collectionView control.
 		/// </summary>
 		/// <param name="sender">The source of the event.</param>
-		/// <param name="e">The <see cref="AdapterView.ItemClickEventArgs"/> instance containing the event data.</param>
+		/// <param name="e">The <see cref="AdapterView.ItemClickEventArgs" /> instance containing the event data.</param>
 		void CollectionViewItemClick(object sender, AdapterView.ItemClickEventArgs e)
 		{
 			var item = this.Element.ItemsSource.Cast<object>().ElementAt(e.Position);
@@ -149,7 +148,7 @@ namespace XLabs.Forms.Controls
 		/// Elements the property changed.
 		/// </summary>
 		/// <param name="sender">The sender.</param>
-		/// <param name="e">The <see cref="System.ComponentModel.PropertyChangedEventArgs"/> instance containing the event data.</param>
+		/// <param name="e">The <see cref="System.ComponentModel.PropertyChangedEventArgs" /> instance containing the event data.</param>
 		private void ElementPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
 		{
 			if (e.PropertyName == "ItemsSource")
@@ -163,7 +162,7 @@ namespace XLabs.Forms.Controls
 		/// Elements the property changing.
 		/// </summary>
 		/// <param name="sender">The sender.</param>
-		/// <param name="e">The <see cref="PropertyChangingEventArgs"/> instance containing the event data.</param>
+		/// <param name="e">The <see cref="PropertyChangingEventArgs" /> instance containing the event data.</param>
 		private void ElementPropertyChanging(object sender, PropertyChangingEventArgs e)
 		{
 			if (e.PropertyName == "ItemsSource")
@@ -178,7 +177,7 @@ namespace XLabs.Forms.Controls
 		/// Datas the collection changed.
 		/// </summary>
 		/// <param name="sender">The sender.</param>
-		/// <param name="e">The <see cref="System.Collections.Specialized.NotifyCollectionChangedEventArgs"/> instance containing the event data.</param>
+		/// <param name="e">The <see cref="System.Collections.Specialized.NotifyCollectionChangedEventArgs" /> instance containing the event data.</param>
 		private void DataCollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
 		{
 			//  Control.ReloadData();
@@ -218,7 +217,7 @@ namespace XLabs.Forms.Controls
 		/// <param name="convertView">The convert view.</param>
 		/// <param name="parent">The parent.</param>
 		/// <returns>Android.Views.View.</returns>
-		public  global::Android.Views.View GetCell(int position, global::Android.Views.View convertView, ViewGroup parent)
+		public global::Android.Views.View GetCell(int position, global::Android.Views.View convertView, ViewGroup parent)
 		{
 			var item = this.Element.ItemsSource.Cast<object>().ElementAt(position);
 			var viewCellBinded = (Element.ItemTemplate.CreateContent () as ViewCell);
@@ -271,41 +270,94 @@ namespace XLabs.Forms.Controls
 		}
 	}
 
+	/// <summary>
+	/// Class GridDataSource.
+	/// </summary>
 	public class GridDataSource : BaseAdapter
 	{
+		/// <summary>
+		/// The _context
+		/// </summary>
 		Context _context;
 
+		/// <summary>
+		/// Delegate OnGetCell
+		/// </summary>
+		/// <param name="position">The position.</param>
+		/// <param name="convertView">The convert view.</param>
+		/// <param name="parent">The parent.</param>
+		/// <returns>Android.Views.View.</returns>
 		public delegate global::Android.Views.View OnGetCell(int position, global::Android.Views.View convertView, ViewGroup parent);
+		/// <summary>
+		/// Delegate OnRowsInSection
+		/// </summary>
+		/// <returns>System.Int32.</returns>
 		public delegate int OnRowsInSection();
 
+		/// <summary>
+		/// The _on get cell
+		/// </summary>
 		private readonly OnGetCell _onGetCell;
+		/// <summary>
+		/// The _on rows in section
+		/// </summary>
 		private readonly OnRowsInSection _onRowsInSection;
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="GridDataSource"/> class.
+		/// </summary>
+		/// <param name="onGetCell">The on get cell.</param>
+		/// <param name="onRowsInSection">The on rows in section.</param>
 		public GridDataSource(OnGetCell onGetCell, OnRowsInSection onRowsInSection)
 		{
 			this._onGetCell = onGetCell;
 			this._onRowsInSection = onRowsInSection;
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="GridDataSource"/> class.
+		/// </summary>
+		/// <param name="c">The c.</param>
 		public GridDataSource (Context c)
 		{
 			_context = c;
 		}
 
+		/// <summary>
+		/// Gets the count.
+		/// </summary>
+		/// <value>The count.</value>
 		public override int Count {
 			get { return _onRowsInSection (); }
 		}
 
+		/// <summary>
+		/// Gets the item.
+		/// </summary>
+		/// <param name="position">The position.</param>
+		/// <returns>Java.Lang.Object.</returns>
 		public override Java.Lang.Object GetItem (int position)
 		{
 			return null;
 		}
 
+		/// <summary>
+		/// Gets the item identifier.
+		/// </summary>
+		/// <param name="position">The position.</param>
+		/// <returns>System.Int64.</returns>
 		public override long GetItemId (int position)
 		{
 			return 0;
 		}
 
+		/// <summary>
+		/// Gets the view.
+		/// </summary>
+		/// <param name="position">The position.</param>
+		/// <param name="convertView">The convert view.</param>
+		/// <param name="parent">The parent.</param>
+		/// <returns>Android.Views.View.</returns>
 		public override global::Android.Views.View GetView (int position, global::Android.Views.View convertView, ViewGroup parent)
 		{
 			return _onGetCell (position, convertView, parent);
@@ -313,11 +365,22 @@ namespace XLabs.Forms.Controls
 
 	}
 
+	/// <summary>
+	/// Class GridViewCellRenderer.
+	/// </summary>
 	public class GridViewCellRenderer : CellRenderer
 	{
 		//
 		// Methods
 		//
+		/// <summary>
+		/// Gets the cell core.
+		/// </summary>
+		/// <param name="item">The item.</param>
+		/// <param name="convertView">The convert view.</param>
+		/// <param name="parent">The parent.</param>
+		/// <param name="context">The context.</param>
+		/// <returns>Android.Views.View.</returns>
 		protected override global::Android.Views.View GetCellCore (Cell item, global::Android.Views.View convertView, ViewGroup parent, Context context)
 		{
 			ViewCell viewCell = (ViewCell)item;
@@ -336,12 +399,31 @@ namespace XLabs.Forms.Controls
 		//
 		// Nested Types
 		//
+		/// <summary>
+		/// Class ViewCellContainer.
+		/// </summary>
 		private class ViewCellContainer : ViewGroup
 		{
 
+			/// <summary>
+			/// The _view
+			/// </summary>
 			IVisualElementRenderer _view;
+			/// <summary>
+			/// The _parent
+			/// </summary>
 			global::Android.Views.View _parent;
+			/// <summary>
+			/// The _view cell
+			/// </summary>
 			ViewCell _viewCell;
+			/// <summary>
+			/// Initializes a new instance of the <see cref="ViewCellContainer"/> class.
+			/// </summary>
+			/// <param name="context">The context.</param>
+			/// <param name="view">The view.</param>
+			/// <param name="viewCell">The view cell.</param>
+			/// <param name="parent">The parent.</param>
 			public ViewCellContainer (Context context, IVisualElementRenderer view, ViewCell viewCell, global::Android.Views.View parent) : base (context)
 			{
 
@@ -353,6 +435,10 @@ namespace XLabs.Forms.Controls
 				this.AddView (view.ViewGroup);
 			}
 
+			/// <summary>
+			/// Updates the specified cell.
+			/// </summary>
+			/// <param name="cell">The cell.</param>
 			public void Update (ViewCell cell)
 			{
 				IVisualElementRenderer visualElementRenderer = this.GetChildAt (0) as IVisualElementRenderer;
@@ -375,6 +461,14 @@ namespace XLabs.Forms.Controls
 				//                this.AddView (this.view.ViewGroup);
 			}
 			//
+			/// <summary>
+			/// Called when [layout].
+			/// </summary>
+			/// <param name="changed">if set to <c>true</c> [changed].</param>
+			/// <param name="l">The l.</param>
+			/// <param name="t">The t.</param>
+			/// <param name="r">The r.</param>
+			/// <param name="b">The b.</param>
 			protected override void OnLayout (bool changed, int l, int t, int r, int b)
 			{
 				double width = base.Context.FromPixels ((double)(r - l));

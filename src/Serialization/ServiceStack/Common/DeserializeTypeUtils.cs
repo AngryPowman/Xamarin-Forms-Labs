@@ -9,15 +9,22 @@
 //
 // Licensed under the same terms of ServiceStack: new BSD license.
 //
-
 using System;
 using System.Reflection;
 
 namespace ServiceStack.Text.Common
 {
-    public class DeserializeTypeUtils
+	/// <summary>
+	/// Class DeserializeTypeUtils.
+	/// </summary>
+	public class DeserializeTypeUtils
     {
-        public static ParseStringDelegate GetParseMethod(Type type)
+		/// <summary>
+		/// Gets the parse method.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns>ParseStringDelegate.</returns>
+		public static ParseStringDelegate GetParseMethod(Type type)
         {
             var typeConstructor = GetTypeStringConstructor(type);
             if (typeConstructor != null)
@@ -28,12 +35,12 @@ namespace ServiceStack.Text.Common
             return null;
         }
 
-        /// <summary>
-        /// Get the type(string) constructor if exists
-        /// </summary>
-        /// <param name="type">The type.</param>
-        /// <returns></returns>
-        public static ConstructorInfo GetTypeStringConstructor(Type type)
+		/// <summary>
+		/// Get the type(string) constructor if exists
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns>ConstructorInfo.</returns>
+		public static ConstructorInfo GetTypeStringConstructor(Type type)
         {
             foreach (var ci in type.DeclaredConstructors())
             {

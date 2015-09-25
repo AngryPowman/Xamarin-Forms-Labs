@@ -103,7 +103,14 @@
             return this;
         }
 
-        public IDependencyContainer Register<T>(Func<IResolver, T> func) where T : class
+		/// <summary>
+		/// Registers the specified function.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="func">The function.</param>
+		/// <returns>IDependencyContainer.</returns>
+		/// <exception cref="System.NotImplementedException">Unity container does not support registering funcs for resolving.</exception>
+		public IDependencyContainer Register<T>(Func<IResolver, T> func) where T : class
         {
             throw new NotImplementedException("Unity container does not support registering funcs for resolving.");
         }

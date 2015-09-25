@@ -21,10 +21,23 @@ using ServiceStack.Text.Common;
 
 namespace ServiceStack.Text.Jsv
 {
+	/// <summary>
+	/// Class JsvSerializer.
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
 	public class JsvSerializer<T>
 	{
+		/// <summary>
+		/// The deserializer cache
+		/// </summary>
 		Dictionary<Type, ParseStringDelegate> DeserializerCache = new Dictionary<Type, ParseStringDelegate>();
 
+		/// <summary>
+		/// Deserializes from string.
+		/// </summary>
+		/// <param name="value">The value.</param>
+		/// <param name="type">The type.</param>
+		/// <returns>T.</returns>
 		public T DeserializeFromString(string value, Type type)
 		{
 			ParseStringDelegate parseFn;
@@ -47,6 +60,11 @@ namespace ServiceStack.Text.Jsv
             return (T)parseFn(value);
 		}
 
+		/// <summary>
+		/// Deserializes from string.
+		/// </summary>
+		/// <param name="value">The value.</param>
+		/// <returns>T.</returns>
 		public T DeserializeFromString(string value)
 		{
 			if (typeof(T) == typeof(string)) return (T)(object)value;
@@ -54,11 +72,21 @@ namespace ServiceStack.Text.Jsv
 			return (T)JsvReader<T>.Parse(value);
 		}
 
+		/// <summary>
+		/// Serializes to writer.
+		/// </summary>
+		/// <param name="value">The value.</param>
+		/// <param name="writer">The writer.</param>
 		public void SerializeToWriter(T value, TextWriter writer)
 		{
 			JsvWriter<T>.WriteObject(writer, value);
 		}
 
+		/// <summary>
+		/// Serializes to string.
+		/// </summary>
+		/// <param name="value">The value.</param>
+		/// <returns>System.String.</returns>
 		public string SerializeToString(T value)
 		{
 			if (value == null) return null;

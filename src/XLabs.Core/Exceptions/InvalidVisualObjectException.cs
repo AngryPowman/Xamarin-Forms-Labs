@@ -3,12 +3,15 @@
 	using System;
 	using System.Runtime.CompilerServices;
 
-	/// <summary>
-	/// Thrown when datatemplate inflates to an object 
-	/// that is neither a <see cref="Xamarin.Forms.View"/> object nor a
-	/// <see cref="Xamarin.Forms.ViewCell"/> object
-	/// </summary>
+#pragma warning disable CS1574 
+	// XML comment has cref attribute that could not be resolved
+							  /// <summary>
+							  /// Thrown when datatemplate inflates to an object 
+							  /// that is neither a <see cref="Xamarin.Forms.View"/> object nor a
+							  /// <see cref="Xamarin.Forms.ViewCell"/> object
+							  /// </summary>
 	public class InvalidVisualObjectException : Exception
+#pragma warning restore CS1574 // XML comment has cref attribute that could not be resolved
 	{
 		/// <summary>
 		/// Hide any possible default constructor

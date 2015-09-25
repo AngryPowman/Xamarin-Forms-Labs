@@ -3,9 +3,15 @@ using Xamarin.Forms;
 
 namespace XLabs.Forms.Controls
 {
-    public class WebImage : Image
+	/// <summary>
+	/// Class WebImage.
+	/// </summary>
+	public class WebImage : Image
     {
-        public static readonly BindableProperty ImageUrlProperty = BindableProperty.Create<WebImage, string>(p => p.ImageUrl, default(string));
+		/// <summary>
+		/// The image URL property
+		/// </summary>
+		public static readonly BindableProperty ImageUrlProperty = BindableProperty.Create<WebImage, string>(p => p.ImageUrl, default(string));
 
         /// <summary>
         /// The URL of the image to display from the web
@@ -16,7 +22,10 @@ namespace XLabs.Forms.Controls
             set { SetValue(ImageUrlProperty, value); }
         }
 
-        public static readonly BindableProperty DefaultImageProperty = BindableProperty.Create<WebImage, string>(p => p.DefaultImage, default(string));
+		/// <summary>
+		/// The default image property
+		/// </summary>
+		public static readonly BindableProperty DefaultImageProperty = BindableProperty.Create<WebImage, string>(p => p.DefaultImage, default(string));
 
         /// <summary>
         /// The path to the local image to display if the <c>ImageUrl</c> can't be loaded

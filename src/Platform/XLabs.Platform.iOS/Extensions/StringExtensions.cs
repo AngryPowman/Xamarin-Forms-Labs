@@ -24,7 +24,12 @@ namespace XLabs.Platform.Extensions
             return text.StringRect(font, width).Height;
 		}
 
-        public static NSString ToNativeString(this string text)
+		/// <summary>
+		/// To the native string.
+		/// </summary>
+		/// <param name="text">The text.</param>
+		/// <returns>NSString.</returns>
+		public static NSString ToNativeString(this string text)
         {
             return new NSString(text);
         }
@@ -45,7 +50,13 @@ namespace XLabs.Platform.Extensions
                 null);
 	    }
 
-        public static CGSize StringSize(this string text, UIFont font)
+		/// <summary>
+		/// Strings the size.
+		/// </summary>
+		/// <param name="text">The text.</param>
+		/// <param name="font">The font.</param>
+		/// <returns>CGSize.</returns>
+		public static CGSize StringSize(this string text, UIFont font)
         {
             return text.ToNativeString().GetSizeUsingAttributes(new UIStringAttributes { Font = font });
         }

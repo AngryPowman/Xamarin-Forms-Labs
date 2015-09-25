@@ -6,24 +6,43 @@ using Xamarin.Forms;
 
 namespace XLabs.Forms.Controls
 {
-    public class BindableRadioGroup : StackLayout
-    {
-        public ObservableCollection<CustomRadioButton> Items;
+	/// <summary>
+	/// Class BindableRadioGroup.
+	/// </summary>
+	public class BindableRadioGroup : StackLayout
+    { 
 
-        public BindableRadioGroup()
+		/// <summary>
+		/// The items
+		/// </summary>
+		public ObservableCollection<CustomRadioButton> Items;
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="BindableRadioGroup"/> class.
+		/// </summary>
+		public BindableRadioGroup()
         {
             Items = new ObservableCollection<CustomRadioButton>();
         }
 
+		/// <summary>
+		/// The items source property
+		/// </summary>
         public static BindableProperty ItemsSourceProperty =
-            BindableProperty.Create<BindableRadioGroup, IEnumerable>(o => o.ItemsSource, default(IEnumerable));
+                    BindableProperty.Create<BindableRadioGroup, IEnumerable>(o => o.ItemsSource, default(IEnumerable), propertyChanged: OnItemsSourceChanged);
 
-        public static BindableProperty SelectedIndexProperty =
+		/// <summary>
+		/// The selected index property
+		/// </summary>
+		public static BindableProperty SelectedIndexProperty =
             BindableProperty.Create<BindableRadioGroup, int>(o => o.SelectedIndex, default(int), BindingMode.TwoWay,
                 propertyChanged: OnSelectedIndexChanged);
 
 
-        public static readonly BindableProperty TextColorProperty =
+		/// <summary>
+		/// The text color property
+		/// </summary>
+		public static readonly BindableProperty TextColorProperty =
             BindableProperty.Create<CheckBox, Color>(
                 p => p.TextColor, Color.Black);
 
@@ -41,45 +60,31 @@ namespace XLabs.Forms.Controls
             BindableProperty.Create<CheckBox, string>(
                 p => p.FontName, string.Empty);
 
-        public IEnumerable ItemsSource
+		/// <summary>
+		/// Gets or sets the items source.
+		/// </summary>
+		/// <value>The items source.</value>
+		public IEnumerable ItemsSource
         {
             get { return (IEnumerable)GetValue(ItemsSourceProperty); }
-            set
-            {
-                SetValue(ItemsSourceProperty, value);
-
-                Items.Clear();
-                Children.Clear();
-
-                var radIndex = 0;
-
-                foreach (var item in ItemsSource)
-                {
-                    var button = new CustomRadioButton
-                    {
-                        Text = item.ToString(),
-                        Id = radIndex++,
-                        TextColor = TextColor,
-                        FontSize = Device.GetNamedSize(NamedSize.Small, this), 
-                        FontName = FontName
-                    };
-
-                    button.CheckedChanged += OnCheckedChanged;
-
-                    Items.Add(button);
-
-                    Children.Add(button);
-                }
-            }
+            set{ SetValue(ItemsSourceProperty, value); }
         }
 
-        public int SelectedIndex
+		/// <summary>
+		/// Gets or sets the index of the selected.
+		/// </summary>
+		/// <value>The index of the selected.</value>
+		public int SelectedIndex
         {
             get { return (int)GetValue(SelectedIndexProperty); }
             set { SetValue(SelectedIndexProperty, value); }
         }
 
-        public Color TextColor
+		/// <summary>
+		/// Gets or sets the color of the text.
+		/// </summary>
+		/// <value>The color of the text.</value>
+		public Color TextColor
         {
             get { return (Color)GetValue(TextColorProperty); }
             set { SetValue(TextColorProperty, value); }
@@ -117,7 +122,10 @@ namespace XLabs.Forms.Controls
             }
         }
 
-        public event EventHandler<int> CheckedChanged;
+		/// <summary>
+		/// Occurs when [checked changed].
+		/// </summary>
+		public event EventHandler<int> CheckedChanged;
 
         private void OnCheckedChanged(object sender, EventArgs<bool> e)
         {
@@ -141,6 +149,7 @@ namespace XLabs.Forms.Controls
                 }
                 else
                 {
+                    SelectedIndex = selectedItem.Id;
                     if (CheckedChanged != null)
                     {
                         CheckedChanged.Invoke(sender, item.Id);
@@ -166,6 +175,38 @@ namespace XLabs.Forms.Controls
             foreach (var button in bindableRadioGroup.Items.Where(button => button.Id == bindableRadioGroup.SelectedIndex))
             {
                 button.Checked = true;
+            }
+        }
+
+        private static void OnItemsSourceChanged(BindableObject bindable, IEnumerable oldValue, IEnumerable newValue)
+        {
+            var radButtons = bindable as BindableRadioGroup;
+
+
+            foreach (var item in radButtons.Items) {
+                item.CheckedChanged -= radButtons.OnCheckedChanged;
+            }
+                
+            radButtons.Children.Clear();
+
+            var radIndex = 0;
+
+            foreach (var item in radButtons.ItemsSource)
+            {
+                var button = new CustomRadioButton
+                {
+                    Text = item.ToString(),
+                    Id = radIndex++,
+                    TextColor = radButtons.TextColor,
+                    FontSize = Device.GetNamedSize(NamedSize.Small, radButtons),
+                    FontName = radButtons.FontName
+                };
+
+                button.CheckedChanged += radButtons.OnCheckedChanged;
+
+                radButtons.Items.Add(button);
+
+                radButtons.Children.Add(button);
             }
         }
     }

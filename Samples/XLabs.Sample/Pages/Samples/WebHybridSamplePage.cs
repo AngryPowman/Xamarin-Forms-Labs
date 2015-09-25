@@ -1,10 +1,7 @@
 ﻿namespace XLabs.Sample.Pages.Samples
 {
-    using System;
-    using System.Collections.Generic;
     using System.IO;
     using System.Reflection;
-    using System.Runtime.InteropServices.WindowsRuntime;
     using Forms.Controls;
     using Ioc;
     using Serialization;
@@ -12,34 +9,33 @@
 
     public class WebHybridSamplePage : ContentPage
     {
-        private HybridWebView hwv;
+        private readonly HybridWebView hybrid;
         public WebHybridSamplePage()
         {
-            this.BackgroundColor = Color.White;
-            var stack = new StackLayout { VerticalOptions = LayoutOptions.FillAndExpand, HorizontalOptions = LayoutOptions.FillAndExpand };
-            hwv = new HybridWebView { VerticalOptions = LayoutOptions.FillAndExpand, HorizontalOptions = LayoutOptions.FillAndExpand };
+            this.Content = this.hybrid = new HybridWebView
+            {
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                VerticalOptions = LayoutOptions.FillAndExpand,
+                BackgroundColor = Color.White
+            };
 
-            stack.Children.Add(hwv);
-            this.Content = stack;
-
-            hwv.RegisterCallback("dataCallback", t =>
+            this.hybrid.RegisterCallback("dataCallback", t =>
                 Device.BeginInvokeOnMainThread(() =>
                 {
                     this.DisplayAlert("Data callback", t, "OK");
                 })
             );
 
-            //hwv.RegisterNativeFunction("funcCallback", s => new object[] {"Func return data for " + s});
-
-            hwv.RegisterCallback("sendObject", s =>
+            this.hybrid.RegisterCallback("sendObject", s =>
             {
                 var serializer = Resolver.Resolve<IJsonSerializer>();
 
                 var o = serializer.Deserialize<SendObject>(s);
 
-                System.Diagnostics.Debug.WriteLine(o.X);
-                System.Diagnostics.Debug.WriteLine(o.Y);
+                this.DisplayAlert("Object", string.Format("JavaScript sent x: {0}, y: {1}", o.X, o.Y), "OK");
             });
+
+            this.hybrid.RegisterNativeFunction("funcCallback", t => new object[] { "From Func callback: " + t });
         }
 
         #region Overrides of Page
@@ -50,7 +46,7 @@
             using (var reader = new StreamReader(assembly.GetManifestResourceStream("XLabs.Sample.Data.WebHybridTest.html")))
             {
                 var str = reader.ReadToEnd();
-                this.hwv.LoadContent(str);
+                this.hybrid.LoadContent(str);
             }
         }
 

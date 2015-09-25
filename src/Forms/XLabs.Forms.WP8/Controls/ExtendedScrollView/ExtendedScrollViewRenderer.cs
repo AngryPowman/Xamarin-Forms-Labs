@@ -47,7 +47,7 @@ namespace XLabs.Forms.Controls
 		/// </summary>
 		/// <param name="sender">The sender.</param>
 		/// <param name="e">The <see cref="PropertyChangedEventArgs"/> instance containing the event data.</param>
-		protected void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
+		protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
 			if (e.PropertyName == ExtendedScrollView.PositionProperty.PropertyName)
 			{

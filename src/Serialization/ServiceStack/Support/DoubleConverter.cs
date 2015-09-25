@@ -18,7 +18,7 @@ namespace ServiceStack.Text.Support
 		/// exact decimal value.
 		/// </summary>
 		/// <param name="d">The double to convert.</param>
-		/// <returns>A string representation of the double's exact decimal value.</return>
+		/// <returns>A string representation of the double's exact decimal value.</returns>
 		public static string ToExactString(double d)
 		{
 #if XBOX
@@ -68,7 +68,7 @@ namespace ServiceStack.Text.Support
 				exponent++;
 			}
 
-			/// Construct a new decimal expansion with the mantissa
+			// Construct a new decimal expansion with the mantissa
 			ArbitraryDecimal ad = new ArbitraryDecimal(mantissa);
 
 			// If the exponent is less than 0, we need to repeatedly
@@ -95,10 +95,14 @@ namespace ServiceStack.Text.Support
 #endif
 		}
 
-		/// <summary>Private class used for manipulating
+		/// <summary>
+		/// Class ArbitraryDecimal.
+		/// </summary>
 		class ArbitraryDecimal
 		{
-			/// <summary>Digits in the decimal expansion, one byte per digit
+			/// <summary>
+			/// The digits
+			/// </summary>
 			byte[] digits;
 			/// <summary> 
 			/// How many digits are *after* the decimal point

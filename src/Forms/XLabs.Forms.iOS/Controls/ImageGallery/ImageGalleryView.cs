@@ -252,7 +252,7 @@ namespace XLabs.Forms.Controls
 									_pageControl.Pages = _pageControl.Pages + 1;
 								});
 					}
-					catch (Exception ex)
+					catch (Exception)
 					{
 					}
 				}

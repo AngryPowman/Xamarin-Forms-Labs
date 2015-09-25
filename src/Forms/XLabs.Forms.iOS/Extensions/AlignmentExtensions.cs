@@ -4,9 +4,18 @@
     using UIKit;
     using Xamarin.Forms;
 
-    public static class AlignmentExtensions
+	/// <summary>
+	/// Class AlignmentExtensions.
+	/// </summary>
+	public static class AlignmentExtensions
     {
-        public static UIControlContentVerticalAlignment ToContentVerticalAlignment(this TextAlignment alignment)
+		/// <summary>
+		/// To the content vertical alignment.
+		/// </summary>
+		/// <param name="alignment">The alignment.</param>
+		/// <returns>UIControlContentVerticalAlignment.</returns>
+		/// <exception cref="System.InvalidOperationException"></exception>
+		public static UIControlContentVerticalAlignment ToContentVerticalAlignment(this TextAlignment alignment)
         {
             switch (alignment)
             {
@@ -21,7 +30,13 @@
             throw new InvalidOperationException(alignment.ToString());
         }
 
-        public static UIControlContentHorizontalAlignment ToContentHorizontalAlignment(this TextAlignment alignment)
+		/// <summary>
+		/// To the content horizontal alignment.
+		/// </summary>
+		/// <param name="alignment">The alignment.</param>
+		/// <returns>UIControlContentHorizontalAlignment.</returns>
+		/// <exception cref="System.InvalidOperationException"></exception>
+		public static UIControlContentHorizontalAlignment ToContentHorizontalAlignment(this TextAlignment alignment)
         {
             switch (alignment)
             {

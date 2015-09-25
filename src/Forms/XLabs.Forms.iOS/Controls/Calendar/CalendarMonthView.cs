@@ -39,9 +39,17 @@ namespace XLabs.Forms.Controls
     using Foundation;
     using UIKit;
 
-    public delegate void DateSelected(DateTime date);
+	/// <summary>
+	/// Delegate DateSelected
+	/// </summary>
+	/// <param name="date">The date.</param>
+	public delegate void DateSelected(DateTime date);
 
-    public delegate void MonthChanged(DateTime monthSelected);
+	/// <summary>
+	/// Delegate MonthChanged
+	/// </summary>
+	/// <param name="monthSelected">The month selected.</param>
+	public delegate void MonthChanged(DateTime monthSelected);
 
     /// <summary>
     /// Class CalendarMonthView.

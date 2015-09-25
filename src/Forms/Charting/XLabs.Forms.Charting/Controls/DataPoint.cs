@@ -9,8 +9,17 @@
 	/// </summary>
 	public class DataPoint : Element
 	{
+		/// <summary>
+		/// The label property
+		/// </summary>
 		public static readonly BindableProperty LabelProperty = BindableProperty.Create("Label", typeof(string), typeof(DataPoint), String.Empty, BindingMode.OneWay, null, null, null, null);
+		/// <summary>
+		/// The value property
+		/// </summary>
 		public static readonly BindableProperty ValueProperty = BindableProperty.Create("Value", typeof(double), typeof(DataPoint), 0.0, BindingMode.OneWay, null, null, null, null);
+		/// <summary>
+		/// The color property
+		/// </summary>
 		public static readonly BindableProperty ColorProperty = BindableProperty.Create("Color", typeof(Color), typeof(DataPoint), Color.Blue, BindingMode.OneWay, null, null, null, null);
 
 		/// <summary>
@@ -58,10 +67,18 @@
 			}
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="DataPoint"/> class.
+		/// </summary>
 		public DataPoint()
 		{
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="DataPoint"/> class.
+		/// </summary>
+		/// <param name="label">The label.</param>
+		/// <param name="value">The value.</param>
 		public DataPoint(string label, double value)
 		{
 			Label = label;

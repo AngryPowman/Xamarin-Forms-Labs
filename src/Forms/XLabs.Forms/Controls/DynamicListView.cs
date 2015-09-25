@@ -42,13 +42,15 @@ namespace XLabs.Forms.Controls
 		/// </summary>
 		public event EventHandler<EventArgs<T>> OnSelected;
 
+#pragma warning disable CS1587 // XML comment is not placed on a valid language element
 		/// <summary>
 		/// The requested event occurs when an observer requests an item.
 		/// </summary>
 		/// <remarks>The sender will be the requesting observer, f.e. a ListView in Android
 		/// or UITableView in iOS.</remarks>
 		//public event EventHandler<EventArgs<int>> OnRequested;
-
+		
+#pragma warning restore CS1587 // XML comment is not placed on a valid language element
 		/// <summary>
 		/// Add items to data collection.
 		/// </summary>
@@ -132,10 +134,7 @@ namespace XLabs.Forms.Controls
 			}
 		}
 
-		/// <summary>
-		/// Invokes the item requested event.
-		/// </summary>
-		/// <param name="index">Index of the requested item.</param>
+	
 		//public void InvokeItemRequestedEvent(object sender, int index)
 		//{
 		//    if (this.OnRequested != null)

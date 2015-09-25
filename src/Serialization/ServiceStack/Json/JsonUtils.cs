@@ -1,24 +1,67 @@
+// ***********************************************************************
+// Assembly         : XLabs.Serialization.ServiceStack.WP8
+// Author           : rmarinho
+// Created          : 09-08-2015
+//
+// Last Modified By : rmarinho
+// Last Modified On : 09-08-2015
+// ***********************************************************************
+// <copyright file="JsonUtils.cs" company="XLabs">
+//     Copyright © ServiceStack 2013 & XLabs
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
 using System;
 using System.IO;
 
 namespace ServiceStack.Text.Json
 {
+	/// <summary>
+	/// Class JsonUtils.
+	/// </summary>
 	public static class JsonUtils
 	{
+		/// <summary>
+		/// The escape character
+		/// </summary>
 		public const char EscapeChar = '\\';
+		/// <summary>
+		/// The quote character
+		/// </summary>
 		public const char QuoteChar = '"';
+		/// <summary>
+		/// The null
+		/// </summary>
 		public const string Null = "null";
+		/// <summary>
+		/// The true
+		/// </summary>
 		public const string True = "true";
+		/// <summary>
+		/// The false
+		/// </summary>
 		public const string False = "false";
 
+		/// <summary>
+		/// The escape chars
+		/// </summary>
 		static readonly char[] EscapeChars = new[]
 			{
 				QuoteChar, '\n', '\r', '\t', '"', '\\', '\f', '\b',
 			};
 
+		/// <summary>
+		/// The length from largest character
+		/// </summary>
 		private const int LengthFromLargestChar = '\\' + 1;
+		/// <summary>
+		/// The escape character flags
+		/// </summary>
 		private static readonly bool[] EscapeCharFlags = new bool[LengthFromLargestChar];
 
+		/// <summary>
+		/// Initializes static members of the <see cref="JsonUtils"/> class.
+		/// </summary>
 		static JsonUtils()
 		{
 			foreach (var escapeChar in EscapeChars)
@@ -27,6 +70,11 @@ namespace ServiceStack.Text.Json
 			}
 		}
 
+		/// <summary>
+		/// Writes the string.
+		/// </summary>
+		/// <param name="writer">The writer.</param>
+		/// <param name="value">The value.</param>
 		public static void WriteString(TextWriter writer, string value)
 		{
 			if (value == null)
@@ -102,8 +150,8 @@ namespace ServiceStack.Text.Json
 		/// <summary>
 		/// micro optimizations: using flags instead of value.IndexOfAny(EscapeChars)
 		/// </summary>
-		/// <param name="value"></param>
-		/// <returns></returns>
+		/// <param name="value">The value.</param>
+		/// <returns><c>true</c> if [has any escape chars] [the specified value]; otherwise, <c>false</c>.</returns>
 		private static bool HasAnyEscapeChars(string value)
 		{
 			var len = value.Length;
@@ -120,6 +168,11 @@ namespace ServiceStack.Text.Json
 			return false;
 		}
 
+		/// <summary>
+		/// Ints to hexadecimal.
+		/// </summary>
+		/// <param name="intValue">The int value.</param>
+		/// <param name="hex">The hexadecimal.</param>
 		public static void IntToHex(int intValue, char[] hex)
 		{
 			for (var i = 0; i < 4; i++)
@@ -135,6 +188,11 @@ namespace ServiceStack.Text.Json
 			}
 		}
 
+		/// <summary>
+		/// Determines whether [is js object] [the specified value].
+		/// </summary>
+		/// <param name="value">The value.</param>
+		/// <returns><c>true</c> if [is js object] [the specified value]; otherwise, <c>false</c>.</returns>
 		public static bool IsJsObject(string value)
 		{
 			return !string.IsNullOrEmpty(value)
@@ -142,6 +200,11 @@ namespace ServiceStack.Text.Json
 				&& value[value.Length - 1] == '}';
 		}
 
+		/// <summary>
+		/// Determines whether [is js array] [the specified value].
+		/// </summary>
+		/// <param name="value">The value.</param>
+		/// <returns><c>true</c> if [is js array] [the specified value]; otherwise, <c>false</c>.</returns>
 		public static bool IsJsArray(string value)
 		{
 			return !string.IsNullOrEmpty(value)

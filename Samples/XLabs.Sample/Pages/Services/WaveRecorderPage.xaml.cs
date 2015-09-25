@@ -1,11 +1,12 @@
 ﻿namespace XLabs.Sample.Pages.Services
 {
+	using Xamarin.Forms;
 	using XLabs.Sample.ViewModel;
 
 	/// <summary>
 	/// Class WaveRecorderPage.
 	/// </summary>
-	public partial class WaveRecorderPage
+	public partial class WaveRecorderPage : ContentPage
 	{
 		/// <summary>
 		/// Initializes a new instance of the <see cref="WaveRecorderPage"/> class.

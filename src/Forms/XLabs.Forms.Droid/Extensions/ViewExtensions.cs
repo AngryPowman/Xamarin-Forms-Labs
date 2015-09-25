@@ -18,9 +18,18 @@ namespace XLabs.Forms
     using Xamarin.Forms;
     using NativeView = global::Android.Views.View;
 
-    public static class ViewExtensions
+	/// <summary>
+	/// Class ViewExtensions.
+	/// </summary>
+	public static class ViewExtensions
     {
-        public static View FindFormsViewFromAccessibilityId(this View view, NativeView nativeView)
+		/// <summary>
+		/// Finds the forms view from accessibility identifier.
+		/// </summary>
+		/// <param name="view">The view.</param>
+		/// <param name="nativeView">The native view.</param>
+		/// <returns>View.</returns>
+		public static View FindFormsViewFromAccessibilityId(this View view, NativeView nativeView)
         {
             View formsView = null;
 
@@ -44,14 +53,24 @@ namespace XLabs.Forms
             return formsView;
         }
 
-        public static ObservableCollection<Element> GetInternalChildren(this View view)
+		/// <summary>
+		/// Gets the internal children.
+		/// </summary>
+		/// <param name="view">The view.</param>
+		/// <returns>ObservableCollection&lt;Element&gt;.</returns>
+		public static ObservableCollection<Element> GetInternalChildren(this View view)
         {
             var internalPropertyInfo = view.GetType().GetProperty("InternalChildren", BindingFlags.NonPublic | BindingFlags.Instance);
 
             return (internalPropertyInfo == null) ? null : internalPropertyInfo.GetValue(view) as ObservableCollection<Element>;
         }
 
-        public static NativeView GetNativeContent(this View view)
+		/// <summary>
+		/// Gets the content of the native.
+		/// </summary>
+		/// <param name="view">The view.</param>
+		/// <returns>NativeView.</returns>
+		public static NativeView GetNativeContent(this View view)
         {
             PropertyInfo controlProperty= view.GetType().GetProperty("Control", BindingFlags.Public | BindingFlags.Instance);
 

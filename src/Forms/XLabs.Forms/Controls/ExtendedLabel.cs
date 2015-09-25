@@ -16,29 +16,6 @@ namespace XLabs.Forms.Controls
 		}
 
 		/// <summary>
-		/// The font size property
-		/// </summary>
-		public static readonly BindableProperty FontSizeProperty =
-			BindableProperty.Create<ExtendedLabel, double>(
-				p => p.FontSize, -1);
-
-		/// <summary>
-		/// Gets or sets the size of the font.
-		/// </summary>
-		/// <value>The size of the font.</value>
-		public double FontSize
-		{
-			get
-			{
-				return (double)GetValue(FontSizeProperty);
-			}
-			set
-			{
-				SetValue(FontSizeProperty, value);
-			}
-		}
-
-		/// <summary>
 		/// The font name android property.
 		/// </summary>
 		[Obsolete("This is now obsolete. Please rather use FontName and FriendlyFontName to cover all platforms.")]
@@ -186,6 +163,10 @@ namespace XLabs.Forms.Controls
 		public static readonly BindableProperty IsDropShadowProperty =
 			BindableProperty.Create<ExtendedLabel, bool>(p => p.IsDropShadow, false);
 
+		/// <summary>
+		/// Gets or sets a value indicating whether this instance is drop shadow.
+		/// </summary>
+		/// <value><c>true</c> if this instance is drop shadow; otherwise, <c>false</c>.</value>
 		public bool IsDropShadow 
 		{
 			get 
@@ -204,6 +185,10 @@ namespace XLabs.Forms.Controls
 		public static readonly BindableProperty DropShadowColorProperty =
 			BindableProperty.Create<ExtendedLabel, Color>(p => p.DropShadowColor, default(Color));
 
+		/// <summary>
+		/// Gets or sets the color of the drop shadow.
+		/// </summary>
+		/// <value>The color of the drop shadow.</value>
 		public Color DropShadowColor 
 		{
 			get 

@@ -3,8 +3,9 @@
 	using System;
 
 	using XLabs;
+	using Forms.Mvvm;
 
-	public partial class DynamicListView
+	public partial class DynamicListView : BaseView
     {
         private int _count;
         public DynamicListView()

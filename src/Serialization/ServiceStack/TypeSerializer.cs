@@ -26,17 +26,21 @@ namespace ServiceStack.Text
 	/// </summary>
 	public static class TypeSerializer
 	{
+		/// <summary>
+		/// The ut f8 encoding without bom
+		/// </summary>
 		private static readonly UTF8Encoding UTF8EncodingWithoutBom = new UTF8Encoding(false);
 
+		/// <summary>
+		/// The double quote string
+		/// </summary>
 		public const string DoubleQuoteString = "\"\"";
 
 		/// <summary>
 		/// Determines whether the specified type is convertible from string.
 		/// </summary>
 		/// <param name="type">The type.</param>
-		/// <returns>
-		/// 	<c>true</c> if the specified type is convertible from string; otherwise, <c>false</c>.
-		/// </returns>
+		/// <returns><c>true</c> if the specified type is convertible from string; otherwise, <c>false</c>.</returns>
 		public static bool CanCreateFromString(Type type)
 		{
 			return JsvReader.GetParseFn(type) != null;
@@ -45,14 +49,21 @@ namespace ServiceStack.Text
 		/// <summary>
 		/// Parses the specified value.
 		/// </summary>
+		/// <typeparam name="T"></typeparam>
 		/// <param name="value">The value.</param>
-		/// <returns></returns>
+		/// <returns>T.</returns>
 		public static T DeserializeFromString<T>(string value)
 		{
 			if (string.IsNullOrEmpty(value)) return default(T);
 			return (T)JsvReader<T>.Parse(value);
 		}
 
+		/// <summary>
+		/// Deserializes from reader.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="reader">The reader.</param>
+		/// <returns>T.</returns>
 		public static T DeserializeFromReader<T>(TextReader reader)
 		{
 			return DeserializeFromString<T>(reader.ReadToEnd());
@@ -61,9 +72,9 @@ namespace ServiceStack.Text
 		/// <summary>
 		/// Parses the specified type.
 		/// </summary>
-		/// <param name="type">The type.</param>
 		/// <param name="value">The value.</param>
-		/// <returns></returns>
+		/// <param name="type">The type.</param>
+		/// <returns>System.Object.</returns>
 		public static object DeserializeFromString(string value, Type type)
 		{
 			return value == null 
@@ -71,11 +82,23 @@ namespace ServiceStack.Text
 			       	: JsvReader.GetParseFn(type)(value);
 		}
 
+		/// <summary>
+		/// Deserializes from reader.
+		/// </summary>
+		/// <param name="reader">The reader.</param>
+		/// <param name="type">The type.</param>
+		/// <returns>System.Object.</returns>
 		public static object DeserializeFromReader(TextReader reader, Type type)
 		{
 			return DeserializeFromString(reader.ReadToEnd(), type);
 		}
 
+		/// <summary>
+		/// Serializes to string.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="value">The value.</param>
+		/// <returns>System.String.</returns>
 		public static string SerializeToString<T>(T value)
 		{
 			if (value == null || value is Delegate) return null;
@@ -96,6 +119,12 @@ namespace ServiceStack.Text
 			return sb.ToString();
 		}
 
+		/// <summary>
+		/// Serializes to string.
+		/// </summary>
+		/// <param name="value">The value.</param>
+		/// <param name="type">The type.</param>
+		/// <returns>System.String.</returns>
 		public static string SerializeToString(object value, Type type)
 		{
 			if (value == null) return null;
@@ -109,6 +138,12 @@ namespace ServiceStack.Text
 			return sb.ToString();
 		}
 
+		/// <summary>
+		/// Serializes to writer.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="value">The value.</param>
+		/// <param name="writer">The writer.</param>
 		public static void SerializeToWriter<T>(T value, TextWriter writer)
 		{
 			if (value == null) return;
@@ -128,6 +163,12 @@ namespace ServiceStack.Text
             JsvWriter<T>.WriteRootObject(writer, value);
 		}
 
+		/// <summary>
+		/// Serializes to writer.
+		/// </summary>
+		/// <param name="value">The value.</param>
+		/// <param name="type">The type.</param>
+		/// <param name="writer">The writer.</param>
 		public static void SerializeToWriter(object value, Type type, TextWriter writer)
 		{
 			if (value == null) return;
@@ -140,6 +181,12 @@ namespace ServiceStack.Text
 			JsvWriter.GetWriteFn(type)(writer, value);
 		}
 
+		/// <summary>
+		/// Serializes to stream.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="value">The value.</param>
+		/// <param name="stream">The stream.</param>
 		public static void SerializeToStream<T>(T value, Stream stream)
 		{
 			if (value == null) return;
@@ -156,6 +203,12 @@ namespace ServiceStack.Text
 			writer.Flush();
 		}
 
+		/// <summary>
+		/// Serializes to stream.
+		/// </summary>
+		/// <param name="value">The value.</param>
+		/// <param name="type">The type.</param>
+		/// <param name="stream">The stream.</param>
 		public static void SerializeToStream(object value, Type type, Stream stream)
 		{
 			var writer = new StreamWriter(stream, UTF8EncodingWithoutBom);
@@ -163,6 +216,12 @@ namespace ServiceStack.Text
 			writer.Flush();
 		}
 
+		/// <summary>
+		/// Clones the specified value.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="value">The value.</param>
+		/// <returns>T.</returns>
 		public static T Clone<T>(T value)
 		{
 			var serializedValue = SerializeToString(value);
@@ -170,6 +229,12 @@ namespace ServiceStack.Text
 			return cloneObj;
 		}
 
+		/// <summary>
+		/// Deserializes from stream.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="stream">The stream.</param>
+		/// <returns>T.</returns>
 		public static T DeserializeFromStream<T>(Stream stream)
 		{
 			using (var reader = new StreamReader(stream, UTF8EncodingWithoutBom))
@@ -178,6 +243,12 @@ namespace ServiceStack.Text
 			}
 		}
 
+		/// <summary>
+		/// Deserializes from stream.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <param name="stream">The stream.</param>
+		/// <returns>System.Object.</returns>
 		public static object DeserializeFromStream(Type type, Stream stream)
 		{
 			using (var reader = new StreamReader(stream, UTF8EncodingWithoutBom))
@@ -189,7 +260,9 @@ namespace ServiceStack.Text
 		/// <summary>
 		/// Useful extension method to get the Dictionary[string,string] representation of any POCO type.
 		/// </summary>
-		/// <returns></returns>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="obj">The object.</param>
+		/// <returns>Dictionary&lt;System.String, System.String&gt;.</returns>
 		public static Dictionary<string, string> ToStringDictionary<T>(this T obj)
 			where T : class
 		{
@@ -198,19 +271,23 @@ namespace ServiceStack.Text
 			return map;
 		}
 
-        /// <summary>
-        /// Recursively prints the contents of any POCO object in a human-friendly, readable format
-        /// </summary>
-        /// <returns></returns>
-        public static string Dump<T>(this T instance)
+		/// <summary>
+		/// Recursively prints the contents of any POCO object in a human-friendly, readable format
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="instance">The instance.</param>
+		/// <returns>System.String.</returns>
+		public static string Dump<T>(this T instance)
         {
             return SerializeAndFormat(instance);
         }
 
-        /// <summary>
-        /// Print Dump to Console.WriteLine
-        /// </summary>
-        public static void PrintDump<T>(this T instance)
+		/// <summary>
+		/// Print Dump to Console.WriteLine
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="instance">The instance.</param>
+		public static void PrintDump<T>(this T instance)
         {
 #if NETFX_CORE
             System.Diagnostics.Debug.WriteLine(SerializeAndFormat(instance));
@@ -219,10 +296,12 @@ namespace ServiceStack.Text
 #endif
         }
 
-        /// <summary>
-        /// Print string.Format to Console.WriteLine
-        /// </summary>
-        public static void Print(this string text, params object[] args)
+		/// <summary>
+		/// Print string.Format to Console.WriteLine
+		/// </summary>
+		/// <param name="text">The text.</param>
+		/// <param name="args">The arguments.</param>
+		public static void Print(this string text, params object[] args)
         {
 #if NETFX_CORE
             if (args.Length > 0)
@@ -237,6 +316,12 @@ namespace ServiceStack.Text
 #endif
         }
 
+		/// <summary>
+		/// Serializes the and format.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="instance">The instance.</param>
+		/// <returns>System.String.</returns>
 		public static string SerializeAndFormat<T>(this T instance)
 		{
 		    var fn = instance as Delegate;
@@ -248,7 +333,12 @@ namespace ServiceStack.Text
 			return formatStr;
 		}
 
-        public static string Dump(this Delegate fn)
+		/// <summary>
+		/// Dumps the specified function.
+		/// </summary>
+		/// <param name="fn">The function.</param>
+		/// <returns>System.String.</returns>
+		public static string Dump(this Delegate fn)
         {
             var method = fn.GetType().GetMethod("Invoke");
             var sb = new StringBuilder();

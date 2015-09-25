@@ -109,13 +109,63 @@ namespace XLabs.Forms.Controls
 		/// Property definition for the <see cref="ShowTick" />
 		/// </summary>
 		public static readonly BindableProperty ShowTickProperty =BindableProperty.Create<CarouselView<T>, bool>(x => x.ShowTick, true,BindingMode.OneWay,null,ShowTickchanged);
-		#endregion
 
 		/// <summary>
-		/// Show the tickboard.  The tickboard takes up 8dp vertically when shown.
+		/// The item template selector property
 		/// </summary>
-		/// <value><c>true</c> if [show tick]; otherwise, <c>false</c>.</value>
-		public bool ShowTick
+		public static readonly BindableProperty ItemTemplateSelectorProperty = BindableProperty.Create<CarouselView<T>, DataTemplateSelector>(x => x.ItemTemplateSelector, default(DataTemplateSelector), propertyChanged: OnDataTemplateSelectorChanged);
+
+        private DataTemplateSelector currentItemSelector;
+		/// <summary>
+		/// Gets or sets the item template selector.
+		/// </summary>
+		/// <value>The item template selector.</value>
+		public DataTemplateSelector ItemTemplateSelector
+        {
+            get
+            {
+                return (DataTemplateSelector)GetValue(ItemTemplateSelectorProperty);
+            }
+            set
+            {
+                SetValue(ItemTemplateSelectorProperty, value);
+            }
+        }
+
+		/// <summary>
+		/// Called when [data template selector changed].
+		/// </summary>
+		/// <param name="bindable">The bindable.</param>
+		/// <param name="oldvalue">The oldvalue.</param>
+		/// <param name="newvalue">The newvalue.</param>
+		private static void OnDataTemplateSelectorChanged(BindableObject bindable, DataTemplateSelector oldvalue, DataTemplateSelector newvalue)
+        {
+            ((CarouselView<T>)bindable).OnDataTemplateSelectorChanged(oldvalue, newvalue);
+        }
+
+		/// <summary>
+		/// Called when [data template selector changed].
+		/// </summary>
+		/// <param name="oldValue">The old value.</param>
+		/// <param name="newValue">The new value.</param>
+		protected virtual void OnDataTemplateSelectorChanged(DataTemplateSelector oldValue, DataTemplateSelector newValue)
+        {
+            // Cache locally
+            currentItemSelector = newValue;
+
+            if (this.contentView != null)//may be constructing
+            {
+                this.contentView.ItemTemplateSelector = currentItemSelector;
+            }
+        }
+
+        #endregion
+
+        /// <summary>
+        /// Show the tickboard.  The tickboard takes up 8dp vertically when shown.
+        /// </summary>
+        /// <value><c>true</c> if [show tick]; otherwise, <c>false</c>.</value>
+        public bool ShowTick
 		{
 			get { return (bool)GetValue(ShowTickProperty); }
 			set { SetValue(ShowTickProperty,value);}

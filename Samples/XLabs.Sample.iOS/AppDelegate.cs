@@ -53,8 +53,8 @@
         {
             this.SetIoc();
 
-            new CalendarViewRenderer(); //added so the assembly is included
-
+            //new CalendarViewRenderer(); //added so the assembly is included
+            HybridWebViewRenderer.CopyBundleDirectory("HTML");
             Forms.Init();
 
             var formsApp = new App();
@@ -74,7 +74,6 @@
                 }
             };
 
-
             base.FinishedLaunching(app, options);
 
             return true;
@@ -92,7 +91,7 @@
 
             var documents = app.AppDataDirectory;
             var pathToDatabase = Path.Combine(documents, "xforms.db");
-
+            
             resolverContainer.Register<IDevice>(t => AppleDevice.CurrentDevice)
                 .Register<IDisplay>(t => t.Resolve<IDevice>().Display)
                 .Register<IFontManager>(t => new FontManager(t.Resolve<IDisplay>()))

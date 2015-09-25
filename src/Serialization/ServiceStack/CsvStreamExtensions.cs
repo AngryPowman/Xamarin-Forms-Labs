@@ -15,8 +15,17 @@ using System.IO;
 
 namespace ServiceStack.Text
 {
+	/// <summary>
+	/// Class CsvStreamExtensions.
+	/// </summary>
 	public static class CsvStreamExtensions
 	{
+		/// <summary>
+		/// Writes the CSV.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="outputStream">The output stream.</param>
+		/// <param name="records">The records.</param>
 		public static void WriteCsv<T>(this Stream outputStream, IEnumerable<T> records)
 		{
 			using (var textWriter = new StreamWriter(outputStream))
@@ -25,6 +34,12 @@ namespace ServiceStack.Text
 			}
 		}
 
+		/// <summary>
+		/// Writes the CSV.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="writer">The writer.</param>
+		/// <param name="records">The records.</param>
 		public static void WriteCsv<T>(this TextWriter writer, IEnumerable<T> records)
 		{
 			CsvWriter<T>.Write(writer, records);

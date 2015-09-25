@@ -15,10 +15,20 @@ using System;
 
 namespace ServiceStack.Text
 {
+	/// <summary>
+	/// Class SystemTime.
+	/// </summary>
 	public static class SystemTime
 	{
+		/// <summary>
+		/// The UTC date time resolver
+		/// </summary>
 		public static Func<DateTime> UtcDateTimeResolver;
 
+		/// <summary>
+		/// Gets the now.
+		/// </summary>
+		/// <value>The now.</value>
 		public static DateTime Now
 		{
 			get
@@ -28,6 +38,10 @@ namespace ServiceStack.Text
 			}
 		}
 
+		/// <summary>
+		/// Gets the UTC now.
+		/// </summary>
+		/// <value>The UTC now.</value>
 		public static DateTime UtcNow
 		{
 			get

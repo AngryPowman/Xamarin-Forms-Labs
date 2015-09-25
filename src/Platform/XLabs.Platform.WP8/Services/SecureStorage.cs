@@ -32,9 +32,14 @@
             
         }
 
-        #region ISecureStorage Members
+		#region ISecureStorage Members
 
-        public void Store(string key, byte[] dataBytes)
+		/// <summary>
+		/// Stores the specified key.
+		/// </summary>
+		/// <param name="key">The key.</param>
+		/// <param name="dataBytes">The data bytes.</param>
+		public void Store(string key, byte[] dataBytes)
         {
             var mutex = new Mutex(false, key);
 
@@ -53,7 +58,13 @@
             }
         }
 
-        public byte[] Retrieve(string key)
+		/// <summary>
+		/// Retrieves the specified key.
+		/// </summary>
+		/// <param name="key">The key.</param>
+		/// <returns>System.Byte[].</returns>
+		/// <exception cref="System.Exception"></exception>
+		public byte[] Retrieve(string key)
         {
             var mutex = new Mutex(false, key);
 
@@ -78,7 +89,11 @@
             }
         }
 
-        public void Delete(string key)
+		/// <summary>
+		/// Deletes the specified key.
+		/// </summary>
+		/// <param name="key">The key.</param>
+		public void Delete(string key)
         {
             var mutex = new Mutex(false, key);
 

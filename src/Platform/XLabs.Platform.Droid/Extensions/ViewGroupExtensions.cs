@@ -1,3 +1,4 @@
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +13,19 @@ using Android.Widget;
 
 namespace XLabs.Platform
 {
-    public static class ViewGroupExtensions
+	/// <summary>
+	/// Class ViewGroupExtensions.
+	/// </summary>
+	public static class ViewGroupExtensions
     {
-        public static Tuple<View, PointF> GetTouchedView(this ViewGroup viewGroup, PointF point, PointF offset = null)
+		/// <summary>
+		/// Gets the touched view.
+		/// </summary>
+		/// <param name="viewGroup">The view group.</param>
+		/// <param name="point">The point.</param>
+		/// <param name="offset">The offset.</param>
+		/// <returns>Tuple&lt;View, PointF&gt;.</returns>
+		public static Tuple<View, PointF> GetTouchedView(this ViewGroup viewGroup, PointF point, PointF offset = null)
         {
             offset = offset ?? new PointF();
 

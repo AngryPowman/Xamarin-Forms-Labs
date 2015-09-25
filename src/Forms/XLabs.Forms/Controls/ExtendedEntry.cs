@@ -90,7 +90,13 @@ namespace XLabs.Forms.Controls
 			set { SetValue(PlaceholderTextColorProperty, value); }
 		}
 
+		/// <summary>
+		/// The left swipe
+		/// </summary>
 		public EventHandler LeftSwipe;
+		/// <summary>
+		/// The right swipe
+		/// </summary>
 		public EventHandler RightSwipe;
 
 		internal void OnLeftSwipe(object sender, EventArgs e)

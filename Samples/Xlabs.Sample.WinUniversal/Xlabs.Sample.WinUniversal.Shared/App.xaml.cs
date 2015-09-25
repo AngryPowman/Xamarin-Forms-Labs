@@ -168,7 +168,7 @@ namespace Xlabs.Sample.WinUniversal
 
             resolverContainer
                 //.Register<IDevice>(t => WindowsPhoneDevice.CurrentDevice)
-                //.Register<IDisplay>(t => t.Resolve<IDevice>().Display)
+                .Register<IDisplay>(t => new Display())
                 //.Register<IFontManager>(t => new FontManager(t.Resolve<IDisplay>()))
                 //.Register<IEmailService, EmailService>()
                 //.Register<IMediaPicker, MediaPicker>()

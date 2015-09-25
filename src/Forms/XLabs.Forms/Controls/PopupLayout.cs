@@ -21,13 +21,9 @@ namespace XLabs.Forms.Controls
             ///     Will show popup below of the specified view
             /// </summary>
             Bottom
-            /// <summary>
-            /// Will show popup left to the specified view
-            /// </summary>
+       
             //Left,
-            /// <summary>
-            /// Will show popup right of the specified view
-            /// </summary>
+      
             //Right
         }
 
@@ -43,7 +39,10 @@ namespace XLabs.Forms.Controls
 
         private readonly RelativeLayout layout;
 
-        public PopupLayout()
+		/// <summary>
+		/// Initializes a new instance of the <see cref="PopupLayout"/> class.
+		/// </summary>
+		public PopupLayout()
         {
             base.Content = this.layout = new RelativeLayout();
         }

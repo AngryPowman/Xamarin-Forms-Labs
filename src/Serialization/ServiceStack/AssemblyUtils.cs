@@ -1,3 +1,9 @@
+// ***********************************************************************
+// <copyright file="AssemblyUtils.cs" company="XLabs">
+//     Copyright © ServiceStack 2013 & XLabs
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,25 +15,40 @@ using ServiceStack.Common.Support;
 
 namespace ServiceStack.Text
 {
-    /// <summary>
-    /// Utils to load types
-    /// </summary>
-    public static class AssemblyUtils
+	/// <summary>
+	/// Utils to load types
+	/// </summary>
+	public static class AssemblyUtils
     {
-        private const string FileUri = "file:///";
-        private const string DllExt = "dll";
-        private const string ExeExt = "dll";
-        private const char UriSeperator = '/';
+		/// <summary>
+		/// The file URI
+		/// </summary>
+		private const string FileUri = "file:///";
+		/// <summary>
+		/// The DLL ext
+		/// </summary>
+		private const string DllExt = "dll";
+		/// <summary>
+		/// The executable ext
+		/// </summary>
+		private const string ExeExt = "dll";
+		/// <summary>
+		/// The URI seperator
+		/// </summary>
+		private const char UriSeperator = '/';
 
-        private static Dictionary<string, Type> TypeCache = new Dictionary<string, Type>();
+		/// <summary>
+		/// The type cache
+		/// </summary>
+		private static Dictionary<string, Type> TypeCache = new Dictionary<string, Type>();
 
 #if !XBOX
-        /// <summary>
-        /// Find the type from the name supplied
-        /// </summary>
-        /// <param name="typeName">[typeName] or [typeName, assemblyName]</param>
-        /// <returns></returns>
-        public static Type FindType(string typeName)
+		/// <summary>
+		/// Find the type from the name supplied
+		/// </summary>
+		/// <param name="typeName">[typeName] or [typeName, assemblyName]</param>
+		/// <returns>Type.</returns>
+		public static Type FindType(string typeName)
         {
             Type type = null;
             if (TypeCache.TryGetValue(typeName, out type)) return type;
@@ -59,11 +80,13 @@ namespace ServiceStack.Text
 
 #if !XBOX
 
-		
+
 		/// <summary>
 		/// The top-most interface of the given type, if any.
 		/// </summary>
-    	public static Type MainInterface<T>() 
+		/// <typeparam name="T"></typeparam>
+		/// <returns>Type.</returns>
+		public static Type MainInterface<T>() 
         {
 			var t = typeof(T);
 #if NETFX_CORE
@@ -82,13 +105,13 @@ namespace ServiceStack.Text
 			return t; // not safe to use interface, as it might be a superclass's one.
 		}
 
-        /// <summary>
-        /// Find type if it exists
-        /// </summary>
-        /// <param name="typeName"></param>
-        /// <param name="assemblyName"></param>
-        /// <returns>The type if it exists</returns>
-        public static Type FindType(string typeName, string assemblyName)
+		/// <summary>
+		/// Find type if it exists
+		/// </summary>
+		/// <param name="typeName">Name of the type.</param>
+		/// <param name="assemblyName">Name of the assembly.</param>
+		/// <returns>The type if it exists</returns>
+		public static Type FindType(string typeName, string assemblyName)
         {
             var type = FindTypeFromLoadedAssemblies(typeName);
             if (type != null)
@@ -163,7 +186,12 @@ namespace ServiceStack.Text
 #endif
 
 #if !XBOX
-        public static Type FindTypeFromLoadedAssemblies(string typeName)
+		/// <summary>
+		/// Finds the type from loaded assemblies.
+		/// </summary>
+		/// <param name="typeName">Name of the type.</param>
+		/// <returns>Type.</returns>
+		public static Type FindTypeFromLoadedAssemblies(string typeName)
         {
 #if SILVERLIGHT4
         	var assemblies = ((dynamic) AppDomain.CurrentDomain).GetAssemblies() as Assembly[];
@@ -193,7 +221,12 @@ namespace ServiceStack.Text
             return Assembly.Load(new AssemblyName(assemblyPath));
         }
 #elif WINDOWS_PHONE
-        private static Assembly LoadAssembly(string assemblyPath)
+		/// <summary>
+		/// Loads the assembly.
+		/// </summary>
+		/// <param name="assemblyPath">The assembly path.</param>
+		/// <returns>Assembly.</returns>
+		private static Assembly LoadAssembly(string assemblyPath)
         {
             return Assembly.LoadFrom(assemblyPath);
         }
@@ -208,7 +241,12 @@ namespace ServiceStack.Text
 #endif
 
 #if !XBOX
-        public static string GetAssemblyBinPath(Assembly assembly)
+		/// <summary>
+		/// Gets the assembly bin path.
+		/// </summary>
+		/// <param name="assembly">The assembly.</param>
+		/// <returns>System.String.</returns>
+		public static string GetAssemblyBinPath(Assembly assembly)
         {
 #if WINDOWS_PHONE
             var codeBase = assembly.GetName().CodeBase;
@@ -233,14 +271,27 @@ namespace ServiceStack.Text
 #if !SILVERLIGHT
 		static readonly Regex versionRegEx = new Regex(", Version=[^\\]]+", RegexOptions.Compiled);
 #else
-        static readonly Regex versionRegEx = new Regex(", Version=[^\\]]+");
+		/// <summary>
+		/// The version reg ex
+		/// </summary>
+		static readonly Regex versionRegEx = new Regex(", Version=[^\\]]+");
 #endif
-        public static string ToTypeString(this Type type)
+		/// <summary>
+		/// To the type string.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns>System.String.</returns>
+		public static string ToTypeString(this Type type)
         {
             return versionRegEx.Replace(type.AssemblyQualifiedName, "");
         }
 
-        public static string WriteType(Type type)
+		/// <summary>
+		/// Writes the type.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns>System.String.</returns>
+		public static string WriteType(Type type)
         {
             return type.ToTypeString();
         }

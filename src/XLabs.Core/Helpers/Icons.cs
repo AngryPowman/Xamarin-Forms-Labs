@@ -1,5 +1,4 @@
-﻿
-namespace XLabs
+﻿namespace XLabs
 {
     /// <summary>
     /// Font Awesome icons
@@ -7,6 +6,10 @@ namespace XLabs
     /// </summary>
     public static class Icons
     {
+        /// <summary>
+        /// Gets the anchor.
+        /// </summary>
+        /// <value>The anchor.</value>
         public static string Anchor
         {
             get
@@ -16,6 +19,10 @@ namespace XLabs
             }
         }
 
+        /// <summary>
+        /// Gets the check.
+        /// </summary>
+        /// <value>The check.</value>
         public static string Check
         {
             get
@@ -25,6 +32,10 @@ namespace XLabs
             }
         }
 
+        /// <summary>
+        /// Gets the car.
+        /// </summary>
+        /// <value>The car.</value>
         public static string Car
         {
             get
@@ -34,6 +45,10 @@ namespace XLabs
             }
         }
 
+        /// <summary>
+        /// Gets the cloud.
+        /// </summary>
+        /// <value>The cloud.</value>
         public static string Cloud
         {
             get
@@ -43,6 +58,10 @@ namespace XLabs
             }
         }
 
+        /// <summary>
+        /// Gets the download.
+        /// </summary>
+        /// <value>The download.</value>
         public static string Download
         {
             get
@@ -52,6 +71,10 @@ namespace XLabs
             }
         }
 
+        /// <summary>
+        /// Gets the envelope.
+        /// </summary>
+        /// <value>The envelope.</value>
         public static string Envelope
         {
             get
@@ -61,6 +84,10 @@ namespace XLabs
             }
         }
 
+        /// <summary>
+        /// Gets the external link.
+        /// </summary>
+        /// <value>The external link.</value>
         public static string ExternalLink
         {
             get
@@ -70,6 +97,10 @@ namespace XLabs
             }
         }
 
+        /// <summary>
+        /// Gets the sign out.
+        /// </summary>
+        /// <value>The sign out.</value>
         public static string SignOut
         {
             get
@@ -79,6 +110,10 @@ namespace XLabs
             }
         }
 
+        /// <summary>
+        /// Gets the send.
+        /// </summary>
+        /// <value>The send.</value>
         public static string Send
         {
             get
@@ -88,6 +123,10 @@ namespace XLabs
             }
         }
 
+        /// <summary>
+        /// Gets the trash can.
+        /// </summary>
+        /// <value>The trash can.</value>
         public static string TrashCan
         {
             get
@@ -97,6 +136,10 @@ namespace XLabs
             }
         }
 
+        /// <summary>
+        /// Gets the undo.
+        /// </summary>
+        /// <value>The undo.</value>
         public static string Undo
         {
             get
@@ -106,6 +149,10 @@ namespace XLabs
             }
         }
 
+        /// <summary>
+        /// Gets the user.
+        /// </summary>
+        /// <value>The user.</value>
         public static string User
         {
             get
@@ -115,6 +162,10 @@ namespace XLabs
             }
         }
 
+        /// <summary>
+        /// Gets the warning.
+        /// </summary>
+        /// <value>The warning.</value>
         public static string Warning
         {
             get
@@ -124,6 +175,10 @@ namespace XLabs
             }
         }
 
+        /// <summary>
+        /// Gets the pencil.
+        /// </summary>
+        /// <value>The pencil.</value>
         public static string Pencil
         {
             get
@@ -133,6 +188,10 @@ namespace XLabs
             }
         }
 
+        /// <summary>
+        /// Gets the lock.
+        /// </summary>
+        /// <value>The lock.</value>
         public static string Lock
         {
             get
@@ -142,6 +201,10 @@ namespace XLabs
             }
         }
 
+        /// <summary>
+        /// Gets the unlock.
+        /// </summary>
+        /// <value>The unlock.</value>
         public static string Unlock
         {
             get
@@ -151,6 +214,10 @@ namespace XLabs
             }
         }
 
+        /// <summary>
+        /// Gets the save.
+        /// </summary>
+        /// <value>The save.</value>
         public static string Save
         {
             get
@@ -160,6 +227,10 @@ namespace XLabs
             }
         }
 
+        /// <summary>
+        /// Gets the twitter.
+        /// </summary>
+        /// <value>The twitter.</value>
         public static string Twitter
         {
             get
@@ -169,6 +240,10 @@ namespace XLabs
             }
         }
 
+        /// <summary>
+        /// Gets the facebook square.
+        /// </summary>
+        /// <value>The facebook square.</value>
         public static string FacebookSquare
         {
             get
@@ -178,6 +253,10 @@ namespace XLabs
             }
         }
 
+        /// <summary>
+        /// Gets the facebook.
+        /// </summary>
+        /// <value>The facebook.</value>
         public static string Facebook
         {
             get
@@ -187,6 +266,10 @@ namespace XLabs
             }
         }
 
+        /// <summary>
+        /// Gets the github.
+        /// </summary>
+        /// <value>The github.</value>
         public static string Github
         {
             get
@@ -196,6 +279,10 @@ namespace XLabs
             }
         }
 
+        /// <summary>
+        /// Gets the google.
+        /// </summary>
+        /// <value>The google.</value>
         public static string Google
         {
             get
@@ -205,6 +292,10 @@ namespace XLabs
             }
         }
 
+        /// <summary>
+        /// Gets the google plus.
+        /// </summary>
+        /// <value>The google plus.</value>
         public static string GooglePlus
         {
             get
@@ -214,6 +305,10 @@ namespace XLabs
             }
         }
 
+        /// <summary>
+        /// Gets the gears.
+        /// </summary>
+        /// <value>The gears.</value>
         public static string Gears
         {
             get
@@ -223,6 +318,10 @@ namespace XLabs
             }
         }
 
+        /// <summary>
+        /// Gets the ticket.
+        /// </summary>
+        /// <value>The ticket.</value>
         public static string Ticket
         {
             get
@@ -232,6 +331,10 @@ namespace XLabs
             }
         }
 
+        /// <summary>
+        /// Gets the windows.
+        /// </summary>
+        /// <value>The windows.</value>
         public static string Windows
         {
             get
@@ -241,6 +344,10 @@ namespace XLabs
             }
         }
 
+        /// <summary>
+        /// Gets the trello.
+        /// </summary>
+        /// <value>The trello.</value>
         public static string Trello
         {
             get

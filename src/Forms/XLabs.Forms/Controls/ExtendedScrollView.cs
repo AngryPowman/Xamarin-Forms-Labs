@@ -11,10 +11,12 @@ namespace XLabs.Forms.Controls
 	/// </summary>
 	public class ExtendedScrollView : ScrollView
 	{
-		/// <summary>
-		/// Occurs when [scrolled].
-		/// </summary>
+#pragma warning disable CS0108 // Member hides inherited member; missing new keyword
+							  /// <summary>
+							  /// Occurs when [scrolled].
+							  /// </summary>
 		public event Action<ScrollView, Rectangle> Scrolled;
+#pragma warning restore CS0108 // Member hides inherited member; missing new keyword
 
 		/// <summary>
 		/// Updates the bounds.

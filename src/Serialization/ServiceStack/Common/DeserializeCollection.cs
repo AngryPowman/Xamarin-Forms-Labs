@@ -8,7 +8,7 @@
 // Copyright 2012 ServiceStack Ltd.
 //
 // Licensed under the same terms of ServiceStack: new BSD license.
-//
+//************************************************************
 
 using System;
 using System.Collections.Generic;
@@ -18,12 +18,25 @@ using System.Linq;
 
 namespace ServiceStack.Text.Common
 {
-    internal static class DeserializeCollection<TSerializer>
+	/// <summary>
+	/// Class DeserializeCollection.
+	/// </summary>
+	/// <typeparam name="TSerializer">The type of the t serializer.</typeparam>
+	internal static class DeserializeCollection<TSerializer>
         where TSerializer : ITypeSerializer
     {
-        private static readonly ITypeSerializer Serializer = JsWriter.GetTypeSerializer<TSerializer>();
+		/// <summary>
+		/// The serializer
+		/// </summary>
+		private static readonly ITypeSerializer Serializer = JsWriter.GetTypeSerializer<TSerializer>();
 
-        public static ParseStringDelegate GetParseMethod(Type type)
+		/// <summary>
+		/// Gets the parse method.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns>ParseStringDelegate.</returns>
+		/// <exception cref="System.ArgumentException"></exception>
+		public static ParseStringDelegate GetParseMethod(Type type)
         {
             var collectionInterface = type.GetTypeWithGenericInterfaceOf(typeof(ICollection<>));
             if (collectionInterface == null)
@@ -49,19 +62,39 @@ namespace ServiceStack.Text.Common
             return null;
         }
 
-        public static ICollection<string> ParseStringCollection(string value, Type createType)
+		/// <summary>
+		/// Parses the string collection.
+		/// </summary>
+		/// <param name="value">The value.</param>
+		/// <param name="createType">Type of the create.</param>
+		/// <returns>ICollection&lt;System.String&gt;.</returns>
+		public static ICollection<string> ParseStringCollection(string value, Type createType)
         {
             var items = DeserializeArrayWithElements<string, TSerializer>.ParseGenericArray(value, Serializer.ParseString);
             return CollectionExtensions.CreateAndPopulate(createType, items);
         }
 
-        public static ICollection<int> ParseIntCollection(string value, Type createType)
+		/// <summary>
+		/// Parses the int collection.
+		/// </summary>
+		/// <param name="value">The value.</param>
+		/// <param name="createType">Type of the create.</param>
+		/// <returns>ICollection&lt;System.Int32&gt;.</returns>
+		public static ICollection<int> ParseIntCollection(string value, Type createType)
         {
             var items = DeserializeArrayWithElements<int, TSerializer>.ParseGenericArray(value, x => int.Parse(x));
             return CollectionExtensions.CreateAndPopulate(createType, items);
         }
 
-        public static ICollection<T> ParseCollection<T>(string value, Type createType, ParseStringDelegate parseFn)
+		/// <summary>
+		/// Parses the collection.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="value">The value.</param>
+		/// <param name="createType">Type of the create.</param>
+		/// <param name="parseFn">The parse function.</param>
+		/// <returns>ICollection&lt;T&gt;.</returns>
+		public static ICollection<T> ParseCollection<T>(string value, Type createType, ParseStringDelegate parseFn)
         {
             if (value == null) return null;
 
@@ -69,12 +102,30 @@ namespace ServiceStack.Text.Common
             return CollectionExtensions.CreateAndPopulate(createType, items);
         }
 
-        private static Dictionary<Type, ParseCollectionDelegate> ParseDelegateCache
+		/// <summary>
+		/// The parse delegate cache
+		/// </summary>
+		private static Dictionary<Type, ParseCollectionDelegate> ParseDelegateCache
             = new Dictionary<Type, ParseCollectionDelegate>();
 
-        private delegate object ParseCollectionDelegate(string value, Type createType, ParseStringDelegate parseFn);
+		/// <summary>
+		/// Delegate ParseCollectionDelegate
+		/// </summary>
+		/// <param name="value">The value.</param>
+		/// <param name="createType">Type of the create.</param>
+		/// <param name="parseFn">The parse function.</param>
+		/// <returns>System.Object.</returns>
+		private delegate object ParseCollectionDelegate(string value, Type createType, ParseStringDelegate parseFn);
 
-        public static object ParseCollectionType(string value, Type createType, Type elementType, ParseStringDelegate parseFn)
+		/// <summary>
+		/// Parses the type of the collection.
+		/// </summary>
+		/// <param name="value">The value.</param>
+		/// <param name="createType">Type of the create.</param>
+		/// <param name="elementType">Type of the element.</param>
+		/// <param name="parseFn">The parse function.</param>
+		/// <returns>System.Object.</returns>
+		public static object ParseCollectionType(string value, Type createType, Type elementType, ParseStringDelegate parseFn)
         {
             ParseCollectionDelegate parseDelegate;
             if (ParseDelegateCache.TryGetValue(elementType, out parseDelegate))

@@ -12,6 +12,10 @@ namespace XLabs.Forms.Mvvm
 		/// <value>The navigation.</value>
 		Xamarin.Forms.INavigation Navigation { get; }
 
+		/// <summary>
+		/// Gets or sets the binding context.
+		/// </summary>
+		/// <value>The binding context.</value>
 		object BindingContext { get; set; }
 
 		/// <summary>
@@ -27,6 +31,10 @@ namespace XLabs.Forms.Mvvm
 		/// <param name="nextPage">The next page.</param>
 		void NavigatingFrom(IPage nextPage);
 
+		/// <summary>
+		/// To the native page.
+		/// </summary>
+		/// <returns>System.Object.</returns>
 		object ToNativePage();
 	}
 

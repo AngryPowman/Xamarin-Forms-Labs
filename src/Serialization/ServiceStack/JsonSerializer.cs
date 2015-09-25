@@ -22,37 +22,70 @@ using ServiceStack.Text.Json;
 
 namespace ServiceStack.Text
 {
-    /// <summary>
-    /// Creates an instance of a Type from a string value
-    /// </summary>
-    public static class JsonSerializer
+	/// <summary>
+	/// Creates an instance of a Type from a string value
+	/// </summary>
+	public static class JsonSerializer
     {
-        private static readonly UTF8Encoding UTF8EncodingWithoutBom = new UTF8Encoding(false);
+		/// <summary>
+		/// The utf8 encoding without bom
+		/// </summary>
+		private static readonly UTF8Encoding UTF8EncodingWithoutBom = new UTF8Encoding(false);
 
-        public static T DeserializeFromString<T>(string value)
+		/// <summary>
+		/// Deserializes from string.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="value">The value.</param>
+		/// <returns>T.</returns>
+		public static T DeserializeFromString<T>(string value)
         {
             if (string.IsNullOrEmpty(value)) return default(T);
             return (T)JsonReader<T>.Parse(value);
         }
 
-        public static T DeserializeFromReader<T>(TextReader reader)
+		/// <summary>
+		/// Deserializes from reader.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="reader">The reader.</param>
+		/// <returns>T.</returns>
+		public static T DeserializeFromReader<T>(TextReader reader)
         {
             return DeserializeFromString<T>(reader.ReadToEnd());
         }
 
-        public static object DeserializeFromString(string value, Type type)
+		/// <summary>
+		/// Deserializes from string.
+		/// </summary>
+		/// <param name="value">The value.</param>
+		/// <param name="type">The type.</param>
+		/// <returns>System.Object.</returns>
+		public static object DeserializeFromString(string value, Type type)
         {
             return string.IsNullOrEmpty(value)
                     ? null
                     : JsonReader.GetParseFn(type)(value);
         }
 
-        public static object DeserializeFromReader(TextReader reader, Type type)
+		/// <summary>
+		/// Deserializes from reader.
+		/// </summary>
+		/// <param name="reader">The reader.</param>
+		/// <param name="type">The type.</param>
+		/// <returns>System.Object.</returns>
+		public static object DeserializeFromReader(TextReader reader, Type type)
         {
             return DeserializeFromString(reader.ReadToEnd(), type);
         }
 
-        public static string SerializeToString<T>(T value)
+		/// <summary>
+		/// Serializes to string.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="value">The value.</param>
+		/// <returns>System.String.</returns>
+		public static string SerializeToString<T>(T value)
         {
             if (value == null || value is Delegate) return null;
             if (typeof(T) == typeof(object) || typeof(T).IsAbstract() || typeof(T).IsInterface())
@@ -78,7 +111,13 @@ namespace ServiceStack.Text
             return sb.ToString();
         }
 
-        public static string SerializeToString(object value, Type type)
+		/// <summary>
+		/// Serializes to string.
+		/// </summary>
+		/// <param name="value">The value.</param>
+		/// <param name="type">The type.</param>
+		/// <returns>System.String.</returns>
+		public static string SerializeToString(object value, Type type)
         {
             if (value == null) return null;
 
@@ -97,7 +136,13 @@ namespace ServiceStack.Text
             return sb.ToString();
         }
 
-        public static void SerializeToWriter<T>(T value, TextWriter writer)
+		/// <summary>
+		/// Serializes to writer.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="value">The value.</param>
+		/// <param name="writer">The writer.</param>
+		public static void SerializeToWriter<T>(T value, TextWriter writer)
         {
             if (value == null) return;
             if (typeof(T) == typeof(string))
@@ -116,7 +161,13 @@ namespace ServiceStack.Text
             JsonWriter<T>.WriteRootObject(writer, value);
         }
 
-        public static void SerializeToWriter(object value, Type type, TextWriter writer)
+		/// <summary>
+		/// Serializes to writer.
+		/// </summary>
+		/// <param name="value">The value.</param>
+		/// <param name="type">The type.</param>
+		/// <param name="writer">The writer.</param>
+		public static void SerializeToWriter(object value, Type type, TextWriter writer)
         {
             if (value == null) return;
             if (type == typeof(string))
@@ -128,7 +179,13 @@ namespace ServiceStack.Text
             JsonWriter.GetWriteFn(type)(writer, value);
         }
 
-        public static void SerializeToStream<T>(T value, Stream stream)
+		/// <summary>
+		/// Serializes to stream.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="value">The value.</param>
+		/// <param name="stream">The stream.</param>
+		public static void SerializeToStream<T>(T value, Stream stream)
         {
             if (value == null) return;
             if (typeof(T) == typeof(object) || typeof(T).IsAbstract() || typeof(T).IsInterface())
@@ -144,7 +201,13 @@ namespace ServiceStack.Text
             writer.Flush();
         }
 
-        public static void SerializeToStream(object value, Type type, Stream stream)
+		/// <summary>
+		/// Serializes to stream.
+		/// </summary>
+		/// <param name="value">The value.</param>
+		/// <param name="type">The type.</param>
+		/// <param name="stream">The stream.</param>
+		public static void SerializeToStream(object value, Type type, Stream stream)
         {
             var writer = new StreamWriter(stream, UTF8EncodingWithoutBom);
             JsonWriter.GetWriteFn(type)(writer, value);

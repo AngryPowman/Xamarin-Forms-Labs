@@ -150,11 +150,21 @@ namespace XLabs.Forms
     /// </summary>
     public class XFormsAppiOS : XFormsApp<XFormsApplicationDelegate>
     {
-        public static void Init() { } /* allow to add assembly without extras */
+		/// <summary>
+		/// Initializes this instance.
+		/// </summary>
+		public static void Init() { } /* allow to add assembly without extras */
 
-        public XFormsAppiOS() { }
+		/// <summary>
+		/// Initializes a new instance of the <see cref="XFormsAppiOS"/> class.
+		/// </summary>
+		public XFormsAppiOS() { }
 
-        public XFormsAppiOS(XFormsApplicationDelegate appDelegate) : base(appDelegate) { }
+		/// <summary>
+		/// Initializes a new instance of the <see cref="XFormsAppiOS"/> class.
+		/// </summary>
+		/// <param name="appDelegate">The application delegate.</param>
+		public XFormsAppiOS(XFormsApplicationDelegate appDelegate) : base(appDelegate) { }
 
         /// <summary>
         /// Called when [initialize].

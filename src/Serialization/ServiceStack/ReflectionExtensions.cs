@@ -1,14 +1,16 @@
+// ***********************************************************************
+// Assembly         : XLabs.Serialization.ServiceStack.WP8
+// Author           : rmarinho
+// Created          : 09-08-2015
 //
-// https://github.com/ServiceStack/ServiceStack.Text
-// ServiceStack.Text: .NET C# POCO JSON, JSV and CSV Text Serializers.
-//
-// Authors:
-//   Demis Bellot (demis.bellot@gmail.com)
-//
-// Copyright 2012 ServiceStack Ltd.
-//
-// Licensed under the same terms of ServiceStack: new BSD license.
-//
+// Last Modified By : rmarinho
+// Last Modified On : 09-08-2015
+// ***********************************************************************
+// <copyright file="ReflectionExtensions.cs" company="XLabs">
+//     Copyright © ServiceStack 2013 & XLabs
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
 
 using System;
 using System.Collections.Generic;
@@ -23,14 +25,28 @@ using System.Linq.Expressions;
 
 namespace ServiceStack.Text
 {
-    public delegate EmptyCtorDelegate EmptyCtorFactoryDelegate(Type type);
-    public delegate object EmptyCtorDelegate();
 
-    public static class ReflectionExtensions
-    {
-        private static Dictionary<Type, object> DefaultValueTypes = new Dictionary<Type, object>();
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+	public delegate EmptyCtorDelegate EmptyCtorFactoryDelegate(Type type);
+	public delegate object EmptyCtorDelegate();
+#pragma warning restore CS1591
 
-        public static object GetDefaultValue(this Type type)
+	/// <summary>
+	/// ReflectionExtensions
+	/// </summary>
+	public static class ReflectionExtensions
+	{
+		/// <summary>
+		/// The default value types
+		/// </summary>
+		private static Dictionary<Type, object> DefaultValueTypes = new Dictionary<Type, object>();
+
+		/// <summary>
+		/// Gets the default value.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns>System.Object.</returns>
+		public static object GetDefaultValue(this Type type)
         {
             if (!type.IsValueType()) return null;
 
@@ -52,7 +68,13 @@ namespace ServiceStack.Text
             return defaultValue;
         }
 
-        public static bool IsInstanceOf(this Type type, Type thisOrBaseType)
+		/// <summary>
+		/// Determines whether [is instance of] [the specified this or base type].
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <param name="thisOrBaseType">Type of the this or base.</param>
+		/// <returns><c>true</c> if [is instance of] [the specified this or base type]; otherwise, <c>false</c>.</returns>
+		public static bool IsInstanceOf(this Type type, Type thisOrBaseType)
         {
             while (type != null)
             {
@@ -64,7 +86,12 @@ namespace ServiceStack.Text
             return false;
         }
 
-        public static bool HasGenericType(this Type type)
+		/// <summary>
+		/// Determines whether [has generic type] [the specified type].
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns><c>true</c> if [has generic type] [the specified type]; otherwise, <c>false</c>.</returns>
+		public static bool HasGenericType(this Type type)
         {
             while (type != null)
             {
@@ -76,7 +103,12 @@ namespace ServiceStack.Text
             return false;
         }
 
-        public static Type GetGenericType(this Type type)
+		/// <summary>
+		/// Gets the type of the generic.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns>Type.</returns>
+		public static Type GetGenericType(this Type type)
         {
             while (type != null)
             {
@@ -88,7 +120,13 @@ namespace ServiceStack.Text
             return null;
         }
 
-        public static Type GetTypeWithGenericTypeDefinitionOfAny(this Type type, params Type[] genericTypeDefinitions)
+		/// <summary>
+		/// Gets the type with generic type definition of any.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <param name="genericTypeDefinitions">The generic type definitions.</param>
+		/// <returns>Type.</returns>
+		public static Type GetTypeWithGenericTypeDefinitionOfAny(this Type type, params Type[] genericTypeDefinitions)
         {
             foreach (var genericTypeDefinition in genericTypeDefinitions)
             {
@@ -104,13 +142,25 @@ namespace ServiceStack.Text
             return null;
         }
 
-        public static bool IsOrHasGenericInterfaceTypeOf(this Type type, Type genericTypeDefinition)
+		/// <summary>
+		/// Determines whether [is or has generic interface type of] [the specified generic type definition].
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <param name="genericTypeDefinition">The generic type definition.</param>
+		/// <returns><c>true</c> if [is or has generic interface type of] [the specified generic type definition]; otherwise, <c>false</c>.</returns>
+		public static bool IsOrHasGenericInterfaceTypeOf(this Type type, Type genericTypeDefinition)
         {
             return (type.GetTypeWithGenericTypeDefinitionOf(genericTypeDefinition) != null)
                 || (type == genericTypeDefinition);
         }
 
-        public static Type GetTypeWithGenericTypeDefinitionOf(this Type type, Type genericTypeDefinition)
+		/// <summary>
+		/// Gets the type with generic type definition of.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <param name="genericTypeDefinition">The generic type definition.</param>
+		/// <returns>Type.</returns>
+		public static Type GetTypeWithGenericTypeDefinitionOf(this Type type, Type genericTypeDefinition)
         {
             foreach (var t in type.GetTypeInterfaces())
             {
@@ -129,7 +179,13 @@ namespace ServiceStack.Text
             return null;
         }
 
-        public static Type GetTypeWithInterfaceOf(this Type type, Type interfaceType)
+		/// <summary>
+		/// Gets the type with interface of.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <param name="interfaceType">Type of the interface.</param>
+		/// <returns>Type.</returns>
+		public static Type GetTypeWithInterfaceOf(this Type type, Type interfaceType)
         {
             if (type == interfaceType) return interfaceType;
 
@@ -142,7 +198,13 @@ namespace ServiceStack.Text
             return null;
         }
 
-        public static bool HasInterface(this Type type, Type interfaceType)
+		/// <summary>
+		/// Determines whether the specified interface type has interface.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <param name="interfaceType">Type of the interface.</param>
+		/// <returns><c>true</c> if the specified interface type has interface; otherwise, <c>false</c>.</returns>
+		public static bool HasInterface(this Type type, Type interfaceType)
         {
             foreach (var t in type.GetTypeInterfaces())
             {
@@ -152,7 +214,13 @@ namespace ServiceStack.Text
             return false;
         }
 
-        public static bool AllHaveInterfacesOfType(
+		/// <summary>
+		/// Alls the type of the have interfaces of.
+		/// </summary>
+		/// <param name="assignableFromType">Type of the assignable from.</param>
+		/// <param name="types">The types.</param>
+		/// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
+		public static bool AllHaveInterfacesOfType(
             this Type assignableFromType, params Type[] types)
         {
             foreach (var type in types)
@@ -162,7 +230,12 @@ namespace ServiceStack.Text
             return true;
         }
 
-        public static bool IsNumericType(this Type type)
+		/// <summary>
+		/// Determines whether [is numeric type] [the specified type].
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns><c>true</c> if [is numeric type] [the specified type]; otherwise, <c>false</c>.</returns>
+		public static bool IsNumericType(this Type type)
         {
             if (type == null) return false;
 
@@ -199,8 +272,13 @@ namespace ServiceStack.Text
             }
             return false;
         }
-        
-        public static bool IsIntegerType(this Type type)
+
+		/// <summary>
+		/// Determines whether [is integer type] [the specified type].
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns><c>true</c> if [is integer type] [the specified type]; otherwise, <c>false</c>.</returns>
+		public static bool IsIntegerType(this Type type)
         {
             if (type == null) return false;
 
@@ -226,7 +304,12 @@ namespace ServiceStack.Text
             return false;
         }
 
-        public static bool IsRealNumberType(this Type type)
+		/// <summary>
+		/// Determines whether [is real number type] [the specified type].
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns><c>true</c> if [is real number type] [the specified type]; otherwise, <c>false</c>.</returns>
+		public static bool IsRealNumberType(this Type type)
         {
             if (type == null) return false;
 
@@ -247,7 +330,13 @@ namespace ServiceStack.Text
             return false;
         }
 
-        public static Type GetTypeWithGenericInterfaceOf(this Type type, Type genericInterfaceType)
+		/// <summary>
+		/// Gets the type with generic interface of.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <param name="genericInterfaceType">Type of the generic interface.</param>
+		/// <returns>Type.</returns>
+		public static Type GetTypeWithGenericInterfaceOf(this Type type, Type genericInterfaceType)
         {
             foreach (var t in type.GetTypeInterfaces())
             {
@@ -263,7 +352,13 @@ namespace ServiceStack.Text
                     : null;
         }
 
-        public static bool HasAnyTypeDefinitionsOf(this Type genericType, params Type[] theseGenericTypes)
+		/// <summary>
+		/// Determines whether [has any type definitions of] [the specified these generic types].
+		/// </summary>
+		/// <param name="genericType">Type of the generic.</param>
+		/// <param name="theseGenericTypes">The these generic types.</param>
+		/// <returns><c>true</c> if [has any type definitions of] [the specified these generic types]; otherwise, <c>false</c>.</returns>
+		public static bool HasAnyTypeDefinitionsOf(this Type genericType, params Type[] theseGenericTypes)
         {
             if (!genericType.IsGeneric()) return false;
 
@@ -278,7 +373,14 @@ namespace ServiceStack.Text
             return false;
         }
 
-        public static Type[] GetGenericArgumentsIfBothHaveSameGenericDefinitionTypeAndArguments(
+		/// <summary>
+		/// Gets the generic arguments if both have same generic definition type and arguments.
+		/// </summary>
+		/// <param name="assignableFromType">Type of the assignable from.</param>
+		/// <param name="typeA">The type a.</param>
+		/// <param name="typeB">The type b.</param>
+		/// <returns>Type[].</returns>
+		public static Type[] GetGenericArgumentsIfBothHaveSameGenericDefinitionTypeAndArguments(
             this Type assignableFromType, Type typeA, Type typeB)
         {
             var typeAInterface = typeA.GetTypeWithGenericInterfaceOf(assignableFromType);
@@ -303,7 +405,14 @@ namespace ServiceStack.Text
             return typeAGenericArgs;
         }
 
-        public static TypePair GetGenericArgumentsIfBothHaveConvertibleGenericDefinitionTypeAndArguments(
+		/// <summary>
+		/// Gets the generic arguments if both have convertible generic definition type and arguments.
+		/// </summary>
+		/// <param name="assignableFromType">Type of the assignable from.</param>
+		/// <param name="typeA">The type a.</param>
+		/// <param name="typeB">The type b.</param>
+		/// <returns>TypePair.</returns>
+		public static TypePair GetGenericArgumentsIfBothHaveConvertibleGenericDefinitionTypeAndArguments(
             this Type assignableFromType, Type typeA, Type typeB)
         {
             var typeAInterface = typeA.GetTypeWithGenericInterfaceOf(assignableFromType);
@@ -328,7 +437,12 @@ namespace ServiceStack.Text
             return new TypePair(typeAGenericArgs, typeBGenericArgs);
         }
 
-        public static bool AreAllStringOrValueTypes(params Type[] types)
+		/// <summary>
+		/// Ares all string or value types.
+		/// </summary>
+		/// <param name="types">The types.</param>
+		/// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
+		public static bool AreAllStringOrValueTypes(params Type[] types)
         {
             foreach (var type in types)
             {
@@ -337,8 +451,16 @@ namespace ServiceStack.Text
             return true;
         }
 
-        static Dictionary<Type, EmptyCtorDelegate> ConstructorMethods = new Dictionary<Type, EmptyCtorDelegate>();
-        public static EmptyCtorDelegate GetConstructorMethod(Type type)
+		/// <summary>
+		/// The constructor methods
+		/// </summary>
+		static Dictionary<Type, EmptyCtorDelegate> ConstructorMethods = new Dictionary<Type, EmptyCtorDelegate>();
+		/// <summary>
+		/// Gets the constructor method.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns>EmptyCtorDelegate.</returns>
+		public static EmptyCtorDelegate GetConstructorMethod(Type type)
         {
             EmptyCtorDelegate emptyCtorFn;
             if (ConstructorMethods.TryGetValue(type, out emptyCtorFn)) return emptyCtorFn;
@@ -358,8 +480,16 @@ namespace ServiceStack.Text
             return emptyCtorFn;
         }
 
-        static Dictionary<string, EmptyCtorDelegate> TypeNamesMap = new Dictionary<string, EmptyCtorDelegate>();
-        public static EmptyCtorDelegate GetConstructorMethod(string typeName)
+		/// <summary>
+		/// The type names map
+		/// </summary>
+		static Dictionary<string, EmptyCtorDelegate> TypeNamesMap = new Dictionary<string, EmptyCtorDelegate>();
+		/// <summary>
+		/// Gets the constructor method.
+		/// </summary>
+		/// <param name="typeName">Name of the type.</param>
+		/// <returns>EmptyCtorDelegate.</returns>
+		public static EmptyCtorDelegate GetConstructorMethod(string typeName)
         {
             EmptyCtorDelegate emptyCtorFn;
             if (TypeNamesMap.TryGetValue(typeName, out emptyCtorFn)) return emptyCtorFn;
@@ -381,7 +511,12 @@ namespace ServiceStack.Text
             return emptyCtorFn;
         }
 
-        public static EmptyCtorDelegate GetConstructorMethodToCache(Type type)
+		/// <summary>
+		/// Gets the constructor method to cache.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns>EmptyCtorDelegate.</returns>
+		public static EmptyCtorDelegate GetConstructorMethodToCache(Type type)
         {
             if (type.IsInterface)
             {
@@ -450,33 +585,63 @@ namespace ServiceStack.Text
 #endif
         }
 
-        private static class TypeMeta<T>
+		/// <summary>
+		/// Class TypeMeta.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		private static class TypeMeta<T>
         {
-            public static readonly EmptyCtorDelegate EmptyCtorFn;
-            static TypeMeta()
+			/// <summary>
+			/// The empty ctor function
+			/// </summary>
+			public static readonly EmptyCtorDelegate EmptyCtorFn;
+			/// <summary>
+			/// Initializes static members of the <see cref="TypeMeta{T}" /> class.
+			/// </summary>
+			static TypeMeta()
             {
                 EmptyCtorFn = GetConstructorMethodToCache(typeof(T));
             }
         }
 
-        public static object CreateInstance<T>()
+		/// <summary>
+		/// Creates the instance.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <returns>System.Object.</returns>
+		public static object CreateInstance<T>()
         {
             return TypeMeta<T>.EmptyCtorFn();
         }
 
-        public static object CreateInstance(this Type type)
+		/// <summary>
+		/// Creates the instance.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns>System.Object.</returns>
+		public static object CreateInstance(this Type type)
         {
             var ctorFn = GetConstructorMethod(type);
             return ctorFn();
         }
 
-        public static object CreateInstance(string typeName)
+		/// <summary>
+		/// Creates the instance.
+		/// </summary>
+		/// <param name="typeName">Name of the type.</param>
+		/// <returns>System.Object.</returns>
+		public static object CreateInstance(string typeName)
         {
             var ctorFn = GetConstructorMethod(typeName);
             return ctorFn();
         }
 
-        public static PropertyInfo[] GetPublicProperties(this Type type)
+		/// <summary>
+		/// Gets the public properties.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns>PropertyInfo[].</returns>
+		public static PropertyInfo[] GetPublicProperties(this Type type)
         {
             if (type.IsInterface())
             {
@@ -514,11 +679,25 @@ namespace ServiceStack.Text
                 .ToArray();
         }
 
-        const string DataContract = "DataContractAttribute";
-        const string DataMember = "DataMemberAttribute";
-        const string IgnoreDataMember = "IgnoreDataMemberAttribute";
+		/// <summary>
+		/// The data contract
+		/// </summary>
+		const string DataContract = "DataContractAttribute";
+		/// <summary>
+		/// The data member
+		/// </summary>
+		const string DataMember = "DataMemberAttribute";
+		/// <summary>
+		/// The ignore data member
+		/// </summary>
+		const string IgnoreDataMember = "IgnoreDataMemberAttribute";
 
-        public static PropertyInfo[] GetSerializableProperties(this Type type)
+		/// <summary>
+		/// Gets the serializable properties.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns>PropertyInfo[].</returns>
+		public static PropertyInfo[] GetSerializableProperties(this Type type)
         {
             var publicProperties = GetPublicProperties(type);
             var publicReadableProperties = publicProperties.Where(x => x.PropertyGetMethod() != null);
@@ -536,7 +715,12 @@ namespace ServiceStack.Text
             return publicReadableProperties.Where(prop => !prop.CustomAttributes(false).Any(attr => attr.GetType().Name == IgnoreDataMember)).ToArray();
         }
 
-        public static FieldInfo[] GetSerializableFields(this Type type)
+		/// <summary>
+		/// Gets the serializable fields.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns>FieldInfo[].</returns>
+		public static FieldInfo[] GetSerializableFields(this Type type)
         {
             if (type.IsDto()) {
                 return new FieldInfo[0];
@@ -548,17 +732,31 @@ namespace ServiceStack.Text
             return publicFields.Where(prop => !prop.CustomAttributes(false).Any(attr => attr.GetType().Name == IgnoreDataMember)).ToArray();
         }
 
-        public static bool HasAttr<T>(this Type type) where T : Attribute
+		/// <summary>
+		/// Determines whether the specified type has attribute.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="type">The type.</param>
+		/// <returns><c>true</c> if the specified type has attribute; otherwise, <c>false</c>.</returns>
+		public static bool HasAttr<T>(this Type type) where T : Attribute
         {
             return type.HasAttribute<T>();
         }
 
-#if !SILVERLIGHT && !MONOTOUCH 
-        static readonly Dictionary<Type, FastMember.TypeAccessor> typeAccessorMap 
+#if !SILVERLIGHT && !MONOTOUCH
+		/// <summary>
+		/// The type accessor map
+		/// </summary>
+		static readonly Dictionary<Type, FastMember.TypeAccessor> typeAccessorMap 
             = new Dictionary<Type, FastMember.TypeAccessor>();
 #endif
 
-        public static DataContractAttribute GetDataContract(this Type type)
+		/// <summary>
+		/// Gets the data contract.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns>DataContractAttribute.</returns>
+		public static DataContractAttribute GetDataContract(this Type type)
         {
             var dataContract = type.FirstAttribute<DataContractAttribute>();
 
@@ -569,7 +767,12 @@ namespace ServiceStack.Text
             return dataContract;
         }
 
-        public static DataMemberAttribute GetDataMember(this PropertyInfo pi)
+		/// <summary>
+		/// Gets the data member.
+		/// </summary>
+		/// <param name="pi">The pi.</param>
+		/// <returns>DataMemberAttribute.</returns>
+		public static DataMemberAttribute GetDataMember(this PropertyInfo pi)
         {
             var dataMember = pi.CustomAttributes(typeof(DataMemberAttribute), false)
                 .FirstOrDefault() as DataMemberAttribute;
@@ -581,7 +784,12 @@ namespace ServiceStack.Text
             return dataMember;
         }
 
-        public static DataMemberAttribute GetDataMember(this FieldInfo pi)
+		/// <summary>
+		/// Gets the data member.
+		/// </summary>
+		/// <param name="pi">The pi.</param>
+		/// <returns>DataMemberAttribute.</returns>
+		public static DataMemberAttribute GetDataMember(this FieldInfo pi)
         {
             var dataMember = pi.CustomAttributes(typeof(DataMemberAttribute), false)
                 .FirstOrDefault() as DataMemberAttribute;
@@ -594,7 +802,12 @@ namespace ServiceStack.Text
         }
 
 #if !SILVERLIGHT && !MONOTOUCH && !XBOX
-        public static DataContractAttribute GetWeakDataContract(this Type type)
+		/// <summary>
+		/// Gets the weak data contract.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns>DataContractAttribute.</returns>
+		public static DataContractAttribute GetWeakDataContract(this Type type)
         {
             var attr = type.CustomAttributes().FirstOrDefault(x => x.GetType().Name == DataContract);
             if (attr != null)
@@ -616,7 +829,12 @@ namespace ServiceStack.Text
             return null;
         }
 
-        public static DataMemberAttribute GetWeakDataMember(this PropertyInfo pi)
+		/// <summary>
+		/// Gets the weak data member.
+		/// </summary>
+		/// <param name="pi">The pi.</param>
+		/// <returns>DataMemberAttribute.</returns>
+		public static DataMemberAttribute GetWeakDataMember(this PropertyInfo pi)
         {
             var attr = pi.CustomAttributes().FirstOrDefault(x => x.GetType().Name == DataMember);
             if (attr != null)
@@ -645,7 +863,12 @@ namespace ServiceStack.Text
             return null;
         }
 
-        public static DataMemberAttribute GetWeakDataMember(this FieldInfo pi)
+		/// <summary>
+		/// Gets the weak data member.
+		/// </summary>
+		/// <param name="pi">The pi.</param>
+		/// <returns>DataMemberAttribute.</returns>
+		public static DataMemberAttribute GetWeakDataMember(this FieldInfo pi)
         {
             var attr = pi.CustomAttributes().FirstOrDefault(x => x.GetType().Name == DataMember);
             if (attr != null)
@@ -677,9 +900,17 @@ namespace ServiceStack.Text
 #endif
     }
 
-    public static class PlatformExtensions //Because WinRT is a POS
+	/// <summary>
+	/// Class PlatformExtensions.
+	/// </summary>
+	public static class PlatformExtensions //Because WinRT is a POS
     {
-        public static bool IsInterface(this Type type)
+		/// <summary>
+		/// Determines whether the specified type is interface.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns><c>true</c> if the specified type is interface; otherwise, <c>false</c>.</returns>
+		public static bool IsInterface(this Type type)
         {
 #if NETFX_CORE
             return type.GetTypeInfo().IsInterface;
@@ -688,7 +919,12 @@ namespace ServiceStack.Text
 #endif
         }
 
-        public static bool IsArray(this Type type)
+		/// <summary>
+		/// Determines whether the specified type is array.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns><c>true</c> if the specified type is array; otherwise, <c>false</c>.</returns>
+		public static bool IsArray(this Type type)
         {
 #if NETFX_CORE
             return type.GetTypeInfo().IsArray;
@@ -697,7 +933,12 @@ namespace ServiceStack.Text
 #endif
         }
 
-        public static bool IsValueType(this Type type)
+		/// <summary>
+		/// Determines whether [is value type] [the specified type].
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns><c>true</c> if [is value type] [the specified type]; otherwise, <c>false</c>.</returns>
+		public static bool IsValueType(this Type type)
         {
 #if NETFX_CORE
             return type.GetTypeInfo().IsValueType;
@@ -706,7 +947,12 @@ namespace ServiceStack.Text
 #endif
         }
 
-        public static bool IsGeneric(this Type type)
+		/// <summary>
+		/// Determines whether the specified type is generic.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns><c>true</c> if the specified type is generic; otherwise, <c>false</c>.</returns>
+		public static bool IsGeneric(this Type type)
         {
 #if NETFX_CORE
             return type.GetTypeInfo().IsGenericType;
@@ -715,7 +961,12 @@ namespace ServiceStack.Text
 #endif
         }
 
-        public static Type BaseType(this Type type)
+		/// <summary>
+		/// Bases the type.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns>Type.</returns>
+		public static Type BaseType(this Type type)
         {
 #if NETFX_CORE
             return type.GetTypeInfo().BaseType;
@@ -724,7 +975,12 @@ namespace ServiceStack.Text
 #endif
         }
 
-        public static Type ReflectedType(this PropertyInfo pi)
+		/// <summary>
+		/// Reflecteds the type.
+		/// </summary>
+		/// <param name="pi">The pi.</param>
+		/// <returns>Type.</returns>
+		public static Type ReflectedType(this PropertyInfo pi)
         {
 #if NETFX_CORE
             return pi.PropertyType;
@@ -733,7 +989,12 @@ namespace ServiceStack.Text
 #endif
         }
 
-        public static Type ReflectedType(this FieldInfo fi)
+		/// <summary>
+		/// Reflecteds the type.
+		/// </summary>
+		/// <param name="fi">The fi.</param>
+		/// <returns>Type.</returns>
+		public static Type ReflectedType(this FieldInfo fi)
         {
 #if NETFX_CORE
             return fi.FieldType;
@@ -742,7 +1003,12 @@ namespace ServiceStack.Text
 #endif
         }
 
-        public static Type GenericTypeDefinition(this Type type)
+		/// <summary>
+		/// Generics the type definition.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns>Type.</returns>
+		public static Type GenericTypeDefinition(this Type type)
         {
 #if NETFX_CORE
             return type.GetTypeInfo().GetGenericTypeDefinition();
@@ -751,7 +1017,12 @@ namespace ServiceStack.Text
 #endif
         }
 
-        public static Type[] GetTypeInterfaces(this Type type)
+		/// <summary>
+		/// Gets the type interfaces.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns>Type[].</returns>
+		public static Type[] GetTypeInterfaces(this Type type)
         {
 #if NETFX_CORE
             return type.GetTypeInfo().ImplementedInterfaces.ToArray();
@@ -760,7 +1031,12 @@ namespace ServiceStack.Text
 #endif
         }
 
-        public static Type[] GetTypeGenericArguments(this Type type)
+		/// <summary>
+		/// Gets the type generic arguments.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns>Type[].</returns>
+		public static Type[] GetTypeGenericArguments(this Type type)
         {
 #if NETFX_CORE
             return type.GenericTypeArguments;
@@ -769,7 +1045,12 @@ namespace ServiceStack.Text
 #endif
         }
 
-        public static ConstructorInfo GetEmptyConstructor(this Type type)
+		/// <summary>
+		/// Gets the empty constructor.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns>ConstructorInfo.</returns>
+		public static ConstructorInfo GetEmptyConstructor(this Type type)
         {
 #if NETFX_CORE
             return type.GetTypeInfo().DeclaredConstructors.FirstOrDefault(c => c.GetParameters().Count() == 0);
@@ -778,7 +1059,12 @@ namespace ServiceStack.Text
 #endif
         }
 
-        internal static PropertyInfo[] GetTypesPublicProperties(this Type subType)
+		/// <summary>
+		/// Gets the types public properties.
+		/// </summary>
+		/// <param name="subType">Type of the sub.</param>
+		/// <returns>PropertyInfo[].</returns>
+		internal static PropertyInfo[] GetTypesPublicProperties(this Type subType)
         {
 #if NETFX_CORE 
             return subType.GetRuntimeProperties().ToArray();
@@ -790,7 +1076,12 @@ namespace ServiceStack.Text
 #endif
         }
 
-        public static PropertyInfo[] Properties(this Type type)
+		/// <summary>
+		/// Propertieses the specified type.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns>PropertyInfo[].</returns>
+		public static PropertyInfo[] Properties(this Type type)
         {
 #if NETFX_CORE 
             return type.GetRuntimeProperties().ToArray();
@@ -799,7 +1090,12 @@ namespace ServiceStack.Text
 #endif
         }
 
-        public static FieldInfo[] GetPublicFields(this Type type)
+		/// <summary>
+		/// Gets the public fields.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns>FieldInfo[].</returns>
+		public static FieldInfo[] GetPublicFields(this Type type)
         {
             if (type.IsInterface())
             {
@@ -814,7 +1110,12 @@ namespace ServiceStack.Text
 #endif
         }
 
-        public static MemberInfo[] GetPublicMembers(this Type type)
+		/// <summary>
+		/// Gets the public members.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns>MemberInfo[].</returns>
+		public static MemberInfo[] GetPublicMembers(this Type type)
         {
 
 #if NETFX_CORE
@@ -827,7 +1128,12 @@ namespace ServiceStack.Text
 #endif
         }
 
-        public static MemberInfo[] GetAllPublicMembers(this Type type)
+		/// <summary>
+		/// Gets all public members.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns>MemberInfo[].</returns>
+		public static MemberInfo[] GetAllPublicMembers(this Type type)
         {
 
 #if NETFX_CORE
@@ -840,162 +1146,265 @@ namespace ServiceStack.Text
 #endif
         }
 
-        public static bool HasAttribute<T>(this Type type, bool inherit = true) where T : Attribute
+		/// <summary>
+		/// Determines whether the specified inherit has attribute.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="type">The type.</param>
+		/// <param name="inherit">if set to <c>true</c> [inherit].</param>
+		/// <returns><c>true</c> if the specified inherit has attribute; otherwise, <c>false</c>.</returns>
+		public static bool HasAttribute<T>(this Type type, bool inherit = true) where T : Attribute
         {
             return type.CustomAttributes(inherit).Any(x => x.GetType() == typeof(T));
         }
 
-        public static IEnumerable<T> AttributesOfType<T>(this Type type, bool inherit = true) where T : Attribute
-        {
+		/// <summary>
+		/// Attributeses the type of the of.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="type">The type.</param>
+		/// <param name="inherit">The inherit.</param>
+		/// <returns>System.Collections.Generic.IEnumerable&lt;T&gt;.</returns>
+		public static IEnumerable<T> AttributesOfType<T>(this Type type, bool inherit = true) where T : Attribute
+		{
 #if NETFX_CORE
             return type.GetTypeInfo().GetCustomAttributes<T>(inherit);
 #else
-            return type.GetCustomAttributes(inherit).OfType<T>();
+			return type.GetCustomAttributes(inherit).OfType<T>();
 #endif
-        }
+		}
 
-        const string DataContract = "DataContractAttribute";
-        public static bool IsDto(this Type type)
-        {
+		const string DataContract = "DataContractAttribute";
+		/// <summary>
+		/// Determines whether the specified type is dto.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns>System.Boolean.</returns>
+		public static bool IsDto(this Type type)
+		{
 #if NETFX_CORE
             return type.GetTypeInfo().IsDefined(typeof(DataContractAttribute), false);
 #else
-            return !Env.IsMono
-                   ? type.IsDefined(typeof(DataContractAttribute), false)
-                   : type.GetCustomAttributes(true).Any(x => x.GetType().Name == DataContract);
+			return !Env.IsMono
+				   ? type.IsDefined(typeof(DataContractAttribute), false)
+				   : type.GetCustomAttributes(true).Any(x => x.GetType().Name == DataContract);
 #endif
-        }
+		}
 
-        public static MethodInfo PropertyGetMethod(this PropertyInfo pi, bool nonPublic = false)
-        {
+		/// <summary>
+		/// Properties the get method.
+		/// </summary>
+		/// <param name="pi">The pi.</param>
+		/// <param name="nonPublic">The non public.</param>
+		/// <returns>System.Reflection.MethodInfo.</returns>
+		public static MethodInfo PropertyGetMethod(this PropertyInfo pi, bool nonPublic = false)
+		{
 #if NETFX_CORE
             return pi.GetMethod;
 #else
-            return pi.GetGetMethod(false);
+			return pi.GetGetMethod(false);
 #endif
-        }
+		}
 
-        public static Type[] Interfaces(this Type type)
-        {
+		/// <summary>
+		/// Interfaceses the specified type.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns>System.Type[].</returns>
+		public static Type[] Interfaces(this Type type)
+		{
 #if NETFX_CORE
             return type.GetTypeInfo().ImplementedInterfaces.ToArray();
             //return type.GetTypeInfo().ImplementedInterfaces
             //    .FirstOrDefault(x => !x.GetTypeInfo().ImplementedInterfaces
             //        .Any(y => y.GetTypeInfo().ImplementedInterfaces.Contains(y)));
 #else
-            return type.GetInterfaces();
+			return type.GetInterfaces();
 #endif
-        }
+		}
 
-        public static PropertyInfo[] AllProperties(this Type type)
-        {
+		/// <summary>
+		/// Alls the properties.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns>System.Reflection.PropertyInfo[].</returns>
+		public static PropertyInfo[] AllProperties(this Type type)
+		{
 #if NETFX_CORE
             return type.GetRuntimeProperties().ToArray();
 #else
-            return type.GetProperties(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
+			return type.GetProperties(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
 #endif
-        }
+		}
 
-        public static object[] CustomAttributes(this PropertyInfo propertyInfo, bool inherit = true)
-        {
+		/// <summary>
+		/// Customs the attributes.
+		/// </summary>
+		/// <param name="propertyInfo">The property information.</param>
+		/// <param name="inherit">The inherit.</param>
+		/// <returns>System.Object[].</returns>
+		public static object[] CustomAttributes(this PropertyInfo propertyInfo, bool inherit = true)
+		{
 #if NETFX_CORE
             return propertyInfo.GetCustomAttributes(inherit).ToArray();
 #else
-            return propertyInfo.GetCustomAttributes(inherit);
+			return propertyInfo.GetCustomAttributes(inherit);
 #endif
-        }
+		}
 
-        public static object[] CustomAttributes(this PropertyInfo propertyInfo, Type attrType, bool inherit = true)
-        {
+		/// <summary>
+		/// Customs the attributes.
+		/// </summary>
+		/// <param name="propertyInfo">The property information.</param>
+		/// <param name="attrType">Type of the attribute.</param>
+		/// <param name="inherit">The inherit.</param>
+		/// <returns>System.Object[].</returns>
+		public static object[] CustomAttributes(this PropertyInfo propertyInfo, Type attrType, bool inherit = true)
+		{
 #if NETFX_CORE
             return propertyInfo.GetCustomAttributes(inherit).Where(x => x.GetType() == attrType).ToArray();
 #else
-            return propertyInfo.GetCustomAttributes(attrType, inherit);
+			return propertyInfo.GetCustomAttributes(attrType, inherit);
 #endif
-        }
+		}
 
-        public static object[] CustomAttributes(this FieldInfo fieldInfo, bool inherit = true)
-        {
+		/// <summary>
+		/// Customs the attributes.
+		/// </summary>
+		/// <param name="fieldInfo">The field information.</param>
+		/// <param name="inherit">The inherit.</param>
+		/// <returns>System.Object[].</returns>
+		public static object[] CustomAttributes(this FieldInfo fieldInfo, bool inherit = true)
+		{
 #if NETFX_CORE
             return fieldInfo.GetCustomAttributes(inherit).ToArray();
 #else
-            return fieldInfo.GetCustomAttributes(inherit);
+			return fieldInfo.GetCustomAttributes(inherit);
 #endif
-        }
+		}
 
-        public static object[] CustomAttributes(this FieldInfo fieldInfo, Type attrType, bool inherit = true)
-        {
+		/// <summary>
+		/// Customs the attributes.
+		/// </summary>
+		/// <param name="fieldInfo">The field information.</param>
+		/// <param name="attrType">Type of the attribute.</param>
+		/// <param name="inherit">The inherit.</param>
+		/// <returns>System.Object[].</returns>
+		public static object[] CustomAttributes(this FieldInfo fieldInfo, Type attrType, bool inherit = true)
+		{
 #if NETFX_CORE
             return fieldInfo.GetCustomAttributes(inherit).Where(x => x.GetType() == attrType).ToArray();
 #else
-            return fieldInfo.GetCustomAttributes(attrType, inherit);
+			return fieldInfo.GetCustomAttributes(attrType, inherit);
 #endif
-        }
+		}
 
-        public static object[] CustomAttributes(this Type type, bool inherit = true)
-        {
+		/// <summary>
+		/// Customs the attributes.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <param name="inherit">The inherit.</param>
+		/// <returns>System.Object[].</returns>
+		public static object[] CustomAttributes(this Type type, bool inherit = true)
+		{
 #if NETFX_CORE
             return type.GetTypeInfo().GetCustomAttributes(inherit).ToArray();
 #else
-            return type.GetCustomAttributes(inherit);
+			return type.GetCustomAttributes(inherit);
 #endif
-        }
+		}
 
-        public static object[] CustomAttributes(this Type type, Type attrType, bool inherit = true)
-        {
+		/// <summary>
+		/// Customs the attributes.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <param name="attrType">Type of the attribute.</param>
+		/// <param name="inherit">The inherit.</param>
+		/// <returns>System.Object[].</returns>
+		public static object[] CustomAttributes(this Type type, Type attrType, bool inherit = true)
+		{
 #if NETFX_CORE
             return type.GetTypeInfo().GetCustomAttributes(inherit).Where(x => x.GetType() == attrType).ToArray();
 #else
-            return type.GetCustomAttributes(attrType, inherit);
+			return type.GetCustomAttributes(attrType, inherit);
 #endif
-        }
+		}
 
-        public static TAttr FirstAttribute<TAttr>(this Type type, bool inherit = true) where TAttr : Attribute
-        {
+		/// <summary>
+		/// Firsts the attribute.
+		/// </summary>
+		/// <typeparam name="TAttr">The type of the t attribute.</typeparam>
+		/// <param name="type">The type.</param>
+		/// <param name="inherit">The inherit.</param>
+		/// <returns>TAttr.</returns>
+		public static TAttr FirstAttribute<TAttr>(this Type type, bool inherit = true) where TAttr : Attribute
+		{
 #if NETFX_CORE
             return type.GetTypeInfo().GetCustomAttributes(typeof(TAttr), inherit)
                 .FirstOrDefault() as TAttr;
 #else
-            return type.GetCustomAttributes(typeof(TAttr), inherit)
-                   .FirstOrDefault() as TAttr;
+			return type.GetCustomAttributes(typeof(TAttr), inherit)
+				   .FirstOrDefault() as TAttr;
 #endif
-        }
-        
-        public static TAttribute FirstAttribute<TAttribute>(this PropertyInfo propertyInfo)
-            where TAttribute : Attribute
-        {
-            return propertyInfo.FirstAttribute<TAttribute>(true);
-        }
+		}
 
-        public static TAttribute FirstAttribute<TAttribute>(this PropertyInfo propertyInfo, bool inherit)
-            where TAttribute : Attribute
-        {
+		/// <summary>
+		/// Firsts the attribute.
+		/// </summary>
+		/// <typeparam name="TAttribute">The type of the t attribute.</typeparam>
+		/// <param name="propertyInfo">The property information.</param>
+		/// <returns>TAttribute.</returns>
+		public static TAttribute FirstAttribute<TAttribute>(this PropertyInfo propertyInfo)
+					where TAttribute : Attribute
+		{
+			return propertyInfo.FirstAttribute<TAttribute>(true);
+		}
+
+		/// <summary>
+		/// Firsts the attribute.
+		/// </summary>
+		/// <typeparam name="TAttribute">The type of the t attribute.</typeparam>
+		/// <param name="propertyInfo">The property information.</param>
+		/// <param name="inherit">The inherit.</param>
+		/// <returns>TAttribute.</returns>
+		public static TAttribute FirstAttribute<TAttribute>(this PropertyInfo propertyInfo, bool inherit)
+					where TAttribute : Attribute
+		{
 #if NETFX_CORE
             var attrs = propertyInfo.GetCustomAttributes<TAttribute>(inherit);
             return (TAttribute)(attrs.Count() > 0 ? attrs.ElementAt(0) : null);
 #else
-            var attrs = propertyInfo.GetCustomAttributes(typeof(TAttribute), inherit);
-            return (TAttribute)(attrs.Length > 0 ? attrs[0] : null);
+			var attrs = propertyInfo.GetCustomAttributes(typeof(TAttribute), inherit);
+			return (TAttribute) (attrs.Length > 0 ? attrs[0] : null);
 #endif
-        }
+		}
 
-        public static Type FirstGenericTypeDefinition(this Type type)
-        {
-            while (type != null)
-            {
-                if (type.HasGenericType())
-                    return type.GenericTypeDefinition();
+		/// <summary>
+		/// Firsts the generic type definition.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns>System.Type.</returns>
+		public static Type FirstGenericTypeDefinition(this Type type)
+		{
+			while(type != null) {
+				if(type.HasGenericType())
+					return type.GenericTypeDefinition();
 
-                type = type.BaseType();
-            }
+				type = type.BaseType();
+			}
 
-            return null;
-        }
+			return null;
+		}
 
-        public static bool IsDynamic(this Assembly assembly)
-        {
+		/// <summary>
+		/// Determines whether the specified assembly is dynamic.
+		/// </summary>
+		/// <param name="assembly">The assembly.</param>
+		/// <returns>System.Boolean.</returns>
+		public static bool IsDynamic(this Assembly assembly)
+		{
 #if MONOTOUCH || WINDOWS_PHONE || NETFX_CORE
-            return false;
+			return false;
 #else
             try
             {
@@ -1009,224 +1418,356 @@ namespace ServiceStack.Text
                 return true;
             }
 #endif
-        }
+		}
 
-        public static MethodInfo GetPublicStaticMethod(this Type type, string methodName, Type[] types = null)
-        {
+		/// <summary>
+		/// Gets the public static method.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <param name="methodName">Name of the method.</param>
+		/// <param name="types">The types.</param>
+		/// <returns>System.Reflection.MethodInfo.</returns>
+		public static MethodInfo GetPublicStaticMethod(this Type type, string methodName, Type[] types = null)
+		{
 #if NETFX_CORE
             return type.GetRuntimeMethod(methodName, types);
 #else
-            return types == null
-                ? type.GetMethod(methodName, BindingFlags.Public | BindingFlags.Static)
-                : type.GetMethod(methodName, BindingFlags.Public | BindingFlags.Static, null, types, null);
+			return types == null
+				? type.GetMethod(methodName, BindingFlags.Public | BindingFlags.Static)
+				: type.GetMethod(methodName, BindingFlags.Public | BindingFlags.Static, null, types, null);
 #endif
-        }
+		}
 
-        public static MethodInfo GetMethodInfo(this Type type, string methodName, Type[] types = null)
-        {
+		/// <summary>
+		/// Gets the method information.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <param name="methodName">Name of the method.</param>
+		/// <param name="types">The types.</param>
+		/// <returns>System.Reflection.MethodInfo.</returns>
+		public static MethodInfo GetMethodInfo(this Type type, string methodName, Type[] types = null)
+		{
 #if NETFX_CORE
             return type.GetRuntimeMethods().First(p => p.Name.Equals(methodName));
 #else
-            return types == null
-                ? type.GetMethod(methodName)
-                : type.GetMethod(methodName, types);
+			return types == null
+				? type.GetMethod(methodName)
+				: type.GetMethod(methodName, types);
 #endif
-        }
+		}
 
-        public static object InvokeMethod(this Delegate fn, object instance, object[] parameters = null)
-        {
+		/// <summary>
+		/// Invokes the method.
+		/// </summary>
+		/// <param name="fn">The function.</param>
+		/// <param name="instance">The instance.</param>
+		/// <param name="parameters">The parameters.</param>
+		/// <returns>System.Object.</returns>
+		public static object InvokeMethod(this Delegate fn, object instance, object[] parameters = null)
+		{
 #if NETFX_CORE
             return fn.GetMethodInfo().Invoke(instance, parameters ?? new object[] { });
 #else
-            return fn.Method.Invoke(instance, parameters ?? new object[] { });
+			return fn.Method.Invoke(instance, parameters ?? new object[] { });
 #endif
-        }
+		}
 
-        public static FieldInfo GetPublicStaticField(this Type type, string fieldName)
-        {
+		/// <summary>
+		/// Gets the public static field.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <param name="fieldName">Name of the field.</param>
+		/// <returns>System.Reflection.FieldInfo.</returns>
+		public static FieldInfo GetPublicStaticField(this Type type, string fieldName)
+		{
 #if NETFX_CORE
             return type.GetRuntimeField(fieldName);
 #else
-            return type.GetField(fieldName, BindingFlags.Public | BindingFlags.Static);
+			return type.GetField(fieldName, BindingFlags.Public | BindingFlags.Static);
 #endif
-        }
+		}
 
-        public static Delegate MakeDelegate(this MethodInfo mi, Type delegateType, bool throwOnBindFailure=true)
-        {
+		/// <summary>
+		/// Makes the delegate.
+		/// </summary>
+		/// <param name="mi">The mi.</param>
+		/// <param name="delegateType">Type of the delegate.</param>
+		/// <param name="throwOnBindFailure">The throw on bind failure.</param>
+		/// <returns>System.Delegate.</returns>
+		public static Delegate MakeDelegate(this MethodInfo mi, Type delegateType, bool throwOnBindFailure = true)
+		{
 #if NETFX_CORE
             return mi.CreateDelegate(delegateType);
 #else
-            return Delegate.CreateDelegate(delegateType, mi, throwOnBindFailure);
+			return Delegate.CreateDelegate(delegateType, mi, throwOnBindFailure);
 #endif
-        }
+		}
 
-        public static Type[] GenericTypeArguments(this Type type)
-        {
+		/// <summary>
+		/// Generics the type arguments.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns>System.Type[].</returns>
+		public static Type[] GenericTypeArguments(this Type type)
+		{
 #if NETFX_CORE
             return type.GenericTypeArguments;
 #else
-            return type.GetGenericArguments();
+			return type.GetGenericArguments();
 #endif
-        }
+		}
 
-        public static ConstructorInfo[] DeclaredConstructors(this Type type)
-        {
+		/// <summary>
+		/// Declareds the constructors.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns>System.Reflection.ConstructorInfo[].</returns>
+		public static ConstructorInfo[] DeclaredConstructors(this Type type)
+		{
 #if NETFX_CORE
             return type.GetTypeInfo().DeclaredConstructors.ToArray();
 #else
-            return type.GetConstructors();
+			return type.GetConstructors();
 #endif
-        }
+		}
 
-        public static bool AssignableFrom(this Type type, Type fromType)
-        {
+		/// <summary>
+		/// Assignables from.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <param name="fromType">From type.</param>
+		/// <returns>System.Boolean.</returns>
+		public static bool AssignableFrom(this Type type, Type fromType)
+		{
 #if NETFX_CORE
             return type.GetTypeInfo().IsAssignableFrom(fromType.GetTypeInfo());
 #else
-            return type.IsAssignableFrom(fromType);
+			return type.IsAssignableFrom(fromType);
 #endif
-        }
-        
-        public static bool IsStandardClass(this Type type)
-        {
+		}
+
+		/// <summary>
+		/// Determines whether [is standard class] [the specified type].
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns>System.Boolean.</returns>
+		public static bool IsStandardClass(this Type type)
+		{
 #if NETFX_CORE
             var typeInfo = type.GetTypeInfo();
             return typeInfo.IsClass && !typeInfo.IsAbstract && !typeInfo.IsInterface;
 #else
-            return type.IsClass && !type.IsAbstract && !type.IsInterface;
+			return type.IsClass && !type.IsAbstract && !type.IsInterface;
 #endif
-        }
+		}
 
-        public static bool IsAbstract(this Type type)
-        {
+		/// <summary>
+		/// Determines whether the specified type is abstract.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns>System.Boolean.</returns>
+		public static bool IsAbstract(this Type type)
+		{
 #if NETFX_CORE
             return type.GetTypeInfo().IsAbstract;
 #else
-            return type.IsAbstract;
+			return type.IsAbstract;
 #endif
-        }
+		}
 
-        public static PropertyInfo GetPropertyInfo(this Type type, string propertyName)
-        {
+		/// <summary>
+		/// Gets the property information.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <param name="propertyName">Name of the property.</param>
+		/// <returns>System.Reflection.PropertyInfo.</returns>
+		public static PropertyInfo GetPropertyInfo(this Type type, string propertyName)
+		{
 #if NETFX_CORE
             return type.GetRuntimeProperty(propertyName);
 #else
-            return type.GetProperty(propertyName);
+			return type.GetProperty(propertyName);
 #endif
-        }
+		}
 
-        public static FieldInfo GetFieldInfo(this Type type, string fieldName)
-        {
+		/// <summary>
+		/// Gets the field information.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <param name="fieldName">Name of the field.</param>
+		/// <returns>System.Reflection.FieldInfo.</returns>
+		public static FieldInfo GetFieldInfo(this Type type, string fieldName)
+		{
 #if NETFX_CORE
             return type.GetRuntimeField(fieldName);
 #else
-            return type.GetField(fieldName);
+			return type.GetField(fieldName);
 #endif
-        }
+		}
 
-        public static FieldInfo[] GetWritableFields(this Type type)
-        {
+		/// <summary>
+		/// Gets the writable fields.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns>System.Reflection.FieldInfo[].</returns>
+		public static FieldInfo[] GetWritableFields(this Type type)
+		{
 #if NETFX_CORE
             return type.GetRuntimeFields().Where(p => !p.IsPublic && !p.IsStatic).ToArray();
 #else
-            return type.GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.SetField);
+			return type.GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.SetField);
 #endif
-        }
+		}
 
-        public static MethodInfo SetMethod(this PropertyInfo pi, bool nonPublic = true)
-        {
+		/// <summary>
+		/// Sets the method.
+		/// </summary>
+		/// <param name="pi">The pi.</param>
+		/// <param name="nonPublic">The non public.</param>
+		/// <returns>System.Reflection.MethodInfo.</returns>
+		public static MethodInfo SetMethod(this PropertyInfo pi, bool nonPublic = true)
+		{
 #if NETFX_CORE
             return pi.SetMethod;
 #else
-            return pi.GetSetMethod(nonPublic);
+			return pi.GetSetMethod(nonPublic);
 #endif
-        }
+		}
 
-        public static MethodInfo GetMethodInfo(this PropertyInfo pi, bool nonPublic = true)
-        {
+		/// <summary>
+		/// Gets the method information.
+		/// </summary>
+		/// <param name="pi">The pi.</param>
+		/// <param name="nonPublic">The non public.</param>
+		/// <returns>System.Reflection.MethodInfo.</returns>
+		public static MethodInfo GetMethodInfo(this PropertyInfo pi, bool nonPublic = true)
+		{
 #if NETFX_CORE
             return pi.GetMethod;
 #else
-            return pi.GetGetMethod(nonPublic);
+			return pi.GetGetMethod(nonPublic);
 #endif
-        }
+		}
 
-        public static bool InstanceOfType(this Type type, object instance)
-        {
+		/// <summary>
+		/// Instances the type of the of.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <param name="instance">The instance.</param>
+		/// <returns>System.Boolean.</returns>
+		public static bool InstanceOfType(this Type type, object instance)
+		{
 #if NETFX_CORE
             return type.IsInstanceOf(instance.GetType());
 #else
-            return type.IsInstanceOfType(instance);
+			return type.IsInstanceOfType(instance);
 #endif
-        }
-        
-        public static bool IsClass(this Type type)
-        {
+		}
+
+		/// <summary>
+		/// Determines whether the specified type is class.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns>System.Boolean.</returns>
+		public static bool IsClass(this Type type)
+		{
 #if NETFX_CORE
             return type.GetTypeInfo().IsClass;
 #else
-            return type.IsClass;
+			return type.IsClass;
 #endif
-        }
+		}
 
-        public static bool IsEnum(this Type type)
-        {
+		/// <summary>
+		/// Determines whether the specified type is enum.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns>System.Boolean.</returns>
+		public static bool IsEnum(this Type type)
+		{
 #if NETFX_CORE
             return type.GetTypeInfo().IsEnum;
 #else
-            return type.IsEnum;
+			return type.IsEnum;
 #endif
-        }
+		}
 
-        public static bool IsEnumFlags(this Type type)
-        {
+		/// <summary>
+		/// Determines whether [is enum flags] [the specified type].
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns>System.Boolean.</returns>
+		public static bool IsEnumFlags(this Type type)
+		{
 #if NETFX_CORE
             return type.GetTypeInfo().IsEnum && type.FirstAttribute<FlagsAttribute>(false) != null;
 #else
-            return type.IsEnum && type.FirstAttribute<FlagsAttribute>(false) != null;
+			return type.IsEnum && type.FirstAttribute<FlagsAttribute>(false) != null;
 #endif
-        }
+		}
 
-        public static bool IsUnderlyingEnum(this Type type)
-        {
+		/// <summary>
+		/// Determines whether [is underlying enum] [the specified type].
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns>System.Boolean.</returns>
+		public static bool IsUnderlyingEnum(this Type type)
+		{
 #if NETFX_CORE
             return type.GetTypeInfo().IsEnum;
 #else
-            return type.IsEnum || type.UnderlyingSystemType.IsEnum;
+			return type.IsEnum || type.UnderlyingSystemType.IsEnum;
 #endif
-        }
+		}
 
-        public static MethodInfo[] GetMethodInfos(this Type type)
-        {
+		/// <summary>
+		/// Gets the method infos.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns>System.Reflection.MethodInfo[].</returns>
+		public static MethodInfo[] GetMethodInfos(this Type type)
+		{
 #if NETFX_CORE
             return type.GetRuntimeMethods().ToArray();
 #else
-            return type.GetMethods();
+			return type.GetMethods();
 #endif
-        }
+		}
 
-        public static PropertyInfo[] GetPropertyInfos(this Type type)
-        {
+		/// <summary>
+		/// Gets the property infos.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns>System.Reflection.PropertyInfo[].</returns>
+		public static PropertyInfo[] GetPropertyInfos(this Type type)
+		{
 #if NETFX_CORE
             return type.GetRuntimeProperties().ToArray();
 #else
-            return type.GetProperties();
+			return type.GetProperties();
 #endif
-        }
+		}
 
 #if SILVERLIGHT || NETFX_CORE
-        public static List<U> ConvertAll<T, U>(this List<T> list, Func<T, U> converter)
-        {
-            var result = new List<U>();
-            foreach (var element in list)
-            {
-                result.Add(converter(element));
-            }
-            return result;
-        }
+		/// <summary>
+		/// Converts all.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <typeparam name="U"></typeparam>
+		/// <param name="list">The list.</param>
+		/// <param name="converter">The converter.</param>
+		/// <returns>System.Collections.Generic.List&lt;U&gt;.</returns>
+		public static List<U> ConvertAll<T, U>(this List<T> list, Func<T, U> converter)
+		{
+			var result = new List<U>();
+			foreach(var element in list) {
+				result.Add(converter(element));
+			}
+			return result;
+		}
 #endif
- 
-    
-    }
+
+
+	}
 
 }

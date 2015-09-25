@@ -2,11 +2,26 @@ namespace XLabs.Forms.Controls.MonoDroid.TimesSquare
 {
 	using System;
 
+	/// <summary>
+	/// Enum RangeState
+	/// </summary>
 	public enum RangeState
 	{
+		/// <summary>
+		/// The none
+		/// </summary>
 		None,
+		/// <summary>
+		/// The first
+		/// </summary>
 		First,
+		/// <summary>
+		/// The middle
+		/// </summary>
 		Middle,
+		/// <summary>
+		/// The last
+		/// </summary>
 		Last
 	}
 

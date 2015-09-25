@@ -282,11 +282,21 @@ namespace XLabs.Forms
     /// </summary>
     public class XFormsAppDroid : XFormsApp<XFormsApplicationDroid>
     {
-        public XFormsAppDroid() { }
+		/// <summary>
+		/// Initializes a new instance of the <see cref="XFormsAppDroid"/> class.
+		/// </summary>
+		public XFormsAppDroid() { }
 
-        public XFormsAppDroid(XFormsApplicationDroid app) : base(app) { }
+		/// <summary>
+		/// Initializes a new instance of the <see cref="XFormsAppDroid"/> class.
+		/// </summary>
+		/// <param name="app">The application.</param>
+		public XFormsAppDroid(XFormsApplicationDroid app) : base(app) { }
 
-        public void RaiseBackPress()
+		/// <summary>
+		/// Raises the back press.
+		/// </summary>
+		public void RaiseBackPress()
         {
             this.OnBackPress();
         }

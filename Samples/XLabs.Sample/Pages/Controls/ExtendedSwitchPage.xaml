@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:XLabs.Forms.Controls;assembly=XLabs.Forms"
+             x:Class="XLabs.Sample.Pages.Controls.ExtendedSwitchPage">
+  <StackLayout Padding="0,40,0,0">
+    <Label Text="Default ExtendedSwitch"/>
+    <controls:ExtendedSwitch 
+      IsToggled="True"
+      HorizontalOptions="Start"/>
+
+    <Label Text="ExtendedSwitch with TintColor=Blue"/>
+    <controls:ExtendedSwitch
+      IsToggled="True"
+      TintColor="Blue"
+      HorizontalOptions="Start"/>
+    
+  </StackLayout>
+</ContentPage>

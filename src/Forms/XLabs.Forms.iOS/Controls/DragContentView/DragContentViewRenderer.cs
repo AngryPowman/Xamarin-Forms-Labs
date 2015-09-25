@@ -11,13 +11,29 @@ using XLabs.Forms.Controls;
 
 namespace XLabs.Forms.Controls
 {
-    public class DragContentViewRenderer : ViewRenderer<DragContentView, UIView>
+	/// <summary>
+	/// Class DragContentViewRenderer.
+	/// </summary>
+	public class DragContentViewRenderer : ViewRenderer<DragContentView, UIView>
     {
-        private UIView touchedView;
-        private View touchedElement;
-        private CGPoint offsetLocation;
+		/// <summary>
+		/// The touched view
+		/// </summary>
+		private UIView touchedView;
+		/// <summary>
+		/// The touched element
+		/// </summary>
+		private View touchedElement;
+		/// <summary>
+		/// The offset location
+		/// </summary>
+		private CGPoint offsetLocation;
 
-        protected override void OnElementChanged(ElementChangedEventArgs<DragContentView> e)
+		/// <summary>
+		/// Called when [element changed].
+		/// </summary>
+		/// <param name="e">The e.</param>
+		protected override void OnElementChanged(ElementChangedEventArgs<DragContentView> e)
         {
             base.OnElementChanged(e);
 
@@ -33,7 +49,12 @@ namespace XLabs.Forms.Controls
             }
         }
 
-        public override void TouchesBegan(NSSet touches, UIEvent evt)
+		/// <summary>
+		/// Toucheses the began.
+		/// </summary>
+		/// <param name="touches">The touches.</param>
+		/// <param name="evt">The evt.</param>
+		public override void TouchesBegan(NSSet touches, UIEvent evt)
         {
             base.TouchesBegan(touches, evt);
 
@@ -52,20 +73,35 @@ namespace XLabs.Forms.Controls
             this.BringSubviewToFront(this.touchedView);
         }
 
-        public override void TouchesCancelled(NSSet touches, UIEvent evt)
+		/// <summary>
+		/// Toucheses the cancelled.
+		/// </summary>
+		/// <param name="touches">The touches.</param>
+		/// <param name="evt">The evt.</param>
+		public override void TouchesCancelled(NSSet touches, UIEvent evt)
         {
             base.TouchesCancelled(touches, evt);
             this.touchedView = null;
         }
 
-        public override void TouchesEnded(NSSet touches, UIEvent evt)
+		/// <summary>
+		/// Toucheses the ended.
+		/// </summary>
+		/// <param name="touches">The touches.</param>
+		/// <param name="evt">The evt.</param>
+		public override void TouchesEnded(NSSet touches, UIEvent evt)
         {
             base.TouchesEnded(touches, evt);
 
             this.touchedView = null;
         }
 
-        public override void TouchesMoved(NSSet touches, UIEvent evt)
+		/// <summary>
+		/// Toucheses the moved.
+		/// </summary>
+		/// <param name="touches">The touches.</param>
+		/// <param name="evt">The evt.</param>
+		public override void TouchesMoved(NSSet touches, UIEvent evt)
         {
             base.TouchesMoved(touches, evt);
 
@@ -83,7 +119,13 @@ namespace XLabs.Forms.Controls
             }
         }
 
-        private static View GetMovedElement(object nativeView, View view)
+		/// <summary>
+		/// Gets the moved element.
+		/// </summary>
+		/// <param name="nativeView">The native view.</param>
+		/// <param name="view">The view.</param>
+		/// <returns>View.</returns>
+		private static View GetMovedElement(object nativeView, View view)
         {
             View movedElement;
 
@@ -107,7 +149,12 @@ namespace XLabs.Forms.Controls
             return movedElement;
         }
 
-        private static string GetAccessibilityId(object view)
+		/// <summary>
+		/// Gets the accessibility identifier.
+		/// </summary>
+		/// <param name="view">The view.</param>
+		/// <returns>System.String.</returns>
+		private static string GetAccessibilityId(object view)
         {
             var ni = view.GetType().GetProperty("Control", BindingFlags.Public | BindingFlags.Instance);
             if (ni == null)

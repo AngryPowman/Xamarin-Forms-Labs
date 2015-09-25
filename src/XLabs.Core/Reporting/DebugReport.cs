@@ -9,6 +9,10 @@
     {
         #region IReport Members
 
+        /// <summary>
+        /// Report an exception.
+        /// </summary>
+        /// <param name="exception">Exception that happened.</param>
         public void Exception(System.Exception exception)
         {
             Debug.WriteLine(exception);

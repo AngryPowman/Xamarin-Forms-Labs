@@ -4,9 +4,15 @@ using XLabs.Platform.Services.Media;
 
 namespace XLabs.Forms.Controls
 {
-    public class CameraView : View
+	/// <summary>
+	/// Class CameraView.
+	/// </summary>
+	public class CameraView : View
     {
-        public CameraView()
+		/// <summary>
+		/// Initializes a new instance of the <see cref="CameraView"/> class.
+		/// </summary>
+		public CameraView()
         {
         }
 

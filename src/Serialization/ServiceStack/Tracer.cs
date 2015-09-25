@@ -1,32 +1,85 @@
+// ***********************************************************************
+// <copyright file="Tracer.cs" company="XLabs">
+//     Copyright © ServiceStack 2013 & XLabs
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
 using System;
 
 namespace ServiceStack.Text
 {
-    public class Tracer
+	/// <summary>
+	/// Class Tracer.
+	/// </summary>
+	public class Tracer
     {
-        public static ITracer Instance = new NullTracer();
+		/// <summary>
+		/// The instance
+		/// </summary>
+		public static ITracer Instance = new NullTracer();
 
-        public class NullTracer : ITracer
+		/// <summary>
+		/// Class NullTracer.
+		/// </summary>
+		public class NullTracer : ITracer
         {
-            public void WriteDebug(string error) { }
+			/// <summary>
+			/// Writes the debug.
+			/// </summary>
+			/// <param name="error">The error.</param>
+			public void WriteDebug(string error) { }
 
-            public void WriteDebug(string format, params object[] args) { }
-            
-            public void WriteWarning(string warning) { }
+			/// <summary>
+			/// Writes the debug.
+			/// </summary>
+			/// <param name="format">The format.</param>
+			/// <param name="args">The arguments.</param>
+			public void WriteDebug(string format, params object[] args) { }
 
-            public void WriteWarning(string format, params object[] args) { }
+			/// <summary>
+			/// Writes the warning.
+			/// </summary>
+			/// <param name="warning">The warning.</param>
+			public void WriteWarning(string warning) { }
 
-            public void WriteError(Exception ex) { }
+			/// <summary>
+			/// Writes the warning.
+			/// </summary>
+			/// <param name="format">The format.</param>
+			/// <param name="args">The arguments.</param>
+			public void WriteWarning(string format, params object[] args) { }
 
-            public void WriteError(string error) { }
+			/// <summary>
+			/// Writes the error.
+			/// </summary>
+			/// <param name="ex">The ex.</param>
+			public void WriteError(Exception ex) { }
 
-            public void WriteError(string format, params object[] args) { }
+			/// <summary>
+			/// Writes the error.
+			/// </summary>
+			/// <param name="error">The error.</param>
+			public void WriteError(string error) { }
+
+			/// <summary>
+			/// Writes the error.
+			/// </summary>
+			/// <param name="format">The format.</param>
+			/// <param name="args">The arguments.</param>
+			public void WriteError(string format, params object[] args) { }
 
         }
 
-        public class ConsoleTracer : ITracer
+		/// <summary>
+		/// Class ConsoleTracer.
+		/// </summary>
+		public class ConsoleTracer : ITracer
         {
-            public void WriteDebug(string error)
+			/// <summary>
+			/// Writes the debug.
+			/// </summary>
+			/// <param name="error">The error.</param>
+			public void WriteDebug(string error)
             {
 #if NETFX_CORE
                 System.Diagnostics.Debug.WriteLine(error);
@@ -35,7 +88,12 @@ namespace ServiceStack.Text
 #endif
             }
 
-            public void WriteDebug(string format, params object[] args)
+			/// <summary>
+			/// Writes the debug.
+			/// </summary>
+			/// <param name="format">The format.</param>
+			/// <param name="args">The arguments.</param>
+			public void WriteDebug(string format, params object[] args)
             {
 #if NETFX_CORE
                 System.Diagnostics.Debug.WriteLine(format, args);
@@ -44,7 +102,11 @@ namespace ServiceStack.Text
 #endif
             }
 
-            public void WriteWarning(string warning)
+			/// <summary>
+			/// Writes the warning.
+			/// </summary>
+			/// <param name="warning">The warning.</param>
+			public void WriteWarning(string warning)
             {
 #if NETFX_CORE
                 System.Diagnostics.Debug.WriteLine(warning);                
@@ -53,7 +115,12 @@ namespace ServiceStack.Text
 #endif
             }
 
-            public void WriteWarning(string format, params object[] args)
+			/// <summary>
+			/// Writes the warning.
+			/// </summary>
+			/// <param name="format">The format.</param>
+			/// <param name="args">The arguments.</param>
+			public void WriteWarning(string format, params object[] args)
             {
 #if NETFX_CORE
                 System.Diagnostics.Debug.WriteLine(format, args);
@@ -62,7 +129,11 @@ namespace ServiceStack.Text
 #endif
             }
 
-            public void WriteError(Exception ex)
+			/// <summary>
+			/// Writes the error.
+			/// </summary>
+			/// <param name="ex">The ex.</param>
+			public void WriteError(Exception ex)
             {
 #if NETFX_CORE
                 System.Diagnostics.Debug.WriteLine(ex);
@@ -71,7 +142,11 @@ namespace ServiceStack.Text
 #endif
             }
 
-            public void WriteError(string error)
+			/// <summary>
+			/// Writes the error.
+			/// </summary>
+			/// <param name="error">The error.</param>
+			public void WriteError(string error)
             {
 #if NETFX_CORE
                 System.Diagnostics.Debug.WriteLine(error);
@@ -80,7 +155,12 @@ namespace ServiceStack.Text
 #endif
             }
 
-            public void WriteError(string format, params object[] args)
+			/// <summary>
+			/// Writes the error.
+			/// </summary>
+			/// <param name="format">The format.</param>
+			/// <param name="args">The arguments.</param>
+			public void WriteError(string format, params object[] args)
             {
 #if NETFX_CORE
                 System.Diagnostics.Debug.WriteLine(format, args);

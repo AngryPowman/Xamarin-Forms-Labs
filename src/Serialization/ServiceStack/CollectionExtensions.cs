@@ -1,11 +1,32 @@
+//
+// https://github.com/ServiceStack/ServiceStack.Text
+// ServiceStack.Text: .NET C# POCO JSON, JSV and CSV Text Serializers.
+//
+// Authors:
+//   Demis Bellot (demis.bellot@gmail.com)
+//
+// Copyright 2012 ServiceStack Ltd.
+//
+// Licensed under the same terms of ServiceStack: new BSD license.
+//
 using System;
 using System.Collections.Generic;
 
 namespace ServiceStack.Text
 {
-    public static class CollectionExtensions
+	/// <summary>
+	/// Class CollectionExtensions.
+	/// </summary>
+	public static class CollectionExtensions
     {
-        public static ICollection<T> CreateAndPopulate<T>(Type ofCollectionType, T[] withItems)
+		/// <summary>
+		/// Creates the and populate.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="ofCollectionType">Type of the of collection.</param>
+		/// <param name="withItems">The with items.</param>
+		/// <returns>ICollection&lt;T&gt;.</returns>
+		public static ICollection<T> CreateAndPopulate<T>(Type ofCollectionType, T[] withItems)
         {
             if (ofCollectionType == null) return new List<T>(withItems);
 
@@ -28,14 +49,27 @@ namespace ServiceStack.Text
             return collection;
         }
 
-        public static T[] ToArray<T>(this ICollection<T> collection)
+		/// <summary>
+		/// To the array.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="collection">The collection.</param>
+		/// <returns>T[].</returns>
+		public static T[] ToArray<T>(this ICollection<T> collection)
         {
             var to = new T[collection.Count];
             collection.CopyTo(to, 0);
             return to;
         }
 
-        public static object Convert<T>(object objCollection, Type toCollectionType)
+		/// <summary>
+		/// Converts the specified object collection.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="objCollection">The object collection.</param>
+		/// <param name="toCollectionType">Type of to collection.</param>
+		/// <returns>System.Object.</returns>
+		public static object Convert<T>(object objCollection, Type toCollectionType)
         {
             var collection = (ICollection<T>) objCollection;
             var to = new T[collection.Count];

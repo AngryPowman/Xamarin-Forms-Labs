@@ -19,12 +19,26 @@ using ServiceStack.Text.Common;
 
 namespace ServiceStack.Text.Json
 {
+	/// <summary>
+	/// Class JsonReader.
+	/// </summary>
 	internal static class JsonReader
 	{
+		/// <summary>
+		/// The instance
+		/// </summary>
 		public static readonly JsReader<JsonTypeSerializer> Instance = new JsReader<JsonTypeSerializer>();
 
+		/// <summary>
+		/// The parse function cache
+		/// </summary>
 		private static Dictionary<Type, ParseFactoryDelegate> ParseFnCache = new Dictionary<Type, ParseFactoryDelegate>();
-        
+
+		/// <summary>
+		/// Gets the parse function.
+		/// </summary>
+		/// <param name="type">The type.</param>
+		/// <returns>ParseStringDelegate.</returns>
 		public static ParseStringDelegate GetParseFn(Type type)
 		{
 			ParseFactoryDelegate parseFactoryFn;
@@ -50,20 +64,41 @@ namespace ServiceStack.Text.Json
 		}
 	}
 
+	/// <summary>
+	/// Class JsonReader.
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
 	public static class JsonReader<T>
 	{
+		/// <summary>
+		/// The read function
+		/// </summary>
 		private static readonly ParseStringDelegate ReadFn;
 
+		/// <summary>
+		/// Initializes static members of the <see cref="JsonReader{T}"/> class.
+		/// </summary>
 		static JsonReader()
 		{
 			ReadFn = JsonReader.Instance.GetParseFn<T>();
 		}
-		
+
+		/// <summary>
+		/// Gets the parse function.
+		/// </summary>
+		/// <returns>ParseStringDelegate.</returns>
 		public static ParseStringDelegate GetParseFn()
 		{
 			return ReadFn ?? Parse;
 		}
 
+		/// <summary>
+		/// Parses the specified value.
+		/// </summary>
+		/// <param name="value">The value.</param>
+		/// <returns>System.Object.</returns>
+		/// <exception cref="System.NotSupportedException">Can not deserialize interface type: 
+		/// 						+ typeof(T).Name</exception>
 		public static object Parse(string value)
 		{
 			if (ReadFn == null)

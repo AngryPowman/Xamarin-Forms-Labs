@@ -1,3 +1,6 @@
+using Java.Lang;
+using Java.Util.Regex;
+
 namespace XLabs.Platform.Services.Media
 {
 	using System;
@@ -491,18 +494,50 @@ namespace XLabs.Platform.Services.Media
 			}
 		}
 
-		/// <summary>
-		/// Gets the file for URI asynchronous.
-		/// </summary>
-		/// <param name="context">The context.</param>
-		/// <param name="uri">The URI.</param>
-		/// <param name="isPhoto">if set to <c>true</c> [is photo].</param>
-		/// <returns>Task&lt;Tuple&lt;System.String, System.Boolean&gt;&gt;.</returns>
-		internal static Task<Tuple<string, bool>> GetFileForUriAsync(Context context, Uri uri, bool isPhoto)
+        /// <summary>
+        /// FIx uripath for 5.0.2 new Gallery Picker Error 
+        /// see https://forums.xamarin.com/discussion/43908/issue-with-xlabs-mediapicker-selectpicture-and-selectvideo
+        /// </summary>
+        /// <param name="uriPath"></param>
+        /// <returns>if result != null uri is fixed</returns>
+        private static Uri FixUri(string uriPath)
+        {
+            //remove /ACTUAL
+            if (uriPath.Contains("/ACTUAL"))
+                uriPath = uriPath.Substring(0, uriPath.IndexOf("/ACTUAL", StringComparison.Ordinal));
+
+            Java.Util.Regex.Pattern pattern = Java.Util.Regex.Pattern.Compile("(content://media/.*\\d)");
+
+            if (uriPath.Contains("content"))
+            {
+                Matcher matcher = pattern.Matcher(uriPath);
+
+                if (matcher.Find())
+                    return Uri.Parse(matcher.Group(1));
+                else
+                    throw new IllegalArgumentException("Cannot handle this URI");
+            }
+            else
+                return null;
+        }
+
+        /// <summary>
+        /// Gets the file for URI asynchronous.
+        /// </summary>
+        /// <param name="context">The context.</param>
+        /// <param name="uri">The URI.</param>
+        /// <param name="isPhoto">if set to <c>true</c> [is photo].</param>
+        /// <returns>Task&lt;Tuple&lt;System.String, System.Boolean&gt;&gt;.</returns>
+        internal static Task<Tuple<string, bool>> GetFileForUriAsync(Context context, Uri uri, bool isPhoto)
 		{
 			var tcs = new TaskCompletionSource<Tuple<string, bool>>();
 
-			if (uri.Scheme == "file")
+            var fixedUri = FixUri(uri.Path);
+
+            if (fixedUri != null)
+                uri = fixedUri;
+
+            if (uri.Scheme == "file")
 				tcs.SetResult(new Tuple<string, bool>(new System.Uri(uri.ToString()).LocalPath, false));
 			else if (uri.Scheme == "content")
 			{

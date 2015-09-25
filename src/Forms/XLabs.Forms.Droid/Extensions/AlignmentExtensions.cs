@@ -5,9 +5,18 @@
     using DroidTextAlignment = Android.Views.TextAlignment;
     using TextAlignment = Xamarin.Forms.TextAlignment;
 
-    public static class AlignmentExtensions
+	/// <summary>
+	/// Class AlignmentExtensions.
+	/// </summary>
+	public static class AlignmentExtensions
     {
-        public static DroidTextAlignment ToDroidTextAlignment(this TextAlignment alignment)
+		/// <summary>
+		/// To the droid text alignment.
+		/// </summary>
+		/// <param name="alignment">The alignment.</param>
+		/// <returns>DroidTextAlignment.</returns>
+		/// <exception cref="System.InvalidOperationException"></exception>
+		public static DroidTextAlignment ToDroidTextAlignment(this TextAlignment alignment)
         {
             switch (alignment)
             {
@@ -22,7 +31,13 @@
             throw new InvalidOperationException(alignment.ToString());
         }
 
-        public static GravityFlags ToDroidHorizontalGravity(this TextAlignment alignment)
+		/// <summary>
+		/// To the droid horizontal gravity.
+		/// </summary>
+		/// <param name="alignment">The alignment.</param>
+		/// <returns>GravityFlags.</returns>
+		/// <exception cref="System.InvalidOperationException"></exception>
+		public static GravityFlags ToDroidHorizontalGravity(this TextAlignment alignment)
         {
             switch (alignment)
             {
@@ -37,7 +52,13 @@
             throw new InvalidOperationException(alignment.ToString());
         }
 
-        public static GravityFlags ToDroidVerticalGravity(this TextAlignment alignment)
+		/// <summary>
+		/// To the droid vertical gravity.
+		/// </summary>
+		/// <param name="alignment">The alignment.</param>
+		/// <returns>GravityFlags.</returns>
+		/// <exception cref="System.InvalidOperationException"></exception>
+		public static GravityFlags ToDroidVerticalGravity(this TextAlignment alignment)
         {
             switch (alignment)
             {

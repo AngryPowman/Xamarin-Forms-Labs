@@ -4,12 +4,11 @@
 //
 // Authors:
 //   Demis Bellot (demis.bellot@gmail.com)
-//	 Mijail Cisneros (cisneros@mijail.ru)
 //
-// Copyright 2012 Liquidbit Ltd.
+// Copyright 2012 ServiceStack Ltd.
 //
 // Licensed under the same terms of ServiceStack: new BSD license.
-//
+//*****************************************************************
 
 using System;
 using System.Collections;
@@ -22,19 +21,31 @@ namespace ServiceStack.Text.WinRT
 namespace ServiceStack.Text.WP
 #endif
 {
-    ///<summary>
-    /// A hashset implementation that uses an IDictionary
-    ///</summary>
-    public class HashSet<T> : ICollection<T>, IEnumerable<T>, IEnumerable
+	/// <summary>
+	/// A hashset implementation that uses an IDictionary
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	public class HashSet<T> : ICollection<T>, IEnumerable<T>, IEnumerable
     {
-        private readonly Dictionary<T, short> _dict;
+		/// <summary>
+		/// The _dict
+		/// </summary>
+		private readonly Dictionary<T, short> _dict;
 
-        public HashSet()
+		/// <summary>
+		/// Initializes a new instance of the <see cref="HashSet{T}"/> class.
+		/// </summary>
+		public HashSet()
         {
             _dict = new Dictionary<T, short>();
         }
 
-        public HashSet(IEnumerable<T> collection)
+		/// <summary>
+		/// Initializes a new instance of the <see cref="HashSet{T}"/> class.
+		/// </summary>
+		/// <param name="collection">The collection.</param>
+		/// <exception cref="System.ArgumentNullException">collection</exception>
+		public HashSet(IEnumerable<T> collection)
         {
             if (collection == null)
                 throw new ArgumentNullException("collection");
@@ -44,47 +55,85 @@ namespace ServiceStack.Text.WP
                 Add(item);
         }
 
-        public void Add(T item)
+		/// <summary>
+		/// Adds the specified item.
+		/// </summary>
+		/// <param name="item">The item.</param>
+		public void Add(T item)
         {
             _dict.Add(item, 0);
         }
 
-        public void Clear()
+		/// <summary>
+		/// Removes all items from the <see cref="T:System.Collections.Generic.ICollection`1" />.
+		/// </summary>
+		public void Clear()
         {
             _dict.Clear();
         }
 
-        public bool Contains(T item)
+		/// <summary>
+		/// Determines whether [contains] [the specified item].
+		/// </summary>
+		/// <param name="item">The item.</param>
+		/// <returns><c>true</c> if [contains] [the specified item]; otherwise, <c>false</c>.</returns>
+		public bool Contains(T item)
         {
             return _dict.ContainsKey(item);
         }
 
-        public void CopyTo(T[] array, int arrayIndex)
+		/// <summary>
+		/// Copies to.
+		/// </summary>
+		/// <param name="array">The array.</param>
+		/// <param name="arrayIndex">Index of the array.</param>
+		public void CopyTo(T[] array, int arrayIndex)
         {
             _dict.Keys.CopyTo(array, arrayIndex);
         }
 
-        public bool Remove(T item)
+		/// <summary>
+		/// Removes the specified item.
+		/// </summary>
+		/// <param name="item">The item.</param>
+		/// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
+		public bool Remove(T item)
         {
             return _dict.Remove(item);
         }
 
-        public IEnumerator<T> GetEnumerator()
+		/// <summary>
+		/// Returns an enumerator that iterates through the collection.
+		/// </summary>
+		/// <returns>An enumerator that can be used to iterate through the collection.</returns>
+		public IEnumerator<T> GetEnumerator()
         {
             return _dict.Keys.GetEnumerator();
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
+		/// <summary>
+		/// Returns an enumerator that iterates through a collection.
+		/// </summary>
+		/// <returns>An <see cref="T:System.Collections.IEnumerator" /> object that can be used to iterate through the collection.</returns>
+		IEnumerator IEnumerable.GetEnumerator()
         {
             return _dict.Keys.GetEnumerator();
         }
 
-        public int Count
+		/// <summary>
+		/// Gets the number of elements contained in the <see cref="T:System.Collections.Generic.ICollection`1" />.
+		/// </summary>
+		/// <value>The count.</value>
+		public int Count
         {
             get { return _dict.Keys.Count(); }
         }
 
-        public bool IsReadOnly
+		/// <summary>
+		/// Gets a value indicating whether the <see cref="T:System.Collections.Generic.ICollection`1" /> is read-only.
+		/// </summary>
+		/// <value><c>true</c> if this instance is read only; otherwise, <c>false</c>.</value>
+		public bool IsReadOnly
         {
             get { return false; }
         }

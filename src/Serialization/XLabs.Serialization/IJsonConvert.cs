@@ -1,7 +1,15 @@
 ﻿namespace XLabs.Serialization
 {
-    public interface IJsonConvert
+	/// <summary>
+	/// Interface IJsonConvert
+	/// </summary>
+	public interface IJsonConvert
     {
-        string ToJson(object obj);
+		/// <summary>
+		/// To the json.
+		/// </summary>
+		/// <param name="obj">The object.</param>
+		/// <returns>System.String.</returns>
+		string ToJson(object obj);
     }
 }

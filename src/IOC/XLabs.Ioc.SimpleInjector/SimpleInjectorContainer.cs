@@ -67,7 +67,13 @@ namespace XLabs.Ioc.SimpleInjectorContainer
             return this;
         }
 
-        public IDependencyContainer RegisterSingle<T, TImpl>() where T : class where TImpl : class, T
+		/// <summary>
+		/// Registers the single.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <typeparam name="TImpl">The type of the t implementation.</typeparam>
+		/// <returns>IDependencyContainer.</returns>
+		public IDependencyContainer RegisterSingle<T, TImpl>() where T : class where TImpl : class, T
         {
             this.container.RegisterSingle<T, TImpl>();
             return this;

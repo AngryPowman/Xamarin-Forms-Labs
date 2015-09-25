@@ -1,9 +1,11 @@
 ﻿namespace XLabs.Forms.Services
 {
 	using System.Collections.Generic;
-
 	using Xamarin.Forms;
 
+	/// <summary>
+	/// Interface IFontManager
+	/// </summary>
 	public interface IFontManager
 	{
 		/// <summary>

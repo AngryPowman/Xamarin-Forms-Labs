@@ -23,7 +23,7 @@ namespace XLabs.Forms.Controls
         {
             base.OnElementChanged(e);
 
-            if (this.Control == null)
+            if (this.Control == null && e.NewElement != null)
             {
                 var webView = new WebBrowser { IsScriptEnabled = true, IsGeolocationEnabled = true };
 
@@ -65,9 +65,9 @@ namespace XLabs.Forms.Controls
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="contentFullName">Full name of the content.</param>
-        partial void LoadContent(object sender, string contentFullName)
+        partial void LoadContent(object sender, HybridWebView.LoadContentEventArgs contentArgs)
         {
-            this.Control.NavigateToString(contentFullName);
+            this.Control.NavigateToString(contentArgs.Content);
             //LoadFromContent(sender, contentFullName);
         }
 
@@ -107,9 +107,9 @@ namespace XLabs.Forms.Controls
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="contentFullName">Full name of the content.</param>
-        partial void LoadFromContent(object sender, string contentFullName)
+        partial void LoadFromContent(object sender, HybridWebView.LoadContentEventArgs contentArgs)
         {
-            Element.Uri = new Uri(contentFullName, UriKind.Relative);
+            Element.Uri = new Uri(contentArgs.Content, UriKind.Relative);
         }
 
         /// <summary>

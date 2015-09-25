@@ -51,7 +51,12 @@
         /// <param name="number">Number to dial.</param>
         void DialNumber(string number);
 
-        void SendSMS(string to, string body);
+		/// <summary>
+		/// Sends the SMS.
+		/// </summary>
+		/// <param name="to">To.</param>
+		/// <param name="body">The body.</param>
+		void SendSMS(string to, string body);
     }
 }
 

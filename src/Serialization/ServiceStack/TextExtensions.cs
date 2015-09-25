@@ -17,9 +17,17 @@ using ServiceStack.Text.Common;
 
 namespace ServiceStack.Text
 {
+	/// <summary>
+	/// Class TextExtensions.
+	/// </summary>
 	public static class TextExtensions
 	{
-        public static string ToCsvField(this string text)
+		/// <summary>
+		/// To the CSV field.
+		/// </summary>
+		/// <param name="text">The text.</param>
+		/// <returns>System.String.</returns>
+		public static string ToCsvField(this string text)
         {
             return string.IsNullOrEmpty(text) || !CsvWriter.HasAnyEscapeChars(text)
                        ? text
@@ -31,7 +39,12 @@ namespace ServiceStack.Text
                              );
         }
 
-        public static object ToCsvField(this object text)
+		/// <summary>
+		/// To the CSV field.
+		/// </summary>
+		/// <param name="text">The text.</param>
+		/// <returns>System.Object.</returns>
+		public static object ToCsvField(this object text)
         {
             return text == null || !JsWriter.HasAnyEscapeChars(text.ToString())
                        ? text
@@ -43,7 +56,12 @@ namespace ServiceStack.Text
                              );
         }
 
-	    public static string FromCsvField(this string text)
+		/// <summary>
+		/// Froms the CSV field.
+		/// </summary>
+		/// <param name="text">The text.</param>
+		/// <returns>System.String.</returns>
+		public static string FromCsvField(this string text)
 		{
             return string.IsNullOrEmpty(text) || !text.StartsWith(CsvConfig.ItemDelimiterString, StringComparison.Ordinal)
 			       	? text
@@ -51,6 +69,11 @@ namespace ServiceStack.Text
 						.Replace(CsvConfig.EscapedItemDelimiterString, CsvConfig.ItemDelimiterString);
 		}
 
+		/// <summary>
+		/// Froms the CSV fields.
+		/// </summary>
+		/// <param name="texts">The texts.</param>
+		/// <returns>List&lt;System.String&gt;.</returns>
 		public static List<string> FromCsvFields(this IEnumerable<string> texts)
 		{
 			var safeTexts = new List<string>();
@@ -61,6 +84,11 @@ namespace ServiceStack.Text
 			return safeTexts;
 		}
 
+		/// <summary>
+		/// Froms the CSV fields.
+		/// </summary>
+		/// <param name="texts">The texts.</param>
+		/// <returns>System.String[].</returns>
 		public static string[] FromCsvFields(params string[] texts)
 		{
 			var textsLen = texts.Length;
@@ -72,6 +100,12 @@ namespace ServiceStack.Text
 			return safeTexts;
 		}
 
+		/// <summary>
+		/// Serializes to string.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="value">The value.</param>
+		/// <returns>System.String.</returns>
 		public static string SerializeToString<T>(this T value)
 		{
 			return JsonSerializer.SerializeToString(value);

@@ -13,7 +13,10 @@ namespace XLabs.Forms.Controls
     /// </summary>
     public class ContentControl : ContentView
     {
-        public static readonly BindableProperty ContentTemplateProperty = BindableProperty.Create<ContentControl, DataTemplate>(x => x.ContentTemplate, null, propertyChanged: OnContentTemplateChanged);
+		/// <summary>
+		/// The content template property
+		/// </summary>
+		public static readonly BindableProperty ContentTemplateProperty = BindableProperty.Create<ContentControl, DataTemplate>(x => x.ContentTemplate, null, propertyChanged: OnContentTemplateChanged);
 
         private static void OnContentTemplateChanged(BindableObject bindable, object oldvalue, object newvalue)
         {

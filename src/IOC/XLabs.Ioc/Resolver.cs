@@ -33,7 +33,7 @@
             {
                 if (IsSet)
                 {
-                    throw new InvalidOperationException("IResolver can only be set once.");
+                    throw new InvalidOperationException("IResolver can only be set once. If this was intentional you should call Reset method first.");
                 }
 
                 instance = value;
@@ -56,6 +56,15 @@
         public static void SetResolver(IResolver resolver)
         {
             Instance = resolver;
+        }
+
+        /// <summary>
+        /// Resets the resolver instance.
+        /// </summary>
+        /// <param name="newInstance">New resolver instance.</param>
+        public static void ResetResolver(IResolver newInstance = null)
+        {
+            instance = newInstance;
         }
 
         /// <summary>

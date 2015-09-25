@@ -9,26 +9,43 @@
 //
 // Licensed under the same terms of ServiceStack: new BSD license.
 //
-
 using System;
 using System.Globalization;
 
 namespace ServiceStack.Text.Common
 {
-    public static class DeserializeBuiltin<T>
+	/// <summary>
+	/// Class DeserializeBuiltin.
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	public static class DeserializeBuiltin<T>
     {
-        private static readonly ParseStringDelegate CachedParseFn;
-        static DeserializeBuiltin()
+		/// <summary>
+		/// The cached parse function
+		/// </summary>
+		private static readonly ParseStringDelegate CachedParseFn;
+		/// <summary>
+		/// Initializes static members of the <see cref="DeserializeBuiltin{T}"/> class.
+		/// </summary>
+		static DeserializeBuiltin()
         {
             CachedParseFn = GetParseFn();
         }
 
-        public static ParseStringDelegate Parse
+		/// <summary>
+		/// Gets the parse.
+		/// </summary>
+		/// <value>The parse.</value>
+		public static ParseStringDelegate Parse
         {
             get { return CachedParseFn; }
         }
 
-        private static ParseStringDelegate GetParseFn()
+		/// <summary>
+		/// Gets the parse function.
+		/// </summary>
+		/// <returns>ParseStringDelegate.</returns>
+		private static ParseStringDelegate GetParseFn()
         {
             //Note the generic typeof(T) is faster than using var type = typeof(T)
             if (typeof(T) == typeof(bool))

@@ -7,56 +7,54 @@ using XLabs.Serialization;
 
 namespace XLabs.Web
 {
-    /// <summary>
-    /// The rest core client.
-    /// </summary>
-    public abstract class RestCoreClient : IRestClient
+	/// <summary>
+	/// The rest core client.
+	/// </summary>
+	public abstract class RestCoreClient : IRestClient
     {
-        /// <summary>
-        /// The serializer to use.
-        /// </summary>
-        protected readonly ISerializer Serializer;
+		/// <summary>
+		/// The serializer to use.
+		/// </summary>
+		protected readonly ISerializer Serializer;
 
-        /// <summary>
-        /// The Http client.
-        /// </summary>
-        protected readonly HttpClient Client;
+		/// <summary>
+		/// The Http client.
+		/// </summary>
+		protected readonly HttpClient Client;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RestCoreClient"/> class.
-        /// </summary>
-        /// <param name="serializer">
-        /// The serializer to use.
-        /// </param>
-        protected RestCoreClient(ISerializer serializer)
+		/// <summary>
+		/// Initializes a new instance of the <see cref="RestCoreClient" /> class.
+		/// </summary>
+		/// <param name="serializer">The serializer to use.</param>
+		protected RestCoreClient(ISerializer serializer)
             : this(serializer, new HttpClient())
         {
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="RestCoreClient"/> class.
-        /// </summary>
-        /// <param name="serializer">
-        /// The serializer to use.
-        /// </param>
-        /// <param name="client">
-        /// The Http client.
-        /// </param>
-        protected RestCoreClient(ISerializer serializer, HttpClient client)
+		/// <summary>
+		/// Initializes a new instance of the <see cref="RestCoreClient" /> class.
+		/// </summary>
+		/// <param name="serializer">The serializer to use.</param>
+		/// <param name="client">The Http client.</param>
+		protected RestCoreClient(ISerializer serializer, HttpClient client)
         {
             this.Serializer = serializer;
             this.Client = client ?? new HttpClient();
         }
 
-        ~RestCoreClient()
+		/// <summary>
+		/// Finalizes an instance of the <see cref="RestCoreClient"/> class.
+		/// </summary>
+		~RestCoreClient()
         {
             
         }
 
-        /// <summary>
-        /// Gets or sets timeout in milliseconds
-        /// </summary>
-        public TimeSpan Timeout
+		/// <summary>
+		/// Gets or sets timeout in milliseconds
+		/// </summary>
+		/// <value>The timeout.</value>
+		public TimeSpan Timeout
         {
             get
             {
@@ -69,44 +67,39 @@ namespace XLabs.Web
             }
         }
 
-        /// <summary>
-        /// Gets the string content type.
-        /// </summary>
-        protected abstract string StringContentType { get; }
+		/// <summary>
+		/// Gets the string content type.
+		/// </summary>
+		/// <value>The type of the string content.</value>
+		protected abstract string StringContentType { get; }
 
-        /// <summary>
-        /// Add request header.
-        /// </summary>
-        /// <param name="key">
-        /// The key.
-        /// </param>
-        /// <param name="value">
-        /// The value.
-        /// </param>
-        public void AddHeader(string key, string value)
+		/// <summary>
+		/// Add request header.
+		/// </summary>
+		/// <param name="key">The key.</param>
+		/// <param name="value">The value.</param>
+		public void AddHeader(string key, string value)
         {
             this.Client.DefaultRequestHeaders.Add(key, value);
         }
 
-        /// <summary>
-        /// Remove request header.
-        /// </summary>
-        /// <param name="key">
-        /// The key.
-        /// </param>
-        public void RemoveHeader(string key)
+		/// <summary>
+		/// Remove request header.
+		/// </summary>
+		/// <param name="key">The key.</param>
+		public void RemoveHeader(string key)
         {
             this.Client.DefaultRequestHeaders.Remove(key);
         }
 
-        /// <summary>
-        /// Async POST method.
-        /// </summary>
-        /// <returns>The async task.</returns>
-        /// <param name="address">Address of the service.</param>
-        /// <param name="dto">DTO to post.</param>
-        /// <typeparam name="T">The type of object to be returned.</typeparam>
-        public async Task<T> PostAsync<T>(string address, object dto)
+		/// <summary>
+		/// Async POST method.
+		/// </summary>
+		/// <typeparam name="T">The type of object to be returned.</typeparam>
+		/// <param name="address">Address of the service.</param>
+		/// <param name="dto">DTO to post.</param>
+		/// <returns>The async task.</returns>
+		public async Task<T> PostAsync<T>(string address, object dto)
         {
             var content = this.Serializer.Serialize(dto);
 
@@ -116,14 +109,14 @@ namespace XLabs.Web
             return await GetResponse<T>(response, this.Serializer);
         }
 
-        /// <summary>
-        /// Async PUT method.
-        /// </summary>
-        /// <returns>The async task.</returns>
-        /// <param name="address">Address of the service.</param>
-        /// <param name="dto">DTO to put.</param>
-        /// <typeparam name="T">The type of object to be returned.</typeparam>
-        public async Task<T> PutAsync<T>(string address, object dto)
+		/// <summary>
+		/// Async PUT method.
+		/// </summary>
+		/// <typeparam name="T">The type of object to be returned.</typeparam>
+		/// <param name="address">Address of the service.</param>
+		/// <param name="dto">DTO to put.</param>
+		/// <returns>The async task.</returns>
+		public async Task<T> PutAsync<T>(string address, object dto)
         {
             var content = this.Serializer.Serialize(dto);
 
@@ -134,26 +127,26 @@ namespace XLabs.Web
             return await GetResponse<T>(response, this.Serializer);
         }
 
-        /// <summary>
-        /// Async GET method.
-        /// </summary>
-        /// <returns>The async task.</returns>
-        /// <param name="address">Address of the service.</param>
-        /// <typeparam name="T">The type of object to be returned.</typeparam>
-        public async Task<T> GetAsync<T>(string address)
+		/// <summary>
+		/// Async GET method.
+		/// </summary>
+		/// <typeparam name="T">The type of object to be returned.</typeparam>
+		/// <param name="address">Address of the service.</param>
+		/// <returns>The async task.</returns>
+		public async Task<T> GetAsync<T>(string address)
         {
             var response = await this.Client.GetAsync(address);
             return await GetResponse<T>(response, this.Serializer);
         }
 
-        /// <summary>
-        /// Async GET method.
-        /// </summary>
-        /// <returns>The async task.</returns>
-        /// <param name="address">Address of the service.</param>
-        /// <param name="values">Values for the request.</param>
-        /// <typeparam name="T">The 1st type parameter.</typeparam>
-        public async Task<T> GetAsync<T>(string address, Dictionary<string, string> values)
+		/// <summary>
+		/// Async GET method.
+		/// </summary>
+		/// <typeparam name="T">The 1st type parameter.</typeparam>
+		/// <param name="address">Address of the service.</param>
+		/// <param name="values">Values for the request.</param>
+		/// <returns>The async task.</returns>
+		public async Task<T> GetAsync<T>(string address, Dictionary<string, string> values)
         {
             var builder = new StringBuilder(address);
             builder.Append("?");
@@ -167,44 +160,62 @@ namespace XLabs.Web
             return await GetResponse<T>(response, this.Serializer);
         }
 
-        /// <summary>
-        /// Deletes the async.
-        /// </summary>
-        /// <returns>The async task.</returns>
-        /// <param name="address">Address of the service.</param>
-        /// <typeparam name="T">The 1st type parameter.</typeparam>
-        public async Task<T> DeleteAsync<T>(string address)
+		/// <summary>
+		/// Deletes the async.
+		/// </summary>
+		/// <typeparam name="T">The 1st type parameter.</typeparam>
+		/// <param name="address">Address of the service.</param>
+		/// <returns>The async task.</returns>
+		public async Task<T> DeleteAsync<T>(string address)
         {
             var response = await this.Client.DeleteAsync(address);
             return await GetResponse<T>(response, this.Serializer);
         }
 
-        public async Task PostAsync(string address, object dto)
+		/// <summary>
+		/// post as an asynchronous operation.
+		/// </summary>
+		/// <param name="address">The address.</param>
+		/// <param name="dto">The dto.</param>
+		/// <returns>Task.</returns>
+		public async Task PostAsync(string address, object dto)
         {
             var content = this.Serializer.Serialize(dto);
             var response = await this.Client.PostAsync(address, new StringContent(content, Encoding.UTF8, this.StringContentType));
             await CheckResponse(response);
         }
 
-        public async Task PutAsync(string address, object dto)
+		/// <summary>
+		/// put as an asynchronous operation.
+		/// </summary>
+		/// <param name="address">The address.</param>
+		/// <param name="dto">The dto.</param>
+		/// <returns>Task.</returns>
+		public async Task PutAsync(string address, object dto)
         {
             var content = this.Serializer.Serialize(dto);
             var response = await this.Client.PutAsync(address, new StringContent(content, Encoding.UTF8, this.StringContentType));
             await CheckResponse(response);
         }
 
-        /// <summary>
-        /// Deletes the async.
-        /// </summary>
-        /// <returns>The async task.</returns>
-        /// <param name="address">Address.</param>
-        public async Task DeleteAsync(string address)
+		/// <summary>
+		/// Deletes the async.
+		/// </summary>
+		/// <param name="address">Address.</param>
+		/// <returns>The async task.</returns>
+		public async Task DeleteAsync(string address)
         {
             var response = await this.Client.DeleteAsync(address);
             await CheckResponse(response);
         }
 
-        public async Task<T> PostAsync<T>(string address)
+		/// <summary>
+		/// post as an asynchronous operation.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="address">The address.</param>
+		/// <returns>Task&lt;T&gt;.</returns>
+		public async Task<T> PostAsync<T>(string address)
         {
             var response = await this.Client.PostAsync(
                 address,
@@ -213,7 +224,13 @@ namespace XLabs.Web
             return await GetResponse<T>(response, this.Serializer);
         }
 
-        public async Task<T> PutAsync<T>(string address)
+		/// <summary>
+		/// put as an asynchronous operation.
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="address">The address.</param>
+		/// <returns>Task&lt;T&gt;.</returns>
+		public async Task<T> PutAsync<T>(string address)
         {
             var response = await this.Client.PutAsync(
                 address,
@@ -222,26 +239,36 @@ namespace XLabs.Web
             return await GetResponse<T>(response, this.Serializer);
         }
 
-        public async Task PostAsync(string address)
+		/// <summary>
+		/// post as an asynchronous operation.
+		/// </summary>
+		/// <param name="address">The address.</param>
+		/// <returns>Task.</returns>
+		public async Task PostAsync(string address)
         {
             var response = await this.Client.PostAsync(address, new StringContent("", Encoding.UTF8, this.StringContentType));
             await CheckResponse(response);
         }
 
-        public async Task PutAsync(string address)
+		/// <summary>
+		/// put as an asynchronous operation.
+		/// </summary>
+		/// <param name="address">The address.</param>
+		/// <returns>Task.</returns>
+		public async Task PutAsync(string address)
         {
             var response = await this.Client.PutAsync(address, new StringContent("", Encoding.UTF8, this.StringContentType));
             await CheckResponse(response);
         }
 
-        /// <summary>
-        /// Gets the response from Http response message
-        /// </summary>
-        /// <typeparam name="T">The 1st type parameter.</typeparam>
-        /// <param name="response">Http response message</param>
-        /// <param name="serializer">Serializer to use.</param>
-        /// <returns>The async task.</returns>
-        private async Task<T> GetResponse<T>(HttpResponseMessage response, ISerializer serializer)
+		/// <summary>
+		/// Gets the response from Http response message
+		/// </summary>
+		/// <typeparam name="T">The 1st type parameter.</typeparam>
+		/// <param name="response">Http response message</param>
+		/// <param name="serializer">Serializer to use.</param>
+		/// <returns>The async task.</returns>
+		private async Task<T> GetResponse<T>(HttpResponseMessage response, ISerializer serializer)
         {
             await CheckResponse(response);
                 
@@ -258,7 +285,12 @@ namespace XLabs.Web
             return ret;
         }
 
-        private async Task CheckResponse(HttpResponseMessage response)
+		/// <summary>
+		/// Checks the response.
+		/// </summary>
+		/// <param name="response">The response.</param>
+		/// <returns>Task.</returns>
+		private async Task CheckResponse(HttpResponseMessage response)
         {
             if (response.IsSuccessStatusCode)
             {

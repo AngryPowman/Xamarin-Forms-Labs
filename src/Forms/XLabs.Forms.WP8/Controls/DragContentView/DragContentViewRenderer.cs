@@ -17,11 +17,18 @@ using XLabs.Forms.Controls;
 
 namespace XLabs.Forms.Controls
 {
-    public class DragContentViewRenderer : ViewRenderer<DragContentView, Canvas>
+	/// <summary>
+	/// Class DragContentViewRenderer.
+	/// </summary>
+	public class DragContentViewRenderer : ViewRenderer<DragContentView, Canvas>
     {
         private int idx;
 
-        protected override void OnElementChanged(ElementChangedEventArgs<DragContentView> e)
+		/// <summary>
+		/// Called when [element changed].
+		/// </summary>
+		/// <param name="e">The e.</param>
+		protected override void OnElementChanged(ElementChangedEventArgs<DragContentView> e)
         {
             foreach (var child in this.Children.OfType<ViewRenderer>())
             {

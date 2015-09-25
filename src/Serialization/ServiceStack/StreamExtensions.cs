@@ -1,11 +1,25 @@
+// ***********************************************************************
+// <copyright file="StreamExtensions.cs" company="XLabs">
+//     Copyright © ServiceStack 2013 & XLabs
+// </copyright>
+// <summary></summary>
+// ***********************************************************************
 using System;
 using System.Collections.Generic;
 using System.IO;
 
 namespace ServiceStack.Text
 {
+	/// <summary>
+	/// Class StreamExtensions.
+	/// </summary>
 	public static class StreamExtensions
 	{
+		/// <summary>
+		/// Writes to.
+		/// </summary>
+		/// <param name="inStream">The in stream.</param>
+		/// <param name="outStream">The out stream.</param>
 		public static void WriteTo(this Stream inStream, Stream outStream)
 		{
 			var memoryStream = inStream as MemoryStream;
@@ -24,6 +38,12 @@ namespace ServiceStack.Text
 			}
 		}
 
+		/// <summary>
+		/// Reads the lines.
+		/// </summary>
+		/// <param name="reader">The reader.</param>
+		/// <returns>IEnumerable&lt;System.String&gt;.</returns>
+		/// <exception cref="System.ArgumentNullException">reader</exception>
 		public static IEnumerable<string> ReadLines(this StreamReader reader)
 		{
 			if (reader == null)
@@ -46,6 +66,8 @@ namespace ServiceStack.Text
 		/// Reads the given stream up to the end, returning the data as a byte
 		/// array.
 		/// </summary>
+		/// <param name="input">The input.</param>
+		/// <returns>System.Byte[].</returns>
 		public static byte[] ReadFully(this Stream input)
 		{
 			return ReadFully(input, DefaultBufferSize);
@@ -55,6 +77,10 @@ namespace ServiceStack.Text
 		/// Reads the given stream up to the end, returning the data as a byte
 		/// array, using the given buffer size.
 		/// </summary>
+		/// <param name="input">The input.</param>
+		/// <param name="bufferSize">Size of the buffer.</param>
+		/// <returns>System.Byte[].</returns>
+		/// <exception cref="System.ArgumentOutOfRangeException">bufferSize</exception>
 		public static byte[] ReadFully(this Stream input, int bufferSize)
 		{
 			if (bufferSize < 1)
@@ -70,6 +96,15 @@ namespace ServiceStack.Text
 		/// current contents of the buffer is ignored, so the buffer needn't
 		/// be cleared beforehand.
 		/// </summary>
+		/// <param name="input">The input.</param>
+		/// <param name="buffer">The buffer.</param>
+		/// <returns>System.Byte[].</returns>
+		/// <exception cref="System.ArgumentNullException">
+		/// buffer
+		/// or
+		/// input
+		/// </exception>
+		/// <exception cref="System.ArgumentException">Buffer has length of 0</exception>
 		public static byte[] ReadFully(this Stream input, byte[] buffer)
 		{
 			if (buffer == null)
@@ -104,6 +139,8 @@ namespace ServiceStack.Text
 		/// <summary>
 		/// Copies all the data from one stream into another.
 		/// </summary>
+		/// <param name="input">The input.</param>
+		/// <param name="output">The output.</param>
 		public static void CopyTo(this Stream input, Stream output)
 		{
 			CopyTo(input, output, DefaultBufferSize);
@@ -113,6 +150,10 @@ namespace ServiceStack.Text
 		/// Copies all the data from one stream into another, using a buffer
 		/// of the given size.
 		/// </summary>
+		/// <param name="input">The input.</param>
+		/// <param name="output">The output.</param>
+		/// <param name="bufferSize">Size of the buffer.</param>
+		/// <exception cref="System.ArgumentOutOfRangeException">bufferSize</exception>
 		public static void CopyTo(this Stream input, Stream output, int bufferSize)
 		{
 			if (bufferSize < 1)
@@ -123,10 +164,21 @@ namespace ServiceStack.Text
 		}
 
 		/// <summary>
-		/// Copies all the data from one stream into another, using the given 
-		/// buffer for transferring data. Note that the current contents of 
+		/// Copies all the data from one stream into another, using the given
+		/// buffer for transferring data. Note that the current contents of
 		/// the buffer is ignored, so the buffer needn't be cleared beforehand.
 		/// </summary>
+		/// <param name="input">The input.</param>
+		/// <param name="output">The output.</param>
+		/// <param name="buffer">The buffer.</param>
+		/// <exception cref="System.ArgumentNullException">
+		/// buffer
+		/// or
+		/// input
+		/// or
+		/// output
+		/// </exception>
+		/// <exception cref="System.ArgumentException">Buffer has length of 0</exception>
 		public static void CopyTo(this Stream input, Stream output, byte[] buffer)
 		{
 			if (buffer == null)
@@ -157,6 +209,9 @@ namespace ServiceStack.Text
 		/// If the end of the stream is reached before the specified amount
 		/// of data is read, an exception is thrown.
 		/// </summary>
+		/// <param name="input">The input.</param>
+		/// <param name="bytesToRead">The bytes to read.</param>
+		/// <returns>System.Byte[].</returns>
 		public static byte[] ReadExactly(this Stream input, int bytesToRead)
 		{
 			return ReadExactly(input, new byte[bytesToRead]);
@@ -165,6 +220,9 @@ namespace ServiceStack.Text
 		/// <summary>
 		/// Reads into a buffer, filling it completely.
 		/// </summary>
+		/// <param name="input">The input.</param>
+		/// <param name="buffer">The buffer.</param>
+		/// <returns>System.Byte[].</returns>
 		public static byte[] ReadExactly(this Stream input, byte[] buffer)
 		{
 			return ReadExactly(input, buffer, buffer.Length);
@@ -174,6 +232,10 @@ namespace ServiceStack.Text
 		/// Reads exactly the given number of bytes from the specified stream,
 		/// into the given buffer, starting at position 0 of the array.
 		/// </summary>
+		/// <param name="input">The input.</param>
+		/// <param name="buffer">The buffer.</param>
+		/// <param name="bytesToRead">The bytes to read.</param>
+		/// <returns>System.Byte[].</returns>
 		public static byte[] ReadExactly(this Stream input, byte[] buffer, int bytesToRead)
 		{
 			return ReadExactly(input, buffer, 0, bytesToRead);
@@ -183,6 +245,21 @@ namespace ServiceStack.Text
 		/// Reads exactly the given number of bytes from the specified stream,
 		/// into the given buffer, starting at position 0 of the array.
 		/// </summary>
+		/// <param name="input">The input.</param>
+		/// <param name="buffer">The buffer.</param>
+		/// <param name="startIndex">The start index.</param>
+		/// <param name="bytesToRead">The bytes to read.</param>
+		/// <returns>System.Byte[].</returns>
+		/// <exception cref="System.ArgumentNullException">
+		/// input
+		/// or
+		/// buffer
+		/// </exception>
+		/// <exception cref="System.ArgumentOutOfRangeException">
+		/// startIndex
+		/// or
+		/// bytesToRead
+		/// </exception>
 		public static byte[] ReadExactly(this Stream input, byte[] buffer, int startIndex, int bytesToRead)
 		{
 			if (input == null)
@@ -211,6 +288,12 @@ namespace ServiceStack.Text
 		/// <summary>
 		/// Same as ReadExactly, but without the argument checks.
 		/// </summary>
+		/// <param name="fromStream">From stream.</param>
+		/// <param name="intoBuffer">The into buffer.</param>
+		/// <param name="startAtIndex">The start at index.</param>
+		/// <param name="bytesToRead">The bytes to read.</param>
+		/// <returns>System.Byte[].</returns>
+		/// <exception cref="System.IO.EndOfStreamException"></exception>
 		private static byte[] ReadExactlyFast(Stream fromStream, byte[] intoBuffer, int startAtIndex, int bytesToRead)
 		{
 			var index = 0;

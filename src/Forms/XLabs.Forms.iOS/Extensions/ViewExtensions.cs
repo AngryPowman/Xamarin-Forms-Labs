@@ -7,11 +7,19 @@ using Xamarin.Forms;
 
 namespace XLabs.Forms
 {
-    public static class ViewExtensions
+	/// <summary>
+	/// Class ViewExtensions.
+	/// </summary>
+	public static class ViewExtensions
     {
-        //private static Lazy<PropertyInfo> InternalChildrenPropertyInfo = new Lazy<PropertyInfo>(() => typeof(View).GetProperty("InternalChildren", BindingFlags.NonPublic | BindingFlags.Instance));
+		//private static Lazy<PropertyInfo> InternalChildrenPropertyInfo = new Lazy<PropertyInfo>(() => typeof(View).GetProperty("InternalChildren", BindingFlags.NonPublic | BindingFlags.Instance));
 
-        public static ObservableCollection<Element> GetInternalChildren(this View view)
+		/// <summary>
+		/// Gets the internal children.
+		/// </summary>
+		/// <param name="view">The view.</param>
+		/// <returns>ObservableCollection&lt;Element&gt;.</returns>
+		public static ObservableCollection<Element> GetInternalChildren(this View view)
         {
             var internalPropertyInfo = view.GetType().GetProperty("InternalChildren", BindingFlags.NonPublic | BindingFlags.Instance);
 

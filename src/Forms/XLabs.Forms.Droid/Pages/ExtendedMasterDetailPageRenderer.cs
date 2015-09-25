@@ -6,7 +6,10 @@ using XLabs.Forms.Pages;
 
 namespace XLabs.Forms.Pages
 {
-    public class ExtendedMasterDetailRenderer : MasterDetailRenderer
+	/// <summary>
+	/// Class ExtendedMasterDetailRenderer.
+	/// </summary>
+	public class ExtendedMasterDetailRenderer : MasterDetailRenderer
     {
     }
 }

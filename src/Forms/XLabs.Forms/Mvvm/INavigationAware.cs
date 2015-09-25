@@ -2,7 +2,10 @@
 
 namespace XLabs.Forms.Mvvm
 {
-    public interface INavigationAware
+	/// <summary>
+	/// Interface INavigationAware
+	/// </summary>
+	public interface INavigationAware
     {
         /// <summary>
         /// Called when being navigated to.

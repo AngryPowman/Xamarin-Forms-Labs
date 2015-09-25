@@ -63,7 +63,7 @@ namespace ServiceStack.Text.Json
 
 				return writeFn;
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
 				throw;
 			}
@@ -95,7 +95,7 @@ namespace ServiceStack.Text.Json
 
 				return writeFn;
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
 				throw;
 			}

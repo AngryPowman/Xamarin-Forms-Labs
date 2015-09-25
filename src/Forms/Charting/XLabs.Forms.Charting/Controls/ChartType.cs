@@ -5,8 +5,17 @@
     /// </summary>
     public enum ChartType
     {
-        Bar = 0,
-        Line = 1,
-        Pie = 2
+		/// <summary>
+		/// The bar
+		/// </summary>
+		Bar = 0,
+		/// <summary>
+		/// The line
+		/// </summary>
+		Line = 1,
+		/// <summary>
+		/// The pie
+		/// </summary>
+		Pie = 2
     }
 }

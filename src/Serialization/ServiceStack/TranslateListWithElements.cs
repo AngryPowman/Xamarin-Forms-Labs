@@ -20,11 +20,24 @@ using ServiceStack.Text.Common;
 
 namespace ServiceStack.Text
 {
+	/// <summary>
+	/// Class TranslateListWithElements.
+	/// </summary>
 	public static class TranslateListWithElements
 	{
-        private static Dictionary<Type, ConvertInstanceDelegate> TranslateICollectionCache
+		/// <summary>
+		/// The translate i collection cache
+		/// </summary>
+		private static Dictionary<Type, ConvertInstanceDelegate> TranslateICollectionCache
             = new Dictionary<Type, ConvertInstanceDelegate>();
 
+		/// <summary>
+		/// Translates to generic i collection cache.
+		/// </summary>
+		/// <param name="from">From.</param>
+		/// <param name="toInstanceOfType">Type of to instance of.</param>
+		/// <param name="elementType">Type of the element.</param>
+		/// <returns>System.Object.</returns>
 		public static object TranslateToGenericICollectionCache(object from, Type toInstanceOfType, Type elementType)
 		{
             ConvertInstanceDelegate translateToFn;
@@ -48,9 +61,19 @@ namespace ServiceStack.Text
 			return translateToFn(from, toInstanceOfType);
 		}
 
-        private static Dictionary<ConvertibleTypeKey, ConvertInstanceDelegate> TranslateConvertibleICollectionCache
+		/// <summary>
+		/// The translate convertible i collection cache
+		/// </summary>
+		private static Dictionary<ConvertibleTypeKey, ConvertInstanceDelegate> TranslateConvertibleICollectionCache
             = new Dictionary<ConvertibleTypeKey, ConvertInstanceDelegate>();
 
+		/// <summary>
+		/// Translates to convertible generic i collection cache.
+		/// </summary>
+		/// <param name="from">From.</param>
+		/// <param name="toInstanceOfType">Type of to instance of.</param>
+		/// <param name="fromElementType">Type of from element.</param>
+		/// <returns>System.Object.</returns>
 		public static object TranslateToConvertibleGenericICollectionCache(
 			object from, Type toInstanceOfType, Type fromElementType)
 		{
@@ -76,6 +99,13 @@ namespace ServiceStack.Text
             return translateToFn(from, toInstanceOfType);
 		}
 
+		/// <summary>
+		/// Tries the translate to generic i collection.
+		/// </summary>
+		/// <param name="fromPropertyType">Type of from property.</param>
+		/// <param name="toPropertyType">Type of to property.</param>
+		/// <param name="fromValue">From value.</param>
+		/// <returns>System.Object.</returns>
 		public static object TryTranslateToGenericICollection(Type fromPropertyType, Type toPropertyType, object fromValue)
 		{
 			var args = typeof(ICollection<>).GetGenericArgumentsIfBothHaveSameGenericDefinitionTypeAndArguments(
@@ -101,21 +131,45 @@ namespace ServiceStack.Text
 
 	}
 
+	/// <summary>
+	/// Class ConvertibleTypeKey.
+	/// </summary>
 	public class ConvertibleTypeKey
 	{
+		/// <summary>
+		/// Gets or sets the type of to instance.
+		/// </summary>
+		/// <value>The type of to instance.</value>
 		public Type ToInstanceType { get; set; }
+		/// <summary>
+		/// Gets or sets the type of from elemenet.
+		/// </summary>
+		/// <value>The type of from elemenet.</value>
 		public Type FromElemenetType { get; set; }
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ConvertibleTypeKey"/> class.
+		/// </summary>
 		public ConvertibleTypeKey()
 		{
 		}
 
+		/// <summary>
+		/// Initializes a new instance of the <see cref="ConvertibleTypeKey"/> class.
+		/// </summary>
+		/// <param name="toInstanceType">Type of to instance.</param>
+		/// <param name="fromElemenetType">Type of from elemenet.</param>
 		public ConvertibleTypeKey(Type toInstanceType, Type fromElemenetType)
 		{
 			ToInstanceType = toInstanceType;
 			FromElemenetType = fromElemenetType;
 		}
 
+		/// <summary>
+		/// Equalses the specified other.
+		/// </summary>
+		/// <param name="other">The other.</param>
+		/// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
 		public bool Equals(ConvertibleTypeKey other)
 		{
 			if (ReferenceEquals(null, other)) return false;
@@ -123,6 +177,11 @@ namespace ServiceStack.Text
 			return Equals(other.ToInstanceType, ToInstanceType) && Equals(other.FromElemenetType, FromElemenetType);
 		}
 
+		/// <summary>
+		/// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
+		/// </summary>
+		/// <param name="obj">The object to compare with the current object.</param>
+		/// <returns><c>true</c> if the specified <see cref="System.Object" /> is equal to this instance; otherwise, <c>false</c>.</returns>
 		public override bool Equals(object obj)
 		{
 			if (ReferenceEquals(null, obj)) return false;
@@ -131,6 +190,10 @@ namespace ServiceStack.Text
 			return Equals((ConvertibleTypeKey)obj);
 		}
 
+		/// <summary>
+		/// Returns a hash code for this instance.
+		/// </summary>
+		/// <returns>A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.</returns>
 		public override int GetHashCode()
 		{
 			unchecked
@@ -141,8 +204,17 @@ namespace ServiceStack.Text
 		}
 	}
 
+	/// <summary>
+	/// Class TranslateListWithElements.
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
 	public class TranslateListWithElements<T>
 	{
+		/// <summary>
+		/// Creates the instance.
+		/// </summary>
+		/// <param name="toInstanceOfType">Type of to instance of.</param>
+		/// <returns>System.Object.</returns>
 		public static object CreateInstance(Type toInstanceOfType)
 		{
             if (toInstanceOfType.IsGeneric())
@@ -157,6 +229,12 @@ namespace ServiceStack.Text
 			return ReflectionExtensions.CreateInstance(toInstanceOfType);
 		}
 
+		/// <summary>
+		/// Translates to i list.
+		/// </summary>
+		/// <param name="fromList">From list.</param>
+		/// <param name="toInstanceOfType">Type of to instance of.</param>
+		/// <returns>IList.</returns>
 		public static IList TranslateToIList(IList fromList, Type toInstanceOfType)
 		{
 			var to = (IList)ReflectionExtensions.CreateInstance(toInstanceOfType);
@@ -167,6 +245,12 @@ namespace ServiceStack.Text
 			return to;
 		}
 
+		/// <summary>
+		/// Lates the bound translate to generic i collection.
+		/// </summary>
+		/// <param name="fromList">From list.</param>
+		/// <param name="toInstanceOfType">Type of to instance of.</param>
+		/// <returns>System.Object.</returns>
 		public static object LateBoundTranslateToGenericICollection(
 			object fromList, Type toInstanceOfType)
 		{
@@ -176,6 +260,12 @@ namespace ServiceStack.Text
 				(ICollection<T>)fromList, toInstanceOfType);
 		}
 
+		/// <summary>
+		/// Translates to generic i collection.
+		/// </summary>
+		/// <param name="fromList">From list.</param>
+		/// <param name="toInstanceOfType">Type of to instance of.</param>
+		/// <returns>ICollection&lt;T&gt;.</returns>
 		public static ICollection<T> TranslateToGenericICollection(
 			ICollection<T> fromList, Type toInstanceOfType)
 		{
@@ -188,15 +278,32 @@ namespace ServiceStack.Text
 		}
 	}
 
+	/// <summary>
+	/// Class TranslateListWithConvertibleElements.
+	/// </summary>
+	/// <typeparam name="TFrom">The type of the t from.</typeparam>
+	/// <typeparam name="TTo">The type of the t to.</typeparam>
 	public class TranslateListWithConvertibleElements<TFrom, TTo>
 	{
+		/// <summary>
+		/// The convert function
+		/// </summary>
 		private static readonly Func<TFrom, TTo> ConvertFn;
 
+		/// <summary>
+		/// Initializes static members of the <see cref="TranslateListWithConvertibleElements{TFrom, TTo}"/> class.
+		/// </summary>
 		static TranslateListWithConvertibleElements()
 		{
 			ConvertFn = GetConvertFn();
 		}
 
+		/// <summary>
+		/// Lates the bound translate to generic i collection.
+		/// </summary>
+		/// <param name="fromList">From list.</param>
+		/// <param name="toInstanceOfType">Type of to instance of.</param>
+		/// <returns>System.Object.</returns>
 		public static object LateBoundTranslateToGenericICollection(
 			object fromList, Type toInstanceOfType)
 		{
@@ -204,6 +311,12 @@ namespace ServiceStack.Text
 				(ICollection<TFrom>)fromList, toInstanceOfType);
 		}
 
+		/// <summary>
+		/// Translates to generic i collection.
+		/// </summary>
+		/// <param name="fromList">From list.</param>
+		/// <param name="toInstanceOfType">Type of to instance of.</param>
+		/// <returns>ICollection&lt;TTo&gt;.</returns>
 		public static ICollection<TTo> TranslateToGenericICollection(
 			ICollection<TFrom> fromList, Type toInstanceOfType)
 		{
@@ -219,6 +332,10 @@ namespace ServiceStack.Text
 			return to;
 		}
 
+		/// <summary>
+		/// Gets the convert function.
+		/// </summary>
+		/// <returns>Func&lt;TFrom, TTo&gt;.</returns>
 		private static Func<TFrom, TTo> GetConvertFn()
 		{
 			if (typeof(TTo) == typeof(string))

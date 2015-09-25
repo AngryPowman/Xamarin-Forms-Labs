@@ -266,7 +266,11 @@
             }
         }
 
-        public double TimeZoneOffset
+		/// <summary>
+		/// Gets the time zone offset.
+		/// </summary>
+		/// <value>The time zone offset.</value>
+		public double TimeZoneOffset
         {
             get
             {
@@ -274,7 +278,11 @@
             }
         }
 
-        public string TimeZone
+		/// <summary>
+		/// Gets the time zone.
+		/// </summary>
+		/// <value>The time zone.</value>
+		public string TimeZone
         {
             get
             {
@@ -282,7 +290,11 @@
             }
         }
 
-        public string LanguageCode
+		/// <summary>
+		/// Gets the language code.
+		/// </summary>
+		/// <value>The language code.</value>
+		public string LanguageCode
         {
             get
             {
@@ -290,7 +302,11 @@
             }
         }
 
-        public Orientation Orientation
+		/// <summary>
+		/// Gets the orientation.
+		/// </summary>
+		/// <value>The orientation.</value>
+		public Orientation Orientation
         {
             get
             {

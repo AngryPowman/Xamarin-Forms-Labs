@@ -107,10 +107,12 @@ namespace XLabs.Forms.Controls
         {
             if (view.IsPassword && _thisPasswordBox != null)
             {
+				#pragma warning disable CS1522 // Empty switch block
                 switch (view.XAlign)
-                {
-                    //NotCurrentlySupported: Text alaignement not available on Windows Phone for Password Entry
-                }                
+				{
+					//NotCurrentlySupported: Text alaignement not available on Windows Phone for Password Entry
+				}   
+				#pragma warning restore CS1522 // Empty switch block
             }
             else if (!view.IsPassword && _thisPhoneTextBox != null)
             {

@@ -1055,6 +1055,11 @@ namespace XLabs.Forms.Controls.MonoDroid.TimesSquare
 	/// <param name="cell">The cell.</param>
 	public delegate void ClickHandler(MonthCellDescriptor cell);
 
+	/// <summary>
+	/// Delegate DateSelectableHandler
+	/// </summary>
+	/// <param name="date">The date.</param>
+	/// <returns><c>true</c> if XXXX, <c>false</c> otherwise.</returns>
 	public delegate bool DateSelectableHandler(DateTime date);
 
 	/// <summary>

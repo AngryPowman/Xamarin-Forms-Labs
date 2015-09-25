@@ -44,7 +44,7 @@ namespace XLabs.Forms.Controls
         /// <summary>
         /// The load content requested
         /// </summary>
-        internal EventHandler<string> LoadContentRequested;
+        internal EventHandler<LoadContentEventArgs> LoadContentRequested;
         /// <summary>
         /// The load finished
         /// </summary>
@@ -52,7 +52,7 @@ namespace XLabs.Forms.Controls
         /// <summary>
         /// The load from content requested
         /// </summary>
-        internal EventHandler<string> LoadFromContentRequested;
+        internal EventHandler<LoadContentEventArgs> LoadFromContentRequested;
         /// <summary>
         /// The navigating
         /// </summary>
@@ -184,28 +184,30 @@ namespace XLabs.Forms.Controls
         }
 
         /// <summary>
-        /// Loads from content.
+        /// Loads from file.
         /// </summary>
         /// <param name="contentFullName">Full name of the content.</param>
-        public void LoadFromContent(string contentFullName)
+        /// <param name="baseUri">Optional base Uri to use for resources.</param>
+        public void LoadFromContent(string contentFullName, string baseUri = null)
         {
             var handler = this.LoadFromContentRequested;
             if (handler != null)
             {
-                handler(this, contentFullName);
+                handler(this, new LoadContentEventArgs(contentFullName, baseUri));
             }
         }
 
         /// <summary>
-        /// Loads the content.
+        /// Loads the content from string content.
         /// </summary>
         /// <param name="content">The content.</param>
-        public void LoadContent(string content)
+        /// <param name="baseUri">Optional base Uri to use for resources.</param>
+        public void LoadContent(string content, string baseUri = null)
         {
             var handler = this.LoadContentRequested;
             if (handler != null)
             {
-                handler(this, content);
+                handler(this, new LoadContentEventArgs(content, baseUri));
             }
         }
 
@@ -390,6 +392,18 @@ namespace XLabs.Forms.Controls
 
             // Cleanup the native stuff
             CleanupCalled = true;
+        }
+
+        internal class LoadContentEventArgs : EventArgs
+        {
+            internal LoadContentEventArgs(string content, string baseUri)
+            {
+                this.Content = content;
+                this.BaseUri = baseUri;
+            }
+
+            public string Content { get; private set; }
+            public string BaseUri { get; private set; }
         }
 
         /// <summary>

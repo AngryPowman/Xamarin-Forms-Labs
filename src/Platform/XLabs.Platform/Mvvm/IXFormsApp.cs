@@ -24,9 +24,17 @@ namespace XLabs.Platform.Mvvm
         /// <value>The application data directory</value>
         string AppDataDirectory { get; set; }
 
-        Orientation Orientation { get; }
+		/// <summary>
+		/// Gets the orientation.
+		/// </summary>
+		/// <value>The orientation.</value>
+		Orientation Orientation { get; }
 
-        [Obsolete]
+		/// <summary>
+		/// Gets or sets the back press delegate.
+		/// </summary>
+		/// <value>The back press delegate.</value>
+		[Obsolete]
         Func<Task<bool>> BackPressDelegate
         {
             get;
@@ -79,7 +87,11 @@ namespace XLabs.Platform.Mvvm
         /// <value>The on rotation.</value>
         EventHandler<EventArgs<Orientation>> Rotation { get; set; }
 
-        EventHandler<EventArgs> BackPress { get; set; } 
+		/// <summary>
+		/// Gets or sets the back press.
+		/// </summary>
+		/// <value>The back press.</value>
+		EventHandler<EventArgs> BackPress { get; set; } 
 
         #endregion Event Handlers
 

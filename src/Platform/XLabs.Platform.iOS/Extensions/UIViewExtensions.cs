@@ -5,7 +5,6 @@ namespace XLabs.Platform.Extensions
 	using System.Linq;
 	using System.Threading.Tasks;
 
-	using CoreGraphics;
 	using UIKit;
 
 	/// <summary>

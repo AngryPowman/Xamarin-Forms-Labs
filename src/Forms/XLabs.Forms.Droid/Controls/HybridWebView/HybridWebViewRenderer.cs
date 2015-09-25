@@ -20,7 +20,14 @@ namespace XLabs.Forms.Controls
     /// </summary>
     public partial class HybridWebViewRenderer : ViewRenderer<HybridWebView, HybridWebViewRenderer.NativeWebView>
     {
+        /// <summary>
+        /// Allows one to override the Webview Client class without a custom renderer.
+        /// </summary>
         public static Func<HybridWebViewRenderer,Client> GetWebViewClientDelegate;
+
+        /// <summary>
+        /// Allows one to override the Chrome Client class without a custom renderer.
+        /// </summary>
         public static Func<HybridWebViewRenderer, ChromeClient> GetWebChromeClientDelegate;
 
         /// <summary>
@@ -49,11 +56,12 @@ namespace XLabs.Forms.Controls
         {
             base.OnElementChanged (e);
 
-            if (this.Control == null)
+            if (this.Control == null && e.NewElement != null)
             {
                 var webView = new NativeWebView(this);
 
                 webView.Settings.JavaScriptEnabled = true;
+                webView.Settings.DomStorageEnabled = true;
 
                 //Turn off hardware rendering
                 webView.SetLayerType(LayerType.Software, null);
@@ -75,6 +83,25 @@ namespace XLabs.Forms.Controls
             this.Unbind(e.OldElement);
 
             this.Bind();
+        }
+
+        /// <summary>
+        /// Releases unmanaged and - optionally - managed resources.
+        /// </summary>
+        /// <param name="disposing"><c>true</c> to release both managed and unmanaged resources; <c>false</c> to release only unmanaged resources.</param>
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && this.Element != null)
+            {
+                if (this.Control != null)
+                {
+                    this.Control.StopLoading();
+                }
+
+                Unbind(this.Element);
+            }
+
+            base.Dispose(disposing);
         }
 
         /// <summary>
@@ -110,12 +137,10 @@ namespace XLabs.Forms.Controls
 
         private void OnPageFinished()
         {
-            if (this.Element != null)
-            {
-                this.Inject(NativeFunction);
-                this.Inject(GetFuncScript());
-                this.Element.OnLoadFinished(this, EventArgs.Empty);
-            }
+            if (this.Element == null) return;
+            this.Inject(NativeFunction);
+            this.Inject(GetFuncScript());
+            this.Element.OnLoadFinished(this, EventArgs.Empty);
         }
 
         /// <summary>
@@ -147,21 +172,23 @@ namespace XLabs.Forms.Controls
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="contentFullName">Full name of the content.</param>
-        partial void LoadFromContent(object sender, string contentFullName)
+        partial void LoadFromContent(object sender, HybridWebView.LoadContentEventArgs contentArgs)
         {
-            this.Element.Uri = new Uri("file:///android_asset/" + contentFullName);
+            var baseUri = new Uri(contentArgs.BaseUri ?? "file:///android_asset/");
+            this.Element.Uri = new Uri(baseUri, contentArgs.Content);
         }
 
         /// <summary>
         /// Loads the content.
         /// </summary>
         /// <param name="sender">The sender.</param>
-        /// <param name="contentFullName">Full name of the content.</param>
-        partial void LoadContent(object sender, string contentFullName)
+        /// <param name="content">Full name of the content.</param>
+        partial void LoadContent(object sender, HybridWebView.LoadContentEventArgs contentArgs)
         {
             if (Control != null) 
             {
-                this.Control.LoadDataWithBaseURL("file:///android_asset/", contentFullName, "text/html", "UTF-8", null);
+                var baseUri = contentArgs.BaseUri ?? "file:///android_asset/";
+                this.Control.LoadDataWithBaseURL(baseUri, contentArgs.Content, "text/html", "UTF-8", null);
             }
         }
 
@@ -185,7 +212,7 @@ namespace XLabs.Forms.Controls
             /// <summary>
             /// The web hybrid
             /// </summary>
-            private readonly WeakReference<HybridWebViewRenderer> webHybrid;
+            protected readonly WeakReference<HybridWebViewRenderer> WebHybrid;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="Client"/> class.
@@ -193,7 +220,7 @@ namespace XLabs.Forms.Controls
             /// <param name="webHybrid">The web hybrid.</param>
             public Client(HybridWebViewRenderer webHybrid)
             {
-                this.webHybrid = new WeakReference<HybridWebViewRenderer>(webHybrid);
+                this.WebHybrid = new WeakReference<HybridWebViewRenderer>(webHybrid);
             }
 
             /// <summary>
@@ -216,7 +243,7 @@ namespace XLabs.Forms.Controls
                 base.OnPageFinished(view, url);
 
                 HybridWebViewRenderer hybrid;
-                if (this.webHybrid != null && this.webHybrid.TryGetTarget(out hybrid))
+                if (this.WebHybrid != null && this.WebHybrid.TryGetTarget(out hybrid))
                 {
                     hybrid.OnPageFinished();
                 }
