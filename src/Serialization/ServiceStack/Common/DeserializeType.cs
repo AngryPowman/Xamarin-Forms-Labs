@@ -36,10 +36,9 @@ namespace ServiceStack.Text.Common
             var map = DeserializeTypeRef.GetTypeAccessorMap(typeConfig, Serializer);
 
             var ctorFn = JsConfig.ModelFactory(type);
-            if (map == null)
-                return value => ctorFn();
+            if (map == null) return value => ctorFn();
 
-            return typeof(TSerializer) == typeof(Json.JsonTypeSerializer)
+            return typeof(TSerializer) == typeof(JsonTypeSerializer)
                 ? (ParseStringDelegate)(value => DeserializeTypeRefJson.StringToType(type, value, ctorFn, map))
                 : value => DeserializeTypeRefJsv.StringToType(type, value, ctorFn, map);
         }
@@ -71,7 +70,9 @@ namespace ServiceStack.Text.Common
                 }
             }
 
-            return Serializer.UnescapeString(strType);
+            return strType;
+
+            //return Serializer.UnescapeString(strType);
         }
 
         public static Type ExtractType(string strType)
@@ -161,19 +162,19 @@ namespace ServiceStack.Text.Common
             decimal decimalValue;
             if (decimal.TryParse(value, NumberStyles.Number, CultureInfo.InvariantCulture, out decimalValue))
             {
-	            if (!JsConfig.TryToParseNumericType)
-		            return decimalValue;
+                if (!JsConfig.TryToParseNumericType)
+                    return decimalValue;
 
                 if (decimalValue == decimal.Truncate(decimalValue))
-				{
-					if (decimalValue <= byte.MaxValue && decimalValue >= byte.MinValue) return (byte)decimalValue;
-					if (decimalValue <= sbyte.MaxValue && decimalValue >= sbyte.MinValue) return (sbyte)decimalValue;
-					if (decimalValue <= Int16.MaxValue && decimalValue >= Int16.MinValue) return (Int16)decimalValue;
-					if (decimalValue <= UInt16.MaxValue && decimalValue >= UInt16.MinValue) return (UInt16)decimalValue;
-					if (decimalValue <= Int32.MaxValue && decimalValue >= Int32.MinValue) return (Int32)decimalValue;
-					if (decimalValue <= UInt32.MaxValue && decimalValue >= UInt32.MinValue) return (UInt32)decimalValue;
-					if (decimalValue <= Int64.MaxValue && decimalValue >= Int64.MinValue) return (Int64)decimalValue;
-					if (decimalValue <= UInt64.MaxValue && decimalValue >= UInt64.MinValue) return (UInt64)decimalValue;
+                {
+                    if (decimalValue <= byte.MaxValue && decimalValue >= byte.MinValue) return (byte)decimalValue;
+                    if (decimalValue <= sbyte.MaxValue && decimalValue >= sbyte.MinValue) return (sbyte)decimalValue;
+                    if (decimalValue <= Int16.MaxValue && decimalValue >= Int16.MinValue) return (Int16)decimalValue;
+                    if (decimalValue <= UInt16.MaxValue && decimalValue >= UInt16.MinValue) return (UInt16)decimalValue;
+                    if (decimalValue <= Int32.MaxValue && decimalValue >= Int32.MinValue) return (Int32)decimalValue;
+                    if (decimalValue <= UInt32.MaxValue && decimalValue >= UInt32.MinValue) return (UInt32)decimalValue;
+                    if (decimalValue <= Int64.MaxValue && decimalValue >= Int64.MinValue) return (Int64)decimalValue;
+                    if (decimalValue <= UInt64.MaxValue && decimalValue >= UInt64.MinValue) return (UInt64)decimalValue;
                 }
                 return decimalValue;
             }
@@ -369,16 +370,16 @@ namespace ServiceStack.Text.Common
             
         }
 
-		private static SetPropertyDelegate GetSetFieldMethod(TypeConfig typeConfig, FieldInfo fieldInfo)
-		{
+        private static SetPropertyDelegate GetSetFieldMethod(TypeConfig typeConfig, FieldInfo fieldInfo)
+        {
             if (fieldInfo.ReflectedType() != fieldInfo.DeclaringType)
                 fieldInfo = fieldInfo.DeclaringType.GetFieldInfo(fieldInfo.Name);
 
 #if SILVERLIGHT || MONOTOUCH || XBOX
             return (instance, value) => fieldInfo.SetValue(instance, value);
 #else
-			return CreateIlFieldSetter(fieldInfo);
+            return CreateIlFieldSetter(fieldInfo);
 #endif
-		}
+        }
     }
 }

@@ -28,7 +28,7 @@ namespace XLabs.Forms.Behaviors
 	/// </Grid>
 	/// ]]>
 	/// </code>
-	/// To this:(where lb is the Xamarin.Forms.Labs.Behavior namespace prefix
+	/// To this:(where lb is the XLabs.Forms.Behavior namespace prefix
 	/// 
 	/// <code>
 	/// <![CDATA[

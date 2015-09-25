@@ -8,10 +8,12 @@ namespace XLabs.Forms.Controls
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
+
     using UIKit;
+
     using Xamarin.Forms;
     using Xamarin.Forms.Platform.iOS;
+
     using XLabs.Forms.Behaviors;
 
     /// <summary>
@@ -57,29 +59,12 @@ namespace XLabs.Forms.Controls
                     }
                 }) { NumberOfTapsRequired = 2 });
             // Longpress
-            CoreGraphics.CGPoint longPressGestureViewPoint = CoreGraphics.CGPoint.Empty;
             this._recognizers.Add(new UILongPressGestureRecognizer((x) =>
                 {
-                    if (x.State == UIGestureRecognizerState.Began)
+                    if (x.State == UIGestureRecognizerState.Ended)
                     {
-                        longPressGestureViewPoint = x.LocationInView(this);
-                        this.Element.ProcessGesture(
-                            new GestureResult { 
-                                GestureType = GestureType.LongTouch, 
-                                Direction = Directionality.None, 
-                                Origin = longPressGestureViewPoint.ToPoint() 
-                            });
-                    }
-
-                    if (x.State == UIGestureRecognizerState.Ended
-                        && longPressGestureViewPoint != CoreGraphics.CGPoint.Empty)
-                    {
-                        bool result = this.Element.ProcessGesture(
-                            new GestureResult { 
-                                GestureType = GestureType.LongPress, 
-                                Direction = Directionality.None, 
-                                Origin = longPressGestureViewPoint.ToPoint() 
-                            });
+                        var viewpoint = x.LocationInView(this);
+                        this.Element.ProcessGesture(new GestureResult { GestureType = GestureType.LongPress, Direction = Directionality.None, Origin = viewpoint.ToPoint() });                        
                     }
                 }));
             // Swipe

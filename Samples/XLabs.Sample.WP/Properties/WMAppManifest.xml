@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2014/deployment" AppPlatformVersion="8.1">
   <DefaultLanguage xmlns="" code="en-US" />
-  <App xmlns="" ProductID="{5de84a66-f761-41d2-9714-af292ca9dbeb}" Title="Xamarin.Forms.Labs.Sample.WP" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="Xamarin.Forms.Labs.Sample.WP author" Description="Sample description" Publisher="Xamarin.Forms.Labs.Sample.WP" PublisherID="{d0864412-b8c2-4896-a87a-e442d7b11ac7}">
+  <App xmlns="" ProductID="{5de84a66-f761-41d2-9714-af292ca9dbeb}" Title="XLabs.Sample.WP" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="XLabs" Description="Sample description" Publisher="XLabs" PublisherID="{d0864412-b8c2-4896-a87a-e442d7b11ac7}">
     <IconPath IsRelative="true" IsResource="false">Assets\ApplicationIcon.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_NETWORKING" />
@@ -24,12 +24,12 @@
       <DefaultTask Name="_default" NavigationPage="MainPage.xaml" />
     </Tasks>
     <Tokens>
-      <PrimaryToken TokenID="Xamarin.Forms.Labs.Sample.WPToken" TaskName="_default">
+      <PrimaryToken TokenID="XLabs.Sample.WPToken" TaskName="_default">
         <TemplateFlip>
           <SmallImageURI IsRelative="true" IsResource="false">Assets\Tiles\FlipCycleTileSmall.png</SmallImageURI>
           <Count>0</Count>
           <BackgroundImageURI IsRelative="true" IsResource="false">Assets\Tiles\FlipCycleTileMedium.png</BackgroundImageURI>
-          <Title>Xamarin.Forms.Labs.Sample.WP</Title>
+          <Title>XLabs.Sample.WP</Title>
           <BackContent></BackContent>
           <BackBackgroundImageURI></BackBackgroundImageURI>
           <BackTitle></BackTitle>

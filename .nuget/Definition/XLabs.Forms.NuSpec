@@ -8,7 +8,7 @@
     <authors>XLabs Team</authors>
     <licenseUrl>https://github.com/XForms/Xamarin-Forms-Labs/blob/master/LICENSE</licenseUrl>
     <projectUrl>https://github.com/XForms/Xamarin-Forms-Labs</projectUrl>
-    <iconUrl>https://raw.githubusercontent.com/XForms/Xamarin-Forms-Labs/master/src/Xamarin.Forms.Labs/Design/Icons/nuget/icon_nuget.png</iconUrl>
+    <iconUrl>https://raw.githubusercontent.com/XLabs/Xamarin-Forms-Labs/master/Design/Icons/nuget/icon_nuget.png</iconUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>
       XLabs.Forms is a open source project that aims to provide a powerfull and cross platform set of controls tailored to work with Xamarin Forms.
@@ -54,10 +54,10 @@
     </frameworkAssemblies>
   </metadata>
   <files>
-    <file src="..\..\build\**\XLabs.Platform.dll" target="lib\portable-net45+netcore45+wpa81+wp8" />
-    <file src="..\..\build\**\XLabs.Platform.dll.mdb" target="lib\portable-net45+netcore45+wpa81+wp8" />
-    <file src="..\..\build\**\XLabs.Platform.pdb" target="lib\portable-net45+netcore45+wpa81+wp8" />
-    <file src="..\..\build\**\XLabs.Platform.xml" target="lib\portable-net45+netcore45+wpa81+wp8" />
+    <file src="..\..\build\**\XLabs.Forms.dll" target="lib\portable-net45+netcore45+wpa81+wp8" />
+    <file src="..\..\build\**\XLabs.Forms.dll.mdb" target="lib\portable-net45+netcore45+wpa81+wp8" />
+    <file src="..\..\build\**\XLabs.Forms.pdb" target="lib\portable-net45+netcore45+wpa81+wp8" />
+    <file src="..\..\build\**\XLabs.Forms.xml" target="lib\portable-net45+netcore45+wpa81+wp8" />
         
     <file src="..\..\build\**\XLabs.Forms.iOS.dll" target="lib\Xamarin.iOS10" />
     <file src="..\..\build\**\XLabs.Forms.iOS.dll.mdb" target="lib\Xamarin.iOS10" />

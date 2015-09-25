@@ -25,7 +25,7 @@
 		private int _bufferSize;
 
 		/// <summary>
-		///     Initializes a new instance of the <see cref="Xamarin.Forms.Labs.Droid.Services.Media.Microphone" /> class.
+		///     Initializes a new instance of the <see cref="Microphone" /> class.
 		/// </summary>
 		public Microphone()
 		{

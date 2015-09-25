@@ -56,6 +56,21 @@ namespace XLabs.Forms.Controls
             BindableProperty.Create<ExtendedTabbedPage, string>(
                 p => p.TabBarBackgroundImage, null);
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="ExtendedTabbedPage" /> class.
+        /// </summary>
+        public ExtendedTabbedPage()
+        {
+            PropertyChanging += OnPropertyChanging;
+            PropertyChanged += OnPropertyChanged;
+            OnSwipeLeft += SwipeLeft;
+            OnSwipeRight += SwipeRight;
+
+            this.SwipeEnabled = false;
+
+            Badges = new List<string>();
+        }
+
         public Color TintColor
         {
             get
@@ -128,22 +143,7 @@ namespace XLabs.Forms.Controls
             }
         }
 
-        public bool SwipeEnabled;
-
-        /// <summary>
-        ///     Initializes a new instance of the <see cref="ExtendedTabbedPage" /> class.
-        /// </summary>
-        public ExtendedTabbedPage()
-        {
-            PropertyChanging += OnPropertyChanging;
-            PropertyChanged += OnPropertyChanged;
-            OnSwipeLeft += SwipeLeft;
-            OnSwipeRight += SwipeRight;
-
-            SwipeEnabled = false;
-
-            Badges = new List<string>();
-        }
+        public bool SwipeEnabled { get; set; }
 
         /// <summary>
         ///     Occurs when [current page changing].

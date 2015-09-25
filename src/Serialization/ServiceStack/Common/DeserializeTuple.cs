@@ -1,13 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-using ServiceStack.Text.Common;
-using ServiceStack.Text.Json;
-
-namespace Xamarin.Forms.Labs.ServiceStackSerializer.Common
+namespace XLabs.Serialization.ServiceStack.Common
 {
+    using System;
+    using System.Linq;
+    using global::ServiceStack.Text.Common;
+    using global::ServiceStack.Text.Json;
+
     internal static class DeserializeTuple<TSerializer> where TSerializer : ITypeSerializer
     {
         private static readonly ITypeSerializer Serializer = JsWriter.GetTypeSerializer<TSerializer>();

@@ -1,10 +1,10 @@
 ﻿// ***********************************************************************
-// Assembly         : Xamarin.Forms.Labs.Sample.Droid
+// Assembly         : XLabs.Sample.Droid
 // Author           : Shawn Anderson
 // Created          : 06-16-2014
 //
 // Last Modified By : Sami Kallio
-// Last Modified On : 20-03-2015
+// Last Modified On : 27-08-2015
 // ***********************************************************************
 // <copyright file="MainActivity.cs" company="">
 //     Copyright (c) 2014 . All rights reserved.
@@ -49,7 +49,7 @@ namespace XLabs.Sample.Droid
     /// <summary>
     /// Class MainActivity.
     /// </summary>
-    [Activity(Label = "Xamarin.Forms.Labs.Sample.Droid", MainLauncher = true,
+    [Activity(Label = "XLabs.Sample.Droid", MainLauncher = true,
         ConfigurationChanges = ConfigChanges.Orientation | ConfigChanges.ScreenSize)]
     public class MainActivity : XFormsApplicationDroid
     {
@@ -61,6 +61,14 @@ namespace XLabs.Sample.Droid
         {
             base.OnCreate(bundle);
 
+            if (Build.VERSION.SdkInt >= BuildVersionCodes.Kitkat) 
+            {
+                Android.Webkit.WebView.SetWebContentsDebuggingEnabled(true); 
+            }
+
+            XLabs.Forms.Controls.HybridWebViewRenderer.GetWebViewClientDelegate = r => new CustomClient(r);
+            XLabs.Forms.Controls.HybridWebViewRenderer.GetWebChromeClientDelegate = r => new CustomChromeClient();
+
             if (!Resolver.IsSet)
             {
                 this.SetIoc();
@@ -68,12 +76,10 @@ namespace XLabs.Sample.Droid
             else
             {
                 var app = Resolver.Resolve<IXFormsApp>() as IXFormsApp<XFormsApplicationDroid>;
-                app.AppContext = this;
+                if (app != null) app.AppContext = this;
             }
 
             Forms.Init(this, bundle);
-
-            App.Init();
 
             Forms.ViewInitialized += (sender, e) =>
             {
@@ -83,7 +89,7 @@ namespace XLabs.Sample.Droid
                 }
             };
 
-            this.SetPage(App.GetMainPage());
+            this.LoadApplication(new App());
         }
 
         /// <summary>

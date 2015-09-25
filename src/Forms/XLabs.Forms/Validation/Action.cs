@@ -16,7 +16,7 @@ namespace XLabs.Forms.Validation
 	{
 		#region Static Fields
 
-		/// <summary>Definition for <see cref="Setters"/>/summary>
+		/// <summary>Definition for <see cref="Setters"/></summary>
 		/// Element created at 08/11/2014,4:01 PM by Charles
 		public static BindableProperty SettersProperty =
 			BindableProperty.Create<Action, PropertySetters>(x => x.Setters,
@@ -120,7 +120,7 @@ namespace XLabs.Forms.Validation
 		/// <summary>Gets the property information.</summary>
 		/// <value>The property information.</value>
 		/// Element created at 07/11/2014,6:18 AM by Charles
-		/// <exception cref="Xamarin.Forms.Labs.Exceptions.PropertyNotFoundException"></exception>
+		/// <exception cref="XLabs.Exceptions.PropertyNotFoundException"></exception>
 		protected virtual PropertyInfo PropertyInfo
 		{
 			get { return _pi ?? (_pi = GetPropertyInfo(Property, Element.GetType())); }

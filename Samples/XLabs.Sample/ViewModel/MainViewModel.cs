@@ -17,7 +17,7 @@
     {
         private readonly IDevice _device;
         private string _numberToCall = "+1 (855) 926-2746";
-        private string _textToSpeak = "Hello from Xamarin Forms Labs";
+        private string _textToSpeak = "Hello from X Labs";
         private string _deviceTimerInfo = string.Empty;
         private ObservableCollection<string> _images;
         private Command _callCommand;

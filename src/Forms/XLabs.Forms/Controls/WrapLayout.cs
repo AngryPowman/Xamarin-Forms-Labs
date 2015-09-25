@@ -105,7 +105,7 @@ namespace XLabs.Forms.Controls
             double minHeight = 0;
             double heightUsed = 0;
 
-            foreach (var size in Children.Select(item => item.GetSizeRequest(widthConstraint, heightConstraint)))
+            foreach (var size in Children.Where(c => c.IsVisible).Select(item => item.GetSizeRequest(widthConstraint, heightConstraint)))
             {
                 width = Math.Max(width, size.Request.Width);
 
@@ -153,7 +153,7 @@ namespace XLabs.Forms.Controls
             double minHeight = 0;
             double widthUsed = 0;
 
-            foreach (var item in Children)
+            foreach (var item in Children.Where(c => c.IsVisible))
             {
                 var size = item.GetSizeRequest(widthConstraint, heightConstraint);
 

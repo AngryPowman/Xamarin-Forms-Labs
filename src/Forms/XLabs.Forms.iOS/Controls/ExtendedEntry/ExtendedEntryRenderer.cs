@@ -37,7 +37,7 @@ namespace XLabs.Forms.Controls
         {
             base.OnElementChanged(e);
 
-            var view = (ExtendedEntry)Element;
+            var view = e.NewElement as ExtendedEntry;
 
             if (view != null)
             {

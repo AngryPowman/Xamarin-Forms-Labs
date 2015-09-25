@@ -51,7 +51,7 @@ namespace ServiceStack.Text.Json
         public WriteObjectDelegate GetWriteFn<T>()
         {
             return JsonWriter<T>.WriteFn();
-		}
+        }
 
         public WriteObjectDelegate GetWriteFn(Type type)
         {
@@ -128,10 +128,8 @@ namespace ServiceStack.Text.Json
 
         public void WriteNullableDateTime(TextWriter writer, object dateTime)
         {
-            if (dateTime == null)
-                writer.Write(JsonUtils.Null);
-            else
-                WriteDateTime(writer, dateTime);
+            if (dateTime == null)  writer.Write(JsonUtils.Null);
+            else WriteDateTime(writer, dateTime);
         }
 
         public void WriteDateTimeOffset(TextWriter writer, object oDateTimeOffset)
@@ -143,10 +141,8 @@ namespace ServiceStack.Text.Json
 
         public void WriteNullableDateTimeOffset(TextWriter writer, object dateTimeOffset)
         {
-            if (dateTimeOffset == null)
-                writer.Write(JsonUtils.Null);
-            else
-                WriteDateTimeOffset(writer, dateTimeOffset);
+            if (dateTimeOffset == null) writer.Write(JsonUtils.Null);
+            else WriteDateTimeOffset(writer, dateTimeOffset);
         }
 
         public void WriteTimeSpan(TextWriter writer, object oTimeSpan)
@@ -159,9 +155,7 @@ namespace ServiceStack.Text.Json
 
         public void WriteNullableTimeSpan(TextWriter writer, object oTimeSpan)
         {
-
-            if (oTimeSpan == null) return;
-            WriteTimeSpan(writer, ((TimeSpan?)oTimeSpan).Value);
+            if (oTimeSpan != null) WriteTimeSpan(writer, ((TimeSpan?)oTimeSpan).Value);
         }
 
         public void WriteGuid(TextWriter writer, object oValue)
@@ -171,94 +165,74 @@ namespace ServiceStack.Text.Json
 
         public void WriteNullableGuid(TextWriter writer, object oValue)
         {
-            if (oValue == null) return;
-            WriteRawString(writer, ((Guid)oValue).ToString("N"));
+            if (oValue != null) WriteRawString(writer, ((Guid)oValue).ToString("N"));
         }
 
         public void WriteBytes(TextWriter writer, object oByteValue)
         {
-            if (oByteValue == null) return;
-            WriteRawString(writer, Convert.ToBase64String((byte[])oByteValue));
+            if (oByteValue != null) WriteRawString(writer, Convert.ToBase64String((byte[])oByteValue));
         }
 
         public void WriteChar(TextWriter writer, object charValue)
         {
-            if (charValue == null)
-                writer.Write(JsonUtils.Null);
-            else
-                WriteRawString(writer, ((char)charValue).ToString());
+            if (charValue == null) writer.Write(JsonUtils.Null);
+            else WriteRawString(writer, ((char)charValue).ToString());
         }
 
         public void WriteByte(TextWriter writer, object byteValue)
         {
-            if (byteValue == null)
-                writer.Write(JsonUtils.Null);
-            else
-                writer.Write((byte)byteValue);
+            if (byteValue == null)  writer.Write(JsonUtils.Null);
+            else writer.Write((byte)byteValue);
         }
 
         public void WriteInt16(TextWriter writer, object intValue)
         {
-            if (intValue == null)
-                writer.Write(JsonUtils.Null);
-            else
-                writer.Write((short)intValue);
+            if (intValue == null)  writer.Write(JsonUtils.Null);
+            else writer.Write((short)intValue);
         }
 
         public void WriteUInt16(TextWriter writer, object intValue)
         {
-            if (intValue == null)
-                writer.Write(JsonUtils.Null);
-            else
-                writer.Write((ushort)intValue);
+            if (intValue == null) writer.Write(JsonUtils.Null);
+            else writer.Write((ushort)intValue);
         }
 
         public void WriteInt32(TextWriter writer, object intValue)
         {
-            if (intValue == null)
-                writer.Write(JsonUtils.Null);
-            else
-                writer.Write((int)intValue);
+            if (intValue == null) writer.Write(JsonUtils.Null);
+            else writer.Write((int)intValue);
         }
 
         public void WriteUInt32(TextWriter writer, object uintValue)
         {
-            if (uintValue == null)
-                writer.Write(JsonUtils.Null);
-            else
-                writer.Write((uint)uintValue);
+            if (uintValue == null) writer.Write(JsonUtils.Null);
+            else writer.Write((uint)uintValue);
         }
 
         public void WriteInt64(TextWriter writer, object integerValue)
         {
-            if (integerValue == null)
-                writer.Write(JsonUtils.Null);
-            else
-                writer.Write((long)integerValue);
+            if (integerValue == null) writer.Write(JsonUtils.Null);
+            else writer.Write((long)integerValue);
         }
 
         public void WriteUInt64(TextWriter writer, object ulongValue)
         {
-            if (ulongValue == null)
-            {
-                writer.Write(JsonUtils.Null);
-            }
-            else
-                writer.Write((ulong)ulongValue);
+            if (ulongValue == null) writer.Write(JsonUtils.Null);
+            else writer.Write((ulong)ulongValue);
         }
 
         public void WriteBool(TextWriter writer, object boolValue)
         {
-            if (boolValue == null)
-                writer.Write(JsonUtils.Null);
-            else
-                writer.Write(((bool)boolValue) ? JsonUtils.True : JsonUtils.False);
+            if (boolValue == null)  writer.Write(JsonUtils.Null);
+            else writer.Write(((bool)boolValue) ? JsonUtils.True : JsonUtils.False);
         }
 
         public void WriteFloat(TextWriter writer, object floatValue)
         {
             if (floatValue == null)
+            {
                 writer.Write(JsonUtils.Null);
+            }
             else
             {
                 var floatVal = (float)floatValue;
@@ -285,10 +259,9 @@ namespace ServiceStack.Text.Json
 
         public void WriteDecimal(TextWriter writer, object decimalValue)
         {
-            if (decimalValue == null)
-                writer.Write(JsonUtils.Null);
-            else
-                writer.Write(((decimal)decimalValue).ToString(CultureInfo.InvariantCulture));
+            writer.Write(decimalValue == null
+                ? JsonUtils.Null
+                : ((decimal) decimalValue).ToString(CultureInfo.InvariantCulture));
         }
 
         public void WriteEnum(TextWriter writer, object enumValue)
@@ -302,7 +275,7 @@ namespace ServiceStack.Text.Json
 
         public void WriteEnumFlags(TextWriter writer, object enumFlagValue)
         {
-			JsWriter.WriteEnumFlags(writer, enumFlagValue);
+            JsWriter.WriteEnumFlags(writer, enumFlagValue);
         }
 
         public void WriteLinqBinary(TextWriter writer, object linqBinaryValue)
@@ -336,7 +309,7 @@ namespace ServiceStack.Text.Json
         {
             for (; i < value.Length; i++) { var c = value[i]; if (c >= WhiteSpaceFlags.Length || !WhiteSpaceFlags[c]) break; } //Whitespace inline
             if (value.Length == i) return true;
-            return value[i++] == JsWriter.MapEndChar;
+            return value[i] == JsWriter.MapEndChar;
         }
 
         internal static string ParseString(string json, ref int index)
@@ -345,7 +318,7 @@ namespace ServiceStack.Text.Json
             if (json[index] != JsonUtils.QuoteChar)
                 throw new Exception("Invalid unquoted string starting with: " + json.SafeSubstring(50));
 
-        	var startIndex = ++index;
+            var startIndex = ++index;
             do
             {
                 char c = json[index];
@@ -373,14 +346,9 @@ namespace ServiceStack.Text.Json
             return value[0] == JsonUtils.QuoteChar && value[value.Length - 1] == JsonUtils.QuoteChar
                 ? value.Substring(1, value.Length - 2)
                 : value;
-
-            //if (value[0] != JsonUtils.QuoteChar)
-            //    throw new Exception("Invalid unquoted string starting with: " + value.SafeSubstring(50));
-
-            //return value.Substring(1, value.Length - 2);
         }
 
-        static readonly char[] IsSafeJsonChars = new[] { JsonUtils.QuoteChar, JsonUtils.EscapeChar };
+        static readonly char[] IsSafeJsonChars = { JsonUtils.QuoteChar, JsonUtils.EscapeChar };
 
         internal static string ParseJsonString(string json, ref int index)
         {
@@ -418,7 +386,7 @@ namespace ServiceStack.Text.Json
             var length = input.Length;
             int start = 0;
             int count = 0; 
-            StringBuilder output = new StringBuilder(length);
+            var output = new StringBuilder(length);
             for ( ; count < length; )
             {
                 if (input[count] == JsonUtils.QuoteChar)
@@ -480,7 +448,7 @@ namespace ServiceStack.Text.Json
                             {
                                 var unicodeString = input.Substring(count+1, 4);
                                 var unicodeIntVal = UInt32.Parse(unicodeString, NumberStyles.HexNumber);
-                                output.Append(JsonTypeSerializer.ConvertFromUtf32((int) unicodeIntVal));
+                                output.Append(ConvertFromUtf32((int) unicodeIntVal));
                                 count += 5;
                             }
                             else
@@ -493,7 +461,7 @@ namespace ServiceStack.Text.Json
                             {
                                 var unicodeString = input.Substring(count+1, 4);
                                 var unicodeIntVal = UInt32.Parse(unicodeString, NumberStyles.HexNumber);
-                                output.Append(JsonTypeSerializer.ConvertFromUtf32((int) unicodeIntVal));
+                                output.Append(ConvertFromUtf32((int) unicodeIntVal));
                                 count += 5;
                             }
                             else
@@ -501,7 +469,7 @@ namespace ServiceStack.Text.Json
                             {
                                 var unicodeString = input.Substring(count+1, 2);
                                 var unicodeIntVal = UInt32.Parse(unicodeString, NumberStyles.HexNumber);
-                                output.Append(JsonTypeSerializer.ConvertFromUtf32((int) unicodeIntVal));
+                                output.Append(ConvertFromUtf32((int) unicodeIntVal));
                                 count += 3;
                             }
                             else
@@ -542,7 +510,7 @@ namespace ServiceStack.Text.Json
                                 (char) (utf32 % 0x0400 + 0xDC00)});
         }
 
-    	public string EatTypeValue(string value, ref int i)
+        public string EatTypeValue(string value, ref int i)
         {
             return EatValue(value, ref i);
         }
@@ -560,8 +528,6 @@ namespace ServiceStack.Text.Json
 
             var tokenStartPos = i;
             var valueChar = value[i];
-            var withinQuotes = false;
-            var endsToEat = 1;
 
             switch (valueChar)
             {
@@ -605,8 +571,7 @@ namespace ServiceStack.Text.Json
 
             if (i == value.Length) return false;
 
-            var success = value[i] == JsWriter.ItemSeperator
-                || value[i] == JsWriter.MapEndChar;
+            var success = value[i] == JsWriter.ItemSeperator || value[i] == JsWriter.MapEndChar;
 
             i++;
 

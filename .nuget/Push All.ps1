@@ -28,7 +28,7 @@ try
     $host.UI.RawUI.BackgroundColor = [System.ConsoleColor]::Black
     $host.UI.RawUI.ForegroundColor = [System.ConsoleColor]::White
     
-    Write-Host "Publish all Xamarin Forms Labs NuGet packages" -ForegroundColor White
+    Write-Host "Publish all XLabs NuGet packages" -ForegroundColor White
     Write-Host "====================================" -ForegroundColor White
     
     ## Get list of packages (without ".symbols.") from Packages folder

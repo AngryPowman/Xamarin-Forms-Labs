@@ -23,7 +23,7 @@ try
 	$host.UI.RawUI.BackgroundColor = [System.ConsoleColor]::Black
 	$host.UI.RawUI.ForegroundColor = [System.ConsoleColor]::White
 	
-	Write-Host "Clean all Xamarin Forms Labs NuGet build outputs" -ForegroundColor White
+	Write-Host "Clean all XLabs NuGet build outputs" -ForegroundColor White
 	Write-Host "=======================================" -ForegroundColor White
 	
 	## NB - Cleanup destination package folder

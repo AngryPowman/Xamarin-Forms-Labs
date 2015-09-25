@@ -4,9 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
-using Xamarin.Forms.Labs.Services;
 
-namespace Xamarin.Forms.Labs.Sample.Pages.Services
+namespace XLabs.Sample.Pages.Services
 {
 	using XLabs.Ioc;
 	using XLabs.Platform.Device;

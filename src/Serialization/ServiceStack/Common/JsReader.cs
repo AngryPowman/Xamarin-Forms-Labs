@@ -2,10 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
-using Xamarin.Forms.Labs.ServiceStackSerializer.Common;
 
 namespace ServiceStack.Text.Common
 {
+    using XLabs.Serialization.ServiceStack.Common;
+
     internal class JsReader<TSerializer>
         where TSerializer : ITypeSerializer
     {
@@ -34,27 +35,20 @@ namespace ServiceStack.Text.Common
                 return x => Enum.Parse(type, Serializer.UnescapeSafeString(x), true);
             }
 
-            if (type == typeof(string))
-                return Serializer.UnescapeString;
+            if (type == typeof(string)) return Serializer.UnescapeString;
 
-            if (type == typeof(object))
-                return DeserializeType<TSerializer>.ObjectStringToType;
+            if (type == typeof(object)) return DeserializeType<TSerializer>.ObjectStringToType;
 
             var specialParseFn = ParseUtils.GetSpecialParseMethod(type);
-            if (specialParseFn != null)
-                return specialParseFn;
+            
+            if (specialParseFn != null) return specialParseFn;
 
-            if (type.IsEnum())
-                return x => Enum.Parse(type, x, true);
+            if (type.IsEnum()) return x => Enum.Parse(type, x, true);
 
-            if (type.IsArray)
-            {
-                return DeserializeArray<T, TSerializer>.Parse;
-            }
+            if (type.IsArray) return DeserializeArray<T, TSerializer>.Parse;
 
             var builtInMethod = DeserializeBuiltin<T>.Parse;
-            if (builtInMethod != null)
-                return value => builtInMethod(Serializer.UnescapeSafeString(value));
+            if (builtInMethod != null) return value => builtInMethod(Serializer.UnescapeSafeString(value));
 
             if (type.HasGenericType())
             {
@@ -79,14 +73,12 @@ namespace ServiceStack.Text.Common
 
                 if (type.Name.Contains("Tuple`"))
                 {
-                    return new ParseStringDelegate(x => DeserializeTuple<TSerializer>.Parse(type, x));
+                    return x => DeserializeTuple<TSerializer>.Parse(type, x);
                 }
-
             }
-
 #if NET40
             if (typeof (T).IsAssignableFrom(typeof (System.Dynamic.IDynamicMetaObjectProvider)) ||
-	            typeof (T).HasInterface(typeof (System.Dynamic.IDynamicMetaObjectProvider))) 
+                typeof (T).HasInterface(typeof (System.Dynamic.IDynamicMetaObjectProvider))) 
             {
                 return DeserializeDynamic<TSerializer>.Parse;
             }
@@ -110,24 +102,17 @@ namespace ServiceStack.Text.Common
             if (type.IsValueType())
             {
                 var staticParseMethod = StaticParseMethod<T>.Parse;
-                if (staticParseMethod != null)
-                    return value => staticParseMethod(Serializer.UnescapeSafeString(value));
+                if (staticParseMethod != null) return value => staticParseMethod(Serializer.UnescapeSafeString(value));
             }
             else
             {
                 var staticParseMethod = StaticParseRefTypeMethod<TSerializer, T>.Parse;
-                if (staticParseMethod != null)
-                    return value => staticParseMethod(Serializer.UnescapeSafeString(value));
+                if (staticParseMethod != null)  return value => staticParseMethod(Serializer.UnescapeSafeString(value));
             }
 
-            var typeConstructor = DeserializeType<TSerializer>.GetParseMethod(TypeConfig<T>.GetState());
-            if (typeConstructor != null)
-                return typeConstructor;
-
-            var stringConstructor = DeserializeTypeUtils.GetParseMethod(type);
-            if (stringConstructor != null) return stringConstructor;
-
-            return DeserializeType<TSerializer>.ParseAbstractType<T>;
+            return DeserializeType<TSerializer>.GetParseMethod(TypeConfig<T>.GetState()) ?? 
+                DeserializeTypeUtils.GetParseMethod(type) ?? 
+                DeserializeType<TSerializer>.ParseAbstractType<T>;
         }
 
     }

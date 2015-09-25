@@ -4,7 +4,7 @@
     using System.IO;
 
     /// <summary>
-    /// Interface IFileManager
+    /// Interface IFileManager provides access to files located in Isolated Storage.
     /// </summary>
     public interface IFileManager
     {
@@ -117,11 +117,9 @@
         ReadWrite = 3,
     }
 
-    // Summary:
-    //     Contains constants for controlling the kind of access other Xamarin.Forms.Labs.Services.IO.IFileManager
-    //     objects can have to the same file.
     /// <summary>
-    /// Enum FileShare
+    /// Contains constants for controlling the kind of access other <see cref="IFileManager"/>
+    /// objects can have to the same file.
     /// </summary>
     [Flags]
     public enum FileShare

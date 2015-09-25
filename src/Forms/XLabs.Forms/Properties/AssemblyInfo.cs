@@ -31,3 +31,4 @@ using System.Runtime.InteropServices;
 [assembly: InternalsVisibleTo("XLabs.Forms.Droid")]
 [assembly: InternalsVisibleTo("XLabs.Forms.iOS")]
 [assembly: InternalsVisibleTo("XLabs.Forms.WP8")]
+[assembly: InternalsVisibleTo("XLabs.Forms.WinUniversal")]

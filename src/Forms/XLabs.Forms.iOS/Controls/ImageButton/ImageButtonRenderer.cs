@@ -57,13 +57,7 @@ namespace XLabs.Forms.Controls
 
                 var width = this.GetWidth(imageButton.ImageWidthRequest);
                 var height = this.GetHeight(imageButton.ImageHeightRequest);
-
-                await SetImageAsync(imageButton.Source, width, height, targetButton);
-
-                if (imageButton.DisabledSource != null)
-                {
-                    await SetImageAsync(imageButton.DisabledSource, width, height, targetButton, UIControlState.Disabled);
-                }
+                await SetupImages(imageButton, targetButton, width, height);
 
                 switch (imageButton.Orientation)
                 {
@@ -91,7 +85,10 @@ namespace XLabs.Forms.Controls
         protected async override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             base.OnElementPropertyChanged(sender, e);
-            if (e.PropertyName == ImageButton.SourceProperty.PropertyName)
+            if (e.PropertyName == ImageButton.SourceProperty.PropertyName ||
+                e.PropertyName == ImageButton.DisabledSourceProperty.PropertyName ||
+                e.PropertyName == ImageButton.ImageTintColorProperty.PropertyName ||
+                e.PropertyName == ImageButton.DisabledImageTintColorProperty.PropertyName)
             {
                 var sourceButton = Element as ImageButton;
                 if (sourceButton != null && sourceButton.Source != null)
@@ -100,14 +97,22 @@ namespace XLabs.Forms.Controls
                     var targetButton = Control;
                     if (imageButton != null && targetButton != null && imageButton.Source != null)
                     {
-                        await SetImageAsync(imageButton.Source, imageButton.ImageWidthRequest, imageButton.ImageHeightRequest, targetButton);
-
-                        if (imageButton.DisabledSource != null)
-                        {
-                            await SetImageAsync(imageButton.DisabledSource, imageButton.ImageWidthRequest, imageButton.ImageHeightRequest, targetButton, UIControlState.Disabled);
-                        }
+                        await SetupImages(imageButton, targetButton, imageButton.ImageWidthRequest, imageButton.ImageHeightRequest);
                     }
                 }
+            }
+        }
+
+        async Task SetupImages(ImageButton imageButton, UIButton targetButton, int width, int height)
+        {
+            UIColor tintColor = imageButton.ImageTintColor == Color.Transparent ? null : imageButton.ImageTintColor.ToUIColor();
+            UIColor disabledTintColor = imageButton.DisabledImageTintColor == Color.Transparent ? null : imageButton.DisabledImageTintColor.ToUIColor();
+
+            await SetImageAsync(imageButton.Source, width, height, targetButton, UIControlState.Normal, tintColor);
+
+            if (imageButton.DisabledSource != null || disabledTintColor != null)
+            {
+                await SetImageAsync(imageButton.DisabledSource ?? imageButton.Source, width, height, targetButton, UIControlState.Disabled, disabledTintColor);
             }
         }
 
@@ -215,7 +220,7 @@ namespace XLabs.Forms.Controls
         /// <param name="heightRequest">The requested image height.</param>
         /// <param name="targetButton">A <see cref="UIButton"/> to set the image into.</param>
         /// <returns>A <see cref="Task"/> for the awaited operation.</returns>
-        private async static Task SetImageAsync(ImageSource source, int widthRequest, int heightRequest, UIButton targetButton, UIControlState state = UIControlState.Normal)
+        private async static Task SetImageAsync(ImageSource source, int widthRequest, int heightRequest, UIButton targetButton, UIControlState state = UIControlState.Normal, UIColor tintColor = null)
         {
             var handler = GetHandler(source);
             using (UIImage image = await handler.LoadImageAsync(source))
@@ -225,7 +230,14 @@ namespace XLabs.Forms.Controls
                 {
                     scaled = scaled.Scale(new CGSize(widthRequest, heightRequest));
                 }
-                targetButton.SetImage(scaled.ImageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal), state);   
+
+                if (tintColor != null)
+                {
+                    targetButton.TintColor = tintColor;
+                    targetButton.SetImage(scaled.ImageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate), state);
+                }
+                else 
+                    targetButton.SetImage(scaled.ImageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal), state);
             }
         }
 

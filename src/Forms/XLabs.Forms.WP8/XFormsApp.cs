@@ -1,79 +1,92 @@
 ﻿namespace XLabs.Forms
 {
-	using System.Diagnostics.CodeAnalysis;
-	using System.Linq;
-	using System.Windows;
+    using System.Diagnostics.CodeAnalysis;
+    using System.Linq;
+    using Windows.Storage;
 
-	using Windows.Storage;
+    using Microsoft.Phone.Controls;
+    using Microsoft.Phone.Shell;
+    using Platform.Device;
+    using Platform.Services;
+    using Platform.Services.Email;
+    using Platform.Services.Geolocation;
+    using Platform.Services.IO;
+    using Platform.Services.Media;
+    using Xamarin.Forms;
+    using XLabs.Platform;
+    using XLabs.Platform.Mvvm;
+    using Application = System.Windows.Application;
 
-	using Microsoft.Phone.Controls;
-	using Microsoft.Phone.Shell;
+    /// <summary>
+    ///     The XLabs Windows Phone Application.
+    /// </summary>
+    [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly",
+        Justification = "Reviewed. Suppression is OK here.")]
+    public class XFormsAppWP : XFormsApp<Application>
+    {
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="XFormsAppWP" /> class.
+        /// </summary>
+        public XFormsAppWP()
+        {
+        }
 
-	using XLabs.Platform;
-	using XLabs.Platform.Mvvm;
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="XFormsAppWP" /> class.
+        /// </summary>
+        /// <param name="application">The application.</param>
+        public XFormsAppWP(Application application)
+            : base(application)
+        {
+        }
 
-	/// <summary>
-	///     The Xamarin Forms Labs Windows Phone Application.
-	/// </summary>
-	[SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly",
-		Justification = "Reviewed. Suppression is OK here.")]
-	public class XFormsAppWP : XFormsApp<Application>
-	{
-		/// <summary>
-		///     Initializes a new instance of the <see cref="XFormsAppWP" /> class.
-		/// </summary>
-		public XFormsAppWP()
-		{
-		}
+        /// <summary>
+        ///     Raises the back press.
+        /// </summary>
+        public void RaiseBackPress()
+        {
+            OnBackPress();
+        }
 
-		/// <summary>
-		///     Initializes a new instance of the <see cref="XFormsAppWP" /> class.
-		/// </summary>
-		/// <param name="application">The application.</param>
-		public XFormsAppWP(Application application)
-			: base(application)
-		{
-		}
+        /// <summary>
+        ///     Sets the orientation.
+        /// </summary>
+        /// <param name="orientation">The orientation.</param>
+        public void SetOrientation(PageOrientation orientation)
+        {
+            Orientation = orientation.ToOrientation();
+        }
 
-		/// <summary>
-		///     Raises the back press.
-		/// </summary>
-		public void RaiseBackPress()
-		{
-			OnBackPress();
-		}
+        /// <summary>
+        ///     Initializes the specified context.
+        /// </summary>
+        /// <param name="app">The native application.</param>
+        /// <param name="initServices">Should initialize services.</param>
+        protected override void OnInit(Application app,bool initServices = true)
+        {
+            app.Startup += (o, e) => OnStartup();
+            app.Exit += (o, e) => OnClosing();
+            app.UnhandledException += (o, e) => OnError(e.ExceptionObject);
+            AppDataDirectory = ApplicationData.Current.LocalFolder.Path;
 
-		/// <summary>
-		///     Sets the orientation.
-		/// </summary>
-		/// <param name="orientation">The orientation.</param>
-		public void SetOrientation(PageOrientation orientation)
-		{
-			Orientation = orientation.ToOrientation();
-		}
+            foreach (var svc in app.ApplicationLifetimeObjects.OfType<PhoneApplicationService>())
+            {
+                svc.Activated += (o, e) => OnResumed();
+                svc.Deactivated += (o, e) => OnSuspended();
+            }
 
-		/// <summary>
-		///     Initializes the specified context.
-		/// </summary>
-		/// <param name="app">The native application.</param>
-		/// <param name="initServices">Should initialize services.</param>
-		protected override void OnInit(Application app,bool initServices = true)
-		{
-			AppContext.Startup += (o, e) => OnStartup();
-			AppContext.Exit += (o, e) => OnClosing();
-			AppContext.UnhandledException += (o, e) => OnError(e.ExceptionObject);
-			AppDataDirectory = ApplicationData.Current.LocalFolder.Path;
+            if (initServices) 
+            {
+                DependencyService.Register<TextToSpeechService>();
+                DependencyService.Register<Geolocator>();
+                DependencyService.Register<MediaPicker>();
+                DependencyService.Register<SoundService>();
+                DependencyService.Register<EmailService>();
+                DependencyService.Register<FileManager>();
+                DependencyService.Register<WindowsPhoneDevice>();
+            }
 
-			foreach (var svc in app.ApplicationLifetimeObjects.OfType<PhoneApplicationService>())
-			{
-				svc.Activated += (o, e) => OnResumed();
-				svc.Deactivated += (o, e) => OnSuspended();
-			}
-			if (initServices) {
-				//TODO : REGISTER SERVICES
-			}
-
-			base.OnInit(app);
-		}
-	}
+            base.OnInit(app);
+        }
+    }
 }

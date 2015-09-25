@@ -10,7 +10,7 @@ namespace XLabs.Sample
     using System.Linq;
     using System.Reflection;
     using System.Threading.Tasks;
-
+    using Pages.Samples;
     using Xamarin.Forms;
 
     using XLabs.Forms.Controls;
@@ -74,7 +74,7 @@ namespace XLabs.Sample
 
             var mainTab = new ExtendedTabbedPage()
             {
-                Title = "Xamarin Forms Labs",
+                Title = "XLabs",
                 SwipeEnabled = true,
                 TintColor = Color.White,
                 BarTintColor = Color.Blue,
@@ -121,6 +121,7 @@ namespace XLabs.Sample
                 "GeoLocator",
                 "Camera",
                 "Accelerometer",
+                "Gyroscope",
                 "Display",
                 "Cache",
                 "Sound",
@@ -139,6 +140,10 @@ namespace XLabs.Sample
 
             lstServices.ItemSelected += async (sender, e) =>
             {
+                if (e.SelectedItem == null) return;
+
+                lstServices.SelectedItem = null;
+
                 switch (e.SelectedItem.ToString().ToLower())
                 {
                     case "texttospeech":
@@ -158,6 +163,9 @@ namespace XLabs.Sample
                         break;
                     case "accelerometer":
                         await mainPage.Navigation.PushAsync(new AcceleratorSensorPage());
+                        break;
+                    case "gyroscope":
+                        await mainPage.Navigation.PushAsync(new GyroscopePage());
                         break;
                     case "display":
                         await mainPage.Navigation.PushAsync(new AbsoluteLayoutWithDisplayInfoPage(Resolver.Resolve<IDisplay>()));
@@ -288,6 +296,8 @@ namespace XLabs.Sample
             var listItems = new SortedDictionary<string, Type>
             {
                  {"US Presidents Circle Image", typeof(UsPresidentList)},
+                 {"Web hybrid func callback", typeof(WebHybridSamplePage)},
+                {"Web hybrid page loading", typeof(WebPageLoadSample)},
             };
 
             var controls = new ContentPage

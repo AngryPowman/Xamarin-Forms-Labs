@@ -273,8 +273,7 @@ namespace ServiceStack.Text.Common
             var sb = new StringBuilder(256);
             foreach (var type in types)
             {
-                if (sb.Length > 0)
-                    sb.Append(">");
+                if (sb.Length > 0) sb.Append(">");
 
                 sb.Append(type.FullName);
             }

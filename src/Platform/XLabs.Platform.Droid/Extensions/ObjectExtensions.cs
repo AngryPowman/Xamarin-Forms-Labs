@@ -27,6 +27,38 @@
                 Application.Context.StartActivity (intent);
             }
         }
+
+        /// <summary>
+        /// Wraps the object to <see cref="JavaObject{T}"/> class.
+        /// </summary>
+        /// <param name="o">Object to wrap.</param>
+        /// <typeparam name="T">Type of object.</typeparam>
+        /// <returns></returns>
+        public static JavaObject<T> ToJavaObject<T>(this T o)
+        {
+            return new JavaObject<T>(o);
+        }
+    }
+
+    /// <summary>
+    /// Java object wrapper.
+    /// </summary>
+    /// <typeparam name="T">Type of object to wrap.</typeparam>
+    public class JavaObject<T> : Java.Lang.Object
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="JavaObject{T}"/> class.
+        /// </summary>
+        /// <param name="obj"></param>
+        public JavaObject(T obj)
+        {
+            this.Value = obj;
+        }
+
+        /// <summary>
+        /// The object that was wrapped.
+        /// </summary>
+        public T Value { get; private set; }
     }
 }
 

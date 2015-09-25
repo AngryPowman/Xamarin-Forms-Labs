@@ -2,11 +2,10 @@
 {
 	using System;
 	using System.Collections.ObjectModel;
-
+	using ViewModel;
 	using Xamarin.Forms;
-	using Xamarin.Forms.Labs.Sample;
 
-	public partial class CarouselSample  : ContentPage
+    public partial class CarouselSample  : ContentPage
     {
         public CarouselSample()
         {

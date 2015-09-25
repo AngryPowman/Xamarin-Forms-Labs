@@ -1,15 +1,13 @@
 ﻿
 namespace XLabs.Sample.ViewModel
 {
-	using System.Collections.ObjectModel;
+    using System.Collections.ObjectModel;
 
-	using Xamarin.Forms;
-	using Xamarin.Forms.Labs.Sample;
+    using Xamarin.Forms;
+    using XLabs.Forms.Behaviors;
+    using XLabs.Forms.Controls;
 
-	using XLabs.Forms.Behaviors;
-	using XLabs.Forms.Controls;
-
-	class GestureSampleVm : BaseViewModel
+    class GestureSampleVm : BaseViewModel
     {
         private int _gesturecount;
         private bool _excludechildren = true;

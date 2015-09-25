@@ -3,7 +3,7 @@
 //
 //  Converted to MonoTouch on 1/22/09 - Eduardo Scoz || http://escoz.com
 //  Originally csreated by Devin Ross on 7/28/09  - tapku.com || http://github.com/devinross/tapkulibrary
-//  Adapted for Xamarin.Forms.Labs project by Vratislav Kalenda on 22/09/14 http://www.applifting.cz
+//  Adapted for XLabs project by Vratislav Kalenda on 22/09/14 http://www.applifting.cz
 /*
  
  Permission is hereby granted, free of charge, to any person

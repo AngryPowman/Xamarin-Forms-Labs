@@ -7,7 +7,7 @@ using System.Runtime.CompilerServices;
 [assembly: AssemblyTitle("XLabs.Ioc.Unity")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Xamarin Forms Labs Team")]
+[assembly: AssemblyCompany("XLabs Team")]
 [assembly: AssemblyProduct("")]
 [assembly: AssemblyCopyright("Copyright © 2014")]
 [assembly: AssemblyTrademark("")]

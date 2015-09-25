@@ -1,5 +1,4 @@
 ﻿using Xamarin.Forms;
-
 using XLabs.Forms.Controls;
 
 [assembly: ExportRenderer(typeof(ExtendedEntry), typeof(ExtendedEntryRenderer))]
@@ -12,7 +11,7 @@ namespace XLabs.Forms.Controls
     using Xamarin.Forms;
     using Xamarin.Forms.Platform.Android;
 
-    using XLabs.Forms.Extensions;
+    using Extensions;
     using Android.Text;
 
     /// <summary>
@@ -23,11 +22,11 @@ namespace XLabs.Forms.Controls
         /// <summary>
         /// The mi n_ distance
         /// </summary>
-        private const int MIN_DISTANCE = 10;
+        private const int MinDistance = 10;
         /// <summary>
         /// The _down x
         /// </summary>
-        private float _downX, _downY, _upX, _upY;
+        private float downX, downY, upX, upY;
 
         /// <summary>
         /// Called when [element changed].
@@ -61,36 +60,44 @@ namespace XLabs.Forms.Controls
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="Android.Views.View.TouchEventArgs"/> instance containing the event data.</param>
-        void HandleTouch (object sender, Android.Views.View.TouchEventArgs e)
+        void HandleTouch (object sender, TouchEventArgs e)
         {
-            var element = this.Element as ExtendedEntry;
+            var element = (ExtendedEntry)this.Element;
             switch (e.Event.Action)
             {
                 case MotionEventActions.Down:
-                    _downX = e.Event.GetX();
-                    _downY = e.Event.GetY();
+                    this.downX = e.Event.GetX();
+                    this.downY = e.Event.GetY();
                     return;
                 case MotionEventActions.Up:
                 case MotionEventActions.Cancel:
                 case MotionEventActions.Move:
-                    _upX = e.Event.GetX();
-                    _upY = e.Event.GetY();
+                    this.upX = e.Event.GetX();
+                    this.upY = e.Event.GetY();
 
-                    float deltaX = _downX - _upX;
-                    float deltaY = _downY - _upY;
+                    float deltaX = this.downX - this.upX;
+                    float deltaY = this.downY - this.upY;
 
                         // swipe horizontal?
                     if(Math.Abs(deltaX) > Math.Abs(deltaY))
                     {
-                        if(Math.Abs(deltaX) > MIN_DISTANCE)
+                        if(Math.Abs(deltaX) > MinDistance)
                         {
-                                // left or right
-                            if(deltaX < 0) { element.OnRightSwipe(this, EventArgs.Empty); return; }
-                            if(deltaX > 0) { element.OnLeftSwipe(this, EventArgs.Empty); return; }
+                            if (deltaX < 0)
+                            {
+                                element.OnRightSwipe(this, EventArgs.Empty); 
+                                return;
+                            }
+
+                            if (deltaX > 0)
+                            {
+                                element.OnLeftSwipe(this, EventArgs.Empty); 
+                                return;
+                            }
                         }
                         else 
                         {
-                            Android.Util.Log.Info("ExtendedEntry", "Horizontal Swipe was only " + Math.Abs(deltaX) + " long, need at least " + MIN_DISTANCE);
+                            Android.Util.Log.Info("ExtendedEntry", "Horizontal Swipe was only " + Math.Abs(deltaX) + " long, need at least " + MinDistance);
                             return; // We don't consume the event
                         }
                     }
@@ -119,28 +126,40 @@ namespace XLabs.Forms.Controls
         /// <param name="e">The <see cref="System.ComponentModel.PropertyChangedEventArgs"/> instance containing the event data.</param>
         protected override void OnElementPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            base.OnElementPropertyChanged(sender, e);
-
             var view = (ExtendedEntry)Element;
 
             if (e.PropertyName == ExtendedEntry.FontProperty.PropertyName)
+            {
                 SetFont(view);
-            if (e.PropertyName == ExtendedEntry.XAlignProperty.PropertyName)
+            }
+            else if (e.PropertyName == ExtendedEntry.XAlignProperty.PropertyName)
+            {
                 SetTextAlignment(view);
-            //if (e.PropertyName == ExtendedEntry.HasBorderProperty.PropertyName)
+            }
+            //else if (e.PropertyName == ExtendedEntry.HasBorderProperty.PropertyName)
             //    SetBorder(view);
-            if (e.PropertyName == ExtendedEntry.PlaceholderTextColorProperty.PropertyName)
+            else if (e.PropertyName == ExtendedEntry.PlaceholderTextColorProperty.PropertyName)
+            {
                 SetPlaceholderTextColor(view);
+            }
+            else if (e.PropertyName == VisualElement.BackgroundColorProperty.PropertyName)
+            {
+                this.Control.SetBackgroundColor(view.BackgroundColor.ToAndroid());
+            }
+            else
+            {
+                base.OnElementPropertyChanged(sender, e);
+            }
         }
 
-        /// <summary>
-        /// Sets the border.
-        /// </summary>
-        /// <param name="view">The view.</param>
-        private void SetBorder(ExtendedEntry view)
-        {
-            //NotCurrentlySupported: HasBorder peroperty not suported on Android
-        }
+        ///// <summary>
+        ///// Sets the border.
+        ///// </summary>
+        ///// <param name="view">The view.</param>
+        //private void SetBorder(ExtendedEntry view)
+        //{
+        //    //NotCurrentlySupported: HasBorder peroperty not suported on Android
+        //}
 
         /// <summary>
         /// Sets the text alignment.
@@ -168,7 +187,8 @@ namespace XLabs.Forms.Controls
         /// <param name="view">The view.</param>
         private void SetFont(ExtendedEntry view)
         {
-            if(view.Font != Font.Default) {
+            if (view.Font != Font.Default) 
+            {
                 Control.TextSize = view.Font.ToScaledPixel();
                 Control.Typeface = view.Font.ToExtendedTypeface(Context);
             }
@@ -178,9 +198,12 @@ namespace XLabs.Forms.Controls
         /// Sets the color of the placeholder text.
         /// </summary>
         /// <param name="view">The view.</param>
-        private void SetPlaceholderTextColor(ExtendedEntry view){
-            if(view.PlaceholderTextColor != Color.Default) 
-                Control.SetHintTextColor(view.PlaceholderTextColor.ToAndroid());			
+        private void SetPlaceholderTextColor(ExtendedEntry view)
+        {
+            if (view.PlaceholderTextColor != Color.Default)
+            {
+                Control.SetHintTextColor(view.PlaceholderTextColor.ToAndroid());	
+            }		
         }
 
         /// <summary>
@@ -189,7 +212,7 @@ namespace XLabs.Forms.Controls
         /// <param name="view">The view.</param>
         private void SetMaxLength(ExtendedEntry view)
         {
-            Control.SetFilters(new IInputFilter[] { new global::Android.Text.InputFilterLengthFilter(view.MaxLength) });
+            Control.SetFilters(new IInputFilter[] { new InputFilterLengthFilter(view.MaxLength) });
         }
     }
 }

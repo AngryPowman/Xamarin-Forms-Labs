@@ -1,12 +1,11 @@
-﻿// ReSharper disable once CheckNamespace
-namespace Xamarin.Forms.Labs.Sample
+﻿namespace XLabs.Sample.ViewModel
 {
-	using System;
-	using System.Collections.Generic;
-	using System.ComponentModel;
-	using System.Runtime.CompilerServices;
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Runtime.CompilerServices;
 
-	public class BaseViewModel : INotifyPropertyChanged
+    public class BaseViewModel : INotifyPropertyChanged
     {
         // boiler-plate
         public event PropertyChangedEventHandler PropertyChanged;
@@ -36,8 +35,8 @@ namespace Xamarin.Forms.Labs.Sample
         private bool _isbusy;
         public bool IsBusy
         {
-            get { return _isbusy; }
-            set { SetField(ref _isbusy, value); }
+            get { return this._isbusy; }
+            set { SetField(ref this._isbusy, value); }
         }
 
     }
@@ -50,7 +49,7 @@ namespace Xamarin.Forms.Labs.Sample
             Item = item;
         }
 
-        public T Item {get {return _item;} private set { SetField(ref _item, value); }} 
+        public T Item {get {return this._item;} private set { SetField(ref this._item, value); }} 
     }
     public class ReadOnlySelectable<T> : BaseViewModel
     {
@@ -65,8 +64,8 @@ namespace Xamarin.Forms.Labs.Sample
 
         public bool Selected
         {
-            get { return _selected; }
-            set { SetField(ref _selected, value); }
+            get { return this._selected; }
+            set { SetField(ref this._selected, value); }
         }
 
     }

@@ -20,6 +20,17 @@ using Windows.UI.Xaml.Navigation;
 
 namespace Xlabs.Sample.WinUniversal
 {
+    using XLabs.Forms;
+    using XLabs.Forms.Services;
+    using XLabs.Ioc;
+    using XLabs.Platform.Device;
+    using XLabs.Platform.Mvvm;
+    using XLabs.Platform.Services;
+    using XLabs.Platform.Services.Email;
+    using XLabs.Platform.Services.Media;
+    using XLabs.Serialization;
+    using XLabs.Serialization.JsonNET;
+
     /// <summary>
     /// Provides application-specific behavior to supplement the default Application class.
     /// </summary>
@@ -37,6 +48,8 @@ namespace Xlabs.Sample.WinUniversal
         {
             this.InitializeComponent();
             this.Suspending += this.OnSuspending;
+
+            SetIoC();
         }
 
         /// <summary>
@@ -47,6 +60,10 @@ namespace Xlabs.Sample.WinUniversal
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
+            Xamarin.Forms.Forms.Init(e);
+
+            Resolver.Resolve<XFormsAppWin>().RaiseStartup();
+            
 #if DEBUG
             if (System.Diagnostics.Debugger.IsAttached)
             {
@@ -128,10 +145,45 @@ namespace Xlabs.Sample.WinUniversal
         /// <param name="e">Details about the suspend request.</param>
         private void OnSuspending(object sender, SuspendingEventArgs e)
         {
+            Resolver.Resolve<XFormsAppWin>().RaiseClosing();
             var deferral = e.SuspendingOperation.GetDeferral();
 
             // TODO: Save application state and stop any background activity
             deferral.Complete();
+        }
+
+        /// <summary>
+        /// Sets Inversion of Control.
+        /// </summary>
+        private void SetIoC()
+        {
+            var resolverContainer = new SimpleContainer();
+
+            var app = new XFormsAppWin();
+
+            app.Init(this);
+
+            //var documents = app.AppDataDirectory;
+            //var pathToDatabase = Path.Combine(documents, "xforms.db");
+
+            resolverContainer
+                //.Register<IDevice>(t => WindowsPhoneDevice.CurrentDevice)
+                //.Register<IDisplay>(t => t.Resolve<IDevice>().Display)
+                //.Register<IFontManager>(t => new FontManager(t.Resolve<IDisplay>()))
+                //.Register<IEmailService, EmailService>()
+                //.Register<IMediaPicker, MediaPicker>()
+                .Register<IJsonSerializer, JsonSerializer>()
+                //.Register<ITextToSpeechService, TextToSpeechService>()
+                .Register<IDependencyContainer>(t => resolverContainer)
+                .Register<XFormsAppWin>(app)
+                .Register<IXFormsApp>(app)
+                //.Register<ISecureStorage, SecureStorage>()
+                //.Register<ISimpleCache>(
+                //    t => new SQLiteSimpleCache(new SQLite.Net.Platform.WindowsPhone8.SQLitePlatformWP8(),
+                //        new SQLite.Net.SQLiteConnectionString(pathToDatabase, true), t.Resolve<IJsonSerializer>()))
+                ;
+
+            Resolver.SetResolver(resolverContainer.GetResolver());
         }
     }
 }

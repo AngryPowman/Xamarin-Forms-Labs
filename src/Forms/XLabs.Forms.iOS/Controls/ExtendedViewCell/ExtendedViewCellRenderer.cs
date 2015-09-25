@@ -56,7 +56,7 @@ namespace XLabs.Forms.Controls
                                 } 
                                 catch (Foundation.You_Should_Not_Call_base_In_This_Method) 
                                 {
-                                    Console.Write("Xamarin Forms Labs Weird stuff : You_Should_Not_Call_base_In_This_Method happend");
+                                    Console.Write("XLabs Weird stuff : You_Should_Not_Call_base_In_This_Method happend");
                                 }
                         };
                         cell.AccessoryView = detailDisclosureButton;

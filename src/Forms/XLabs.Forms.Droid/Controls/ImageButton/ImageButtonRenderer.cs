@@ -50,7 +50,9 @@ namespace XLabs.Forms.Controls
                 targetButton.Typeface = Element.Font.ToExtendedTypeface(Context);
             }
 
-            if (this.Element != null && this.ImageButton.Source != null )
+            if (this.Element != null && 
+                (this.ImageButton.Source != null ||
+                this.ImageButton.DisabledSource != null))
             {
                 await this.SetImageSourceAsync(targetButton, this.ImageButton);
             }
@@ -68,12 +70,18 @@ namespace XLabs.Forms.Controls
             const int Padding = 10;
             var source = model.IsEnabled ? model.Source : model.DisabledSource ?? model.Source;
 
-
             using (var bitmap = await this.GetBitmapAsync(source))
             {
                 if (bitmap != null)
                 {
-                    Drawable drawable = new BitmapDrawable(bitmap);
+                    var drawable = new BitmapDrawable(bitmap);
+                    var tintColor = model.IsEnabled ? model.ImageTintColor : model.DisabledImageTintColor;
+                    if (tintColor != Xamarin.Forms.Color.Transparent)
+                    {
+                        drawable.SetTint(tintColor.ToAndroid());
+                        drawable.SetTintMode(PorterDuff.Mode.SrcIn);
+                    }
+
                     var scaledDrawable = GetScaleDrawable(drawable, GetWidth(model.ImageWidthRequest),
                         GetHeight(model.ImageHeightRequest));
 
@@ -129,7 +137,11 @@ namespace XLabs.Forms.Controls
         {
             base.OnElementPropertyChanged(sender, e);
 
-            if (e.PropertyName == ImageButton.SourceProperty.PropertyName || e.PropertyName == ImageButton.DisabledSourceProperty.PropertyName || e.PropertyName == VisualElement.IsEnabledProperty.PropertyName)
+            if (e.PropertyName == ImageButton.SourceProperty.PropertyName || 
+                e.PropertyName == ImageButton.DisabledSourceProperty.PropertyName || 
+                e.PropertyName == VisualElement.IsEnabledProperty.PropertyName ||
+                e.PropertyName == ImageButton.ImageTintColorProperty.PropertyName ||
+                e.PropertyName == ImageButton.DisabledImageTintColorProperty.PropertyName)
             {
                 await SetImageSourceAsync(this.Control, this.ImageButton);
             }

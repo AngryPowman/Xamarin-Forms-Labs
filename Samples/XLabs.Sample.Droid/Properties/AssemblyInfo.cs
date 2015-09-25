@@ -5,12 +5,12 @@ using Android.App;
 // Information about this assembly is defined by the following attributes.
 // Change them to the values specific to your project.
 
-[assembly: AssemblyTitle("Xamarin.Forms.Labs.Sample.Droid")]
+[assembly: AssemblyTitle("XLabs.Sample.Droid")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("ruimarinho.net")]
+[assembly: AssemblyCompany("XLabs")]
 [assembly: AssemblyProduct("")]
-[assembly: AssemblyCopyright("ruimarinho.net")]
+[assembly: AssemblyCopyright("XLabs")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
