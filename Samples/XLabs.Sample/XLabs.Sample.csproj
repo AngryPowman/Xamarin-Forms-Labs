@@ -82,6 +82,9 @@
     <Compile Include="Pages\Controls\ExtendedSwitchPage.xaml.cs">
       <DependentUpon>ExtendedSwitchPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Controls\ExtendedTextCellPage.xaml.cs">
+      <DependentUpon>ExtendedTextCellPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\Controls\GestureSample.xaml.cs">
       <DependentUpon>GestureSample.xaml</DependentUpon>
     </Compile>
@@ -458,6 +461,12 @@
   <ItemGroup>
     <EmbeddedResource Include="Pages\Controls\ExtendedSwitchPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Pages\Controls\ExtendedTextCellPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>

@@ -22,7 +22,8 @@ namespace XLabs.Forms.Controls
 		protected override void OnElementChanged(ElementChangedEventArgs<Button> e)
         {
             base.OnElementChanged(e);
-            SetAlignment();
+	        UpdateAlignment();
+	        UpdateFont();
         }
 
 		/// <summary>
@@ -32,22 +33,31 @@ namespace XLabs.Forms.Controls
 		/// <param name="e">The <see cref="PropertyChangedEventArgs"/> instance containing the event data.</param>
 		protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            switch (e.PropertyName)
+		    if (e.PropertyName == ExtendedButton.VerticalContentAlignmentProperty.PropertyName ||
+		        e.PropertyName == ExtendedButton.HorizontalContentAlignmentProperty.PropertyName)
+		    {
+		        UpdateAlignment();
+		    }
+            else if (e.PropertyName == Button.FontProperty.PropertyName)
             {
-                case "VerticalContentAlignment":
-                case "HorizontalContentAlignment":
-                    SetAlignment();
-                    break;
-                default:
-                    base.OnElementPropertyChanged(sender, e);
-                    break;
+                UpdateFont();
             }
+             
+            base.OnElementPropertyChanged(sender, e);
         }
+
+        /// <summary>
+        /// Updates the font
+        /// </summary>
+	    private void UpdateFont()
+	    {
+            Control.Typeface = Element.Font.ToExtendedTypeface(Context);
+	    }
 
 		/// <summary>
 		/// Sets the alignment.
 		/// </summary>
-		private void SetAlignment()
+		private void UpdateAlignment()
         {
             var element = this.Element as ExtendedButton;
 

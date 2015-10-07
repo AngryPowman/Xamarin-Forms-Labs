@@ -27,7 +27,7 @@ namespace XLabs.Forms.Controls
         /// </summary>
         public static readonly BindableProperty TextColorProperty =
             BindableProperty.Create<CustomRadioButton, Color>(
-                p => p.TextColor, Color.Black);
+                p => p.TextColor, Color.Default);
 
         /// <summary>
         /// The font size property

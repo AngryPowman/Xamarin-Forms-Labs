@@ -105,7 +105,7 @@ namespace XLabs.Forms.Controls
 		/// </summary>
 		public static readonly BindableProperty IconColorProperty =
 			BindableProperty.Create<IconButton, Color>(
-				p => p.IconColor, default(Color));
+				p => p.IconColor, Color.Default);
 
 		/// <summary>
 		/// Gets or sets the icon's color

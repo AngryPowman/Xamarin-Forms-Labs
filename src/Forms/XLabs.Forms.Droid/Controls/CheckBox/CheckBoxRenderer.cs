@@ -1,3 +1,4 @@
+using Android.Content.Res;
 using Xamarin.Forms;
 
 using XLabs.Forms.Controls;
@@ -18,7 +19,9 @@ namespace XLabs.Forms.Controls
 	/// </summary>
 	public class CheckBoxRenderer : ViewRenderer<CheckBox, Android.Widget.CheckBox>
 	{
-		/// <summary>
+        private ColorStateList defaultTextColor;
+        
+        /// <summary>
 		/// Called when [element changed].
 		/// </summary>
 		/// <param name="e">The e.</param>
@@ -31,12 +34,13 @@ namespace XLabs.Forms.Controls
 				var checkBox = new Android.Widget.CheckBox(this.Context);
 				checkBox.CheckedChange += CheckBoxCheckedChange;
 
+			    defaultTextColor = checkBox.TextColors;
 				this.SetNativeControl(checkBox);
 			}
 
 			Control.Text = e.NewElement.Text;
 			Control.Checked = e.NewElement.Checked;
-			Control.SetTextColor(e.NewElement.TextColor.ToAndroid());
+            UpdateTextColor();
 
 			if (e.NewElement.FontSize > 0)
 			{
@@ -65,7 +69,7 @@ namespace XLabs.Forms.Controls
 					Control.Checked = Element.Checked;
 					break;
 				case "TextColor":
-					Control.SetTextColor(Element.TextColor.ToAndroid());
+			        UpdateTextColor();
 					break;
 				case "FontName":
 					if (!string.IsNullOrEmpty(Element.FontName))
@@ -127,5 +131,19 @@ namespace XLabs.Forms.Controls
 				}
 			}
 		}
+
+        /// <summary>
+        /// Updates the color of the text
+        /// </summary>
+        private void UpdateTextColor()
+        {
+            if (Control == null || Element == null)
+                return;
+
+            if (Element.TextColor == Xamarin.Forms.Color.Default)
+                Control.SetTextColor(defaultTextColor);
+            else
+                Control.SetTextColor(Element.TextColor.ToAndroid());
+        }
 	}
 }

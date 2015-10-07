@@ -420,7 +420,7 @@ namespace XLabs.Forms.Controls
 		/// <param name="isSelected">if set to <c>true</c> [is selected].</param>
 		private void SetSelectedState(int index, bool isSelected)
 		{
-			if (_buttonLayout.Children.Count <= index)
+			if (index < 0 || _buttonLayout.Children.Count <= index)
 			{
 				return; //Out of bounds
 			}

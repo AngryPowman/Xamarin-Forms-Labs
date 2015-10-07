@@ -1,4 +1,4 @@
-**Xamarin Forms Labs** [![Build status](https://ci.appveyor.com/api/projects/status/33q2u1d3dpn3abgn?svg=true)](https://ci.appveyor.com/project/xlabs/xamarin-forms-labs)
+﻿**Xamarin Forms Labs** [![Build status](https://ci.appveyor.com/api/projects/status/33q2u1d3dpn3abgn?svg=true)](https://ci.appveyor.com/project/xlabs/xamarin-forms-labs)
 =====================
 
 [![Build status](https://ci.appveyor.com/api/projects/status/33q2u1d3dpn3abgn?svg=true)](https://ci.appveyor.com/project/xlabs/xamarin-forms-labs)
@@ -11,9 +11,14 @@ Call for action for all Xamarin Developers, embrace this project and share your 
 The master branch is the current development branch.
 The v.2.0 is the stable branch.
 
+**Find a Bug or Fix a Bug** [Issue Tracker]
+(https://github.com/XLabs/Xamarin-Forms-Labs/issues)
+
+
 **Available controls**
 
  - [AutoCompleteView (beta)](https://github.com/XLabs/Xamarin-Forms-Labs/wiki/AutoCompleteView)
+ - BindablePicker (beta)
  - [Calendar Control (beta)](https://github.com/XLabs/Xamarin-Forms-Labs/wiki/Calendar-Control)
  - [Checkbox (beta)](https://github.com/XLabs/Xamarin-Forms-Labs/wiki/Checkbox-Control)
  - [DynamicListView (beta)](https://github.com/XLabs/Xamarin-Forms-Labs/wiki/DynamicListView)

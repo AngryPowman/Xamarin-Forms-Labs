@@ -144,6 +144,14 @@ namespace XLabs.Forms.Controls
             return computedText;
         }
 
+        private Android.Graphics.Color GetSpanColor(Xamarin.Forms.Color color)
+        {
+            if (color == Xamarin.Forms.Color.Default)
+                return new Android.Graphics.Color(Control.TextColors.DefaultColor);
+
+            return color.ToAndroid();
+        }
+
         /// <summary>
         /// Build the spannable according to the computed text, meaning set the right font, color and size to the text and icon char index
         /// </summary>
@@ -156,7 +164,7 @@ namespace XLabs.Forms.Controls
             if (!string.IsNullOrEmpty(iconButton.Icon))
             {
                 //set icon
-                span.SetSpan(new CustomTypefaceSpan("fontawesome", iconFont, iconButton.IconColor.ToAndroid()),
+                span.SetSpan(new CustomTypefaceSpan("fontawesome", iconFont, GetSpanColor(iconButton.IconColor)),
                     computedString.IndexOf(iconButton.Icon),
                     computedString.IndexOf(iconButton.Icon) + iconButton.Icon.Length,
                     SpanTypes.ExclusiveExclusive);
@@ -171,7 +179,7 @@ namespace XLabs.Forms.Controls
             //if there is text
             if (!string.IsNullOrEmpty(iconButton.Text))
             {
-                span.SetSpan(new CustomTypefaceSpan("", textFont, iconButton.TextColor.ToAndroid()),
+                span.SetSpan(new CustomTypefaceSpan("", textFont, GetSpanColor(iconButton.TextColor)),
                      textStartIndex,
                      textStopIndex,
                      SpanTypes.ExclusiveExclusive);

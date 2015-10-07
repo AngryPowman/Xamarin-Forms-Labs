@@ -1,5 +1,6 @@
 using System;
 using System.ComponentModel;
+using Android.Content.Res;
 using Android.Graphics;
 using Android.Widget;
 using Xamarin.Forms;
@@ -16,8 +17,10 @@ namespace XLabs.Forms.Controls
 	/// Class RadioButtonRenderer.
 	/// </summary>
 	public class RadioButtonRenderer : ViewRenderer<CustomRadioButton, RadioButton>
-    {
-		/// <summary>
+	{
+	    private ColorStateList defaultTextColor;
+
+	    /// <summary>
 		/// Called when [element changed].
 		/// </summary>
 		/// <param name="e">The e.</param>
@@ -25,14 +28,10 @@ namespace XLabs.Forms.Controls
         {
             base.OnElementChanged(e);
 
-            if (e.OldElement != null)
-            {
-                e.OldElement.PropertyChanged += ElementOnPropertyChanged;
-            }
-
             if (Control == null)
             {
                 var radButton = new RadioButton(Context);
+                defaultTextColor = radButton.TextColors;
 
                 radButton.CheckedChange += radButton_CheckedChange;
 
@@ -42,7 +41,7 @@ namespace XLabs.Forms.Controls
             Control.Text = e.NewElement.Text;
             //Control.TextSize = 14;
             Control.Checked = e.NewElement.Checked;
-            Control.SetTextColor(e.NewElement.TextColor.ToAndroid());
+	        UpdateTextColor();
 
             if (e.NewElement.FontSize > 0)
             {
@@ -53,8 +52,6 @@ namespace XLabs.Forms.Controls
             {
                 Control.Typeface = TrySetFont(e.NewElement.FontName);
             }
-
-            Element.PropertyChanged += ElementOnPropertyChanged;
         }
 
         private void radButton_CheckedChange(object sender, CompoundButton.CheckedChangeEventArgs e)
@@ -62,8 +59,10 @@ namespace XLabs.Forms.Controls
             Element.Checked = e.IsChecked;
         }
 
-        private void ElementOnPropertyChanged(object sender, PropertyChangedEventArgs e)
+        protected override void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
+            base.OnElementPropertyChanged(sender, e);
+
             switch (e.PropertyName)
             {
                 case "Checked":
@@ -73,7 +72,7 @@ namespace XLabs.Forms.Controls
                     Control.Text = Element.Text;
                     break;
                 case "TextColor":
-                    Control.SetTextColor(Element.TextColor.ToAndroid());
+                    UpdateTextColor();
                     break;
                 case "FontName":
                     if (!string.IsNullOrEmpty(Element.FontName))
@@ -123,10 +122,18 @@ namespace XLabs.Forms.Controls
             }
         }
 
-        protected override void Dispose(bool disposing)
-        {
-            Control.Dispose();
-            base.Dispose(disposing);
+        /// <summary>
+        /// Updates the color of the text
+        /// </summary>
+	    private void UpdateTextColor()
+	    {
+	        if (Control == null || Element == null)
+	            return;
+
+	        if (Element.TextColor == Xamarin.Forms.Color.Default)
+                Control.SetTextColor(defaultTextColor);
+            else
+                Control.SetTextColor(Element.TextColor.ToAndroid());
         }
     }
 }
